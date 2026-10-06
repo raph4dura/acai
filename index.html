@@ -1501,15 +1501,17 @@ function adicionarAcaiMontado(){
         :
         "";
 
-    carrinho.push({
+   carrinho.push({
 
-        nome:"Açaí " + tamanhoSelecionado.nome,
+    nome:"Açaí " + tamanhoSelecionado.nome,
 
-        preco:total,
+    preco:total,
 
-        detalhes:detalhes
+    quantidade:1,
 
-    });
+    detalhes:detalhes
+
+});
 
     atualizarCarrinho();
 
@@ -1529,79 +1531,182 @@ function adicionarAcaiMontado(){
 /* =========================================================
    CARRINHO
 ========================================================= */
-
 ```javascript
+/* =========================================================
+   CARRINHO
+========================================================= */
+
 function atualizarCarrinho(){
 
-    const lista = document.getElementById("carrinho");
+    const lista = document.getElementById("cartContent");
 
     if(!lista) return;
 
     lista.innerHTML = "";
 
     let total = 0;
+    let quantidadeTotal = 0;
+
+
+    /* =========================
+       CARRINHO VAZIO
+    ========================= */
 
     if(carrinho.length === 0){
 
         lista.innerHTML = `
-            <div class="carrinho-vazio">
-                <p>Seu carrinho está vazio.</p>
+
+            <div class="cart-empty">
+
+                <div>🛒</div>
+
+                <strong>Seu pedido está vazio</strong>
+
+                <p style="margin-top:6px;">
+                    Adicione algum produto do cardápio.
+                </p>
+
             </div>
+
         `;
 
-        const totalElemento = document.getElementById("totalCarrinho");
-
-        if(totalElemento){
-            totalElemento.textContent = "R$ 0,00";
-        }
+        atualizarBadge(0);
 
         return;
+
     }
 
-    carrinho.forEach((item, index) => {
 
-        const subtotal = item.preco * item.quantidade;
+    /* =========================
+       PRODUTOS
+    ========================= */
+
+    carrinho.forEach((item,index) => {
+
+        /* Produtos antigos sem quantidade passam a ter 1 */
+
+        if(!item.quantidade){
+            item.quantidade = 1;
+        }
+
+
+        const subtotal =
+            item.preco * item.quantidade;
+
 
         total += subtotal;
 
+        quantidadeTotal += item.quantidade;
+
+
         lista.innerHTML += `
 
-            <div class="item-carrinho">
+            <div class="cart-item">
 
-                <div class="item-info">
+                <div class="cart-item-top">
 
-                    <strong>${item.nome}</strong>
+                    <div>
 
-                    <span>
-                        R$ ${formatar(item.preco)}
-                    </span>
+                        <strong>
+                            ${item.nome}
+                        </strong>
+
+                        ${
+                            item.detalhes
+                            ?
+                            `<small>${item.detalhes}</small>`
+                            :
+                            ""
+                        }
+
+                        <small>
+                            R$ ${formatar(item.preco)} cada
+                        </small>
+
+                    </div>
+
+
+                    <strong>
+                        R$ ${formatar(subtotal)}
+                    </strong>
 
                 </div>
 
-                <div class="item-controles">
 
-                    <button onclick="alterarQuantidade(${index}, -1)">
-                        −
-                    </button>
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    margin-top:12px;
+                ">
 
-                    <span>${item.quantidade}</span>
 
-                    <button onclick="alterarQuantidade(${index}, 1)">
-                        +
-                    </button>
+                    <!-- CONTROLES -->
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                    ">
+
+                        <button
+                            onclick="alterarQuantidade(${index},-1)"
+                            style="
+                                width:32px;
+                                height:32px;
+                                border-radius:9px;
+                                background:#ede9fe;
+                                color:var(--roxo);
+                                font-size:20px;
+                                font-weight:bold;
+                            "
+                        >
+                            −
+                        </button>
+
+
+                        <strong
+                            style="
+                                min-width:25px;
+                                text-align:center;
+                            "
+                        >
+                            ${item.quantidade}
+                        </strong>
+
+
+                        <button
+                            onclick="alterarQuantidade(${index},1)"
+                            style="
+                                width:32px;
+                                height:32px;
+                                border-radius:9px;
+                                background:var(--roxo);
+                                color:white;
+                                font-size:20px;
+                                font-weight:bold;
+                            "
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <!-- EXCLUIR -->
 
                     <button
-                        class="btn-excluir"
                         onclick="removerProduto(${index})"
+                        style="
+                            background:#fee2e2;
+                            color:var(--vermelho);
+                            padding:8px 11px;
+                            border-radius:9px;
+                            font-size:13px;
+                        "
                     >
-                        🗑️
+                        🗑️ Remover
                     </button>
-
-                </div>
-
-                <div class="item-subtotal">
-
-                    R$ ${formatar(subtotal)}
 
                 </div>
 
@@ -1611,58 +1716,131 @@ function atualizarCarrinho(){
 
     });
 
-    const totalElemento = document.getElementById("totalCarrinho");
 
-    if(totalElemento){
+    /* =========================
+       TOTAL
+    ========================= */
 
-        totalElemento.textContent = `R$ ${formatar(total)}`;
+    lista.innerHTML += `
 
-    }
+        <div class="cart-total">
+
+            <div>
+
+                <span>
+                    Itens
+                </span>
+
+                <strong>
+                    ${quantidadeTotal}
+                </strong>
+
+            </div>
+
+
+            <div class="grand">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    R$ ${formatar(total)}
+                </span>
+
+            </div>
+
+
+            <button
+                class="main-btn"
+                onclick="abrirCheckout()"
+            >
+                Finalizar pedido
+            </button>
+
+        </div>
+
+    `;
+
+
+    /* Atualiza o número do carrinho */
+
+    atualizarBadge(quantidadeTotal);
 
 }
 
 
-function alterarQuantidade(index, quantidade){
+/* =========================================================
+   ALTERAR QUANTIDADE
+========================================================= */
+
+function alterarQuantidade(index,alteracao){
 
     if(!carrinho[index]) return;
 
-    carrinho[index].quantidade += quantidade;
+
+    carrinho[index].quantidade += alteracao;
+
+
+    /* Se chegar a zero, remove */
 
     if(carrinho[index].quantidade <= 0){
 
-        carrinho.splice(index, 1);
+        carrinho.splice(index,1);
 
     }
+
 
     atualizarCarrinho();
 
 }
 
+
+/* =========================================================
+   REMOVER PRODUTO
+========================================================= */
 
 function removerProduto(index){
 
     if(!carrinho[index]) return;
 
-    carrinho.splice(index, 1);
-
-    atualizarCarrinho();
-
-}
-
-
-
-
-
-
-    
-
-function removerItem(index){
 
     carrinho.splice(index,1);
 
+
     atualizarCarrinho();
 
 }
+
+
+/* =========================================================
+   BADGE DO CARRINHO
+========================================================= */
+
+function atualizarBadge(quantidade){
+
+    const badge =
+        document.getElementById("cartBadge");
+
+
+    if(!badge) return;
+
+
+    badge.textContent = quantidade;
+
+
+    if(quantidade > 0){
+
+        badge.style.display = "flex";
+
+    }else{
+
+        badge.style.display = "none";
+
+    }
+
+}
+```
 
 
 /* =========================================================
@@ -1756,15 +1934,35 @@ mensagem +=
         "*ITENS:*%0A";
 
 
-    carrinho.forEach(item => {
+carrinho.forEach(item => {
 
-        total += item.preco;
+    const quantidade = item.quantidade || 1;
+
+    const subtotal =
+        item.preco * quantidade;
+
+    total += subtotal;
+
+    mensagem +=
+        "• " +
+        quantidade +
+        "x " +
+        encodeURIComponent(item.nome) +
+        " - R$ " +
+        formatar(subtotal);
+
+    if(item.detalhes){
 
         mensagem +=
-            "• " +
-            encodeURIComponent(item.nome) +
-            " - R$ " +
-            formatar(item.preco);
+            " (" +
+            encodeURIComponent(item.detalhes) +
+            ")";
+
+    }
+
+    mensagem += "%0A";
+
+});
 
         if(item.detalhes){
 
