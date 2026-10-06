@@ -1530,93 +1530,80 @@ function adicionarAcaiMontado(){
    CARRINHO
 ========================================================= */
 
+```javascript
 function atualizarCarrinho(){
 
-    const content =
-        document.getElementById("cartContent");
+    const lista = document.getElementById("carrinho");
 
-    const badge =
-        document.getElementById("cartBadge");
+    if(!lista) return;
 
-
-    badge.innerText = carrinho.length;
-
-    badge.style.display =
-        carrinho.length
-        ? "flex"
-        : "none";
-
-
-    if(carrinho.length === 0){
-
-        content.innerHTML = `
-
-            <div class="cart-empty">
-
-                <div>🛒</div>
-
-                <h3>Seu pedido está vazio</h3>
-
-                <p style="margin-top:7px;">
-                    Escolha alguma coisa deliciosa.
-                </p>
-
-                <button
-                    class="main-btn"
-                    onclick="mostrarPagina('menu')"
-                    style="max-width:250px;"
-                >
-                    Ver cardápio
-                </button>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
+    lista.innerHTML = "";
 
     let total = 0;
 
-    let html = "";
+    if(carrinho.length === 0){
 
+        lista.innerHTML = `
+            <div class="carrinho-vazio">
+                <p>Seu carrinho está vazio.</p>
+            </div>
+        `;
 
-    carrinho.forEach((item,index) => {
+        const totalElemento = document.getElementById("totalCarrinho");
 
-        total += item.preco;
+        if(totalElemento){
+            totalElemento.textContent = "R$ 0,00";
+        }
 
-        html += `
+        return;
+    }
 
-            <div class="cart-item">
+    carrinho.forEach((item, index) => {
 
-                <div class="cart-item-top">
+        const subtotal = item.preco * item.quantidade;
 
-                    <strong>
-                        ${item.nome}
-                    </strong>
+        total += subtotal;
 
-                    <strong>
+        lista.innerHTML += `
+
+            <div class="item-carrinho">
+
+                <div class="item-info">
+
+                    <strong>${item.nome}</strong>
+
+                    <span>
                         R$ ${formatar(item.preco)}
-                    </strong>
+                    </span>
 
                 </div>
 
-                ${
-                    item.detalhes
-                    ?
-                    `<small>${item.detalhes}</small>`
-                    :
-                    ""
-                }
+                <div class="item-controles">
 
-                <button
-                    class="remove"
-                    onclick="removerItem(${index})"
-                >
-                    Remover
-                </button>
+                    <button onclick="alterarQuantidade(${index}, -1)">
+                        −
+                    </button>
+
+                    <span>${item.quantidade}</span>
+
+                    <button onclick="alterarQuantidade(${index}, 1)">
+                        +
+                    </button>
+
+                    <button
+                        class="btn-excluir"
+                        onclick="removerProduto(${index})"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
+                <div class="item-subtotal">
+
+                    R$ ${formatar(subtotal)}
+
+                </div>
 
             </div>
 
@@ -1624,37 +1611,50 @@ function atualizarCarrinho(){
 
     });
 
+    const totalElemento = document.getElementById("totalCarrinho");
 
-    html += `
+    if(totalElemento){
 
-        <div class="cart-total">
+        totalElemento.textContent = `R$ ${formatar(total)}`;
 
-            <div>
-                <span>Subtotal</span>
-                <span>R$ ${formatar(total)}</span>
-            </div>
-
-            <div class="grand">
-                <span>Total</span>
-                <span>R$ ${formatar(total)}</span>
-            </div>
-
-            <button
-                class="main-btn"
-                onclick="abrirCheckout()"
-            >
-                Finalizar pedido
-            </button>
-
-        </div>
-
-    `;
-
-
-    content.innerHTML = html;
+    }
 
 }
 
+
+function alterarQuantidade(index, quantidade){
+
+    if(!carrinho[index]) return;
+
+    carrinho[index].quantidade += quantidade;
+
+    if(carrinho[index].quantidade <= 0){
+
+        carrinho.splice(index, 1);
+
+    }
+
+    atualizarCarrinho();
+
+}
+
+
+function removerProduto(index){
+
+    if(!carrinho[index]) return;
+
+    carrinho.splice(index, 1);
+
+    atualizarCarrinho();
+
+}
+
+
+
+
+
+
+    
 
 function removerItem(index){
 
