@@ -1531,7 +1531,7 @@ function adicionarAcaiMontado(){
 /* =========================================================
    CARRINHO
 ========================================================= */
-```javascript
+
 /* =========================================================
    CARRINHO
 ========================================================= */
@@ -1934,12 +1934,12 @@ mensagem +=
         "*ITENS:*%0A";
 
 
+
 carrinho.forEach(item => {
 
     const quantidade = item.quantidade || 1;
 
-    const subtotal =
-        item.preco * quantidade;
+    const subtotal = item.preco * quantidade;
 
     total += subtotal;
 
@@ -1963,21 +1963,7 @@ carrinho.forEach(item => {
     mensagem += "%0A";
 
 });
-
-        if(item.detalhes){
-
-            mensagem +=
-                " (" +
-                encodeURIComponent(item.detalhes) +
-                ")";
-
-        }
-
-        mensagem += "%0A";
-
-    });
-
-
+    
     mensagem +=
         "%0A💰 *TOTAL: R$ " +
         formatar(total) +
