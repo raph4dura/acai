@@ -1355,26 +1355,36 @@ function formatar(valor){
    ADICIONAR PRODUTO
 ========================================================= */
 
-function adicionarProduto(id){
+    function adicionarProduto(id){
 
     const produto = produtos.find(p => p.id === id);
 
     if(!produto) return;
 
-    carrinho.push({
+    const itemExistente = carrinho.find(item => item.nome === produto.nome);
 
-        nome:produto.nome,
-        preco:produto.preco,
-        detalhes:""
+    if(itemExistente){
 
-    });
+        itemExistente.quantidade++;
+
+    }else{
+
+        carrinho.push({
+
+            nome: produto.nome,
+            preco: produto.preco,
+            quantidade: 1,
+            detalhes: ""
+
+        });
+
+    }
 
     atualizarCarrinho();
 
     mostrarPagina("cart");
 
 }
-
 
 /* =========================================================
    MONTADOR
