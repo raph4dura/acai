@@ -12,2300 +12,2770 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-:root{
-    --roxo:#6d28d9;
-    --roxo2:#7c3aed;
-    --roxo-escuro:#4c1d95;
-    --rosa:#ec4899;
-    --fundo:#f7f5fb;
-    --texto:#241b35;
-    --cinza:#6b7280;
-    --branco:#ffffff;
-    --verde:#16a34a;
-    --vermelho:#dc2626;
-    --sombra:0 8px 25px rgba(60,30,100,.10);
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--fundo);
-    color:var(--texto);
-    padding-bottom:85px;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f7f5fb;
+  color:#24113f;
+  min-height:100vh;
+  padding-bottom:85px;
+  overflow-x:hidden;
 }
 
-button{
-    font-family:inherit;
-    cursor:pointer;
-    border:none;
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
 }
 
-.header{
-    background:linear-gradient(135deg,var(--roxo-escuro),var(--roxo),var(--rosa));
-    color:white;
-    padding:25px 18px 28px;
-    border-radius:0 0 28px 28px;
+@keyframes slideUp{
+  from{
+    opacity:0;
+    transform:translateY(18px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-.header-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    max-width:600px;
-    margin:auto;
+@keyframes slideDown{
+  from{
+    opacity:0;
+    transform:translateY(-15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
+@keyframes pop{
+  0%{
+    transform:scale(.92);
+    opacity:0;
+  }
+  70%{
+    transform:scale(1.03);
+  }
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
 }
 
-.logo-icon{
-    width:48px;
-    height:48px;
-    border-radius:15px;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:27px;
+@keyframes pulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.06);
+  }
 }
 
-.logo h1{
-    font-size:20px;
+@keyframes cartBounce{
+  0%{
+    transform:scale(1);
+  }
+  35%{
+    transform:scale(1.18);
+  }
+  70%{
+    transform:scale(.95);
+  }
+  100%{
+    transform:scale(1);
+  }
 }
 
-.logo span{
-    display:block;
-    font-size:12px;
-    opacity:.85;
-    margin-top:3px;
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(40px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
 }
 
-.header-text{
-    max-width:600px;
-    margin:25px auto 0;
+@keyframes shimmer{
+  0%{
+    background-position:-400px 0;
+  }
+  100%{
+    background-position:400px 0;
+  }
 }
 
-.header-text h2{
-    font-size:27px;
-    line-height:1.15;
-}
-
-.header-text p{
-    margin-top:8px;
-    opacity:.9;
-}
-
-.open-status{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    margin-top:13px;
-    background:rgba(255,255,255,.18);
-    padding:7px 11px;
-    border-radius:30px;
-    font-size:12px;
-}
-
-.green-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#86efac;
-}
-
-.container{
-    max-width:600px;
-    margin:auto;
-    padding:18px;
-}
-
-.search{
-    background:white;
-    border-radius:15px;
-    padding:13px 15px;
-    box-shadow:var(--sombra);
-    display:flex;
-    gap:10px;
-    margin-top:-5px;
-}
-
-.search input{
-    border:none;
-    outline:none;
-    width:100%;
-    font-size:15px;
-}
-
-.section-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin:25px 0 13px;
-}
-
-.section-title h2{
-    font-size:20px;
-}
-
-.section-title span{
-    color:var(--roxo);
-    font-size:13px;
-    font-weight:bold;
-}
-
-.promo{
-    background:linear-gradient(135deg,#fff,#f3e8ff);
-    border:1px solid #e9d5ff;
-    border-radius:20px;
-    padding:18px;
-    box-shadow:var(--sombra);
-    position:relative;
-    overflow:hidden;
-}
-
-.promo::after{
-    content:"🍧";
-    position:absolute;
-    right:15px;
-    bottom:-8px;
-    font-size:75px;
-    opacity:.15;
-}
-
-.promo small{
-    color:var(--roxo);
-    font-weight:bold;
-}
-
-.promo h3{
-    margin-top:5px;
-    font-size:20px;
-}
-
-.promo p{
-    margin-top:5px;
-    color:var(--cinza);
-    font-size:14px;
-    max-width:75%;
-}
-
-.promo button{
-    margin-top:13px;
-    background:var(--roxo);
-    color:white;
-    padding:10px 15px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-.categories{
-    display:flex;
-    gap:9px;
-    overflow-x:auto;
-    padding-bottom:5px;
-}
-
-.categories::-webkit-scrollbar{
-    display:none;
-}
-
-.category{
-    white-space:nowrap;
-    background:white;
-    border:1px solid #e5e7eb;
-    padding:10px 14px;
-    border-radius:30px;
-    font-size:13px;
-}
-
-.category.active{
-    background:var(--roxo);
-    color:white;
-    border-color:var(--roxo);
-}
-
-.products{
-    display:grid;
-    gap:13px;
-}
-
-.product{
-    background:white;
-    border-radius:18px;
-    padding:13px;
-    display:flex;
-    gap:13px;
-    box-shadow:var(--sombra);
-}
-
-.product-image{
-    width:88px;
-    height:88px;
-    min-width:88px;
-    border-radius:15px;
-    background:linear-gradient(145deg,#4c1d95,#a855f7,#f472b6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:42px;
-}
-
-.product-info{
-    flex:1;
-}
-
-.product-info h3{
-    font-size:16px;
-}
-
-.product-info p{
-    color:var(--cinza);
-    font-size:12px;
-    line-height:1.4;
-    margin-top:4px;
-}
-
-.product-bottom{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:9px;
-}
-
-.price{
-    font-weight:bold;
-    color:var(--roxo-escuro);
-}
-
-.add{
-    background:var(--roxo);
-    color:white;
-    width:34px;
-    height:34px;
-    border-radius:10px;
-    font-size:20px;
-}
-
-.loyalty{
-    margin-top:25px;
-    background:linear-gradient(135deg,#4c1d95,#7c3aed);
-    color:white;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:var(--sombra);
-}
-
-.loyalty-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.loyalty h3{
-    font-size:18px;
-}
-
-.points{
-    font-size:25px;
-    font-weight:bold;
-}
-
-.progress{
-    margin-top:15px;
-    height:9px;
-    background:rgba(255,255,255,.2);
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress div{
-    height:100%;
-    width:65%;
-    background:#f9a8d4;
-}
-
-.loyalty p{
-    font-size:12px;
-    opacity:.9;
-    margin-top:9px;
-}
-
-.info-card{
-    background:white;
-    border-radius:18px;
-    padding:17px;
-    box-shadow:var(--sombra);
-}
-
-.info-line{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    padding:10px 0;
-    border-bottom:1px solid #eee;
-}
-
-.info-line:last-child{
-    border-bottom:none;
-}
-
-.info-icon{
-    font-size:20px;
-}
-
-.info-line strong{
-    font-size:14px;
-}
-
-.info-line span{
-    display:block;
-    font-size:12px;
-    color:var(--cinza);
-    margin-top:3px;
-}
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:70px;
-    background:white;
-    border-top:1px solid #e5e7eb;
-    display:flex;
-    justify-content:center;
-    z-index:100;
-    box-shadow:0 -5px 20px rgba(0,0,0,.08);
-}
-
-.nav-inner{
-    width:100%;
-    max-width:600px;
-    display:flex;
-    justify-content:space-around;
-}
-
-.nav-btn{
-    background:none;
-    color:#777;
-    font-size:11px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    width:25%;
-}
-
-.nav-btn span{
-    font-size:22px;
-}
-
-.nav-btn.active{
-    color:var(--roxo);
-    font-weight:bold;
-}
-
-.badge{
-    position:absolute;
-    margin-left:18px;
-    margin-top:-7px;
-    background:var(--rosa);
-    color:white;
-    border-radius:20px;
-    min-width:18px;
-    height:18px;
-    font-size:10px;
-    display:none;
-    align-items:center;
-    justify-content:center;
+@keyframes check{
+  0%{
+    transform:scale(.5);
+    opacity:0;
+  }
+  70%{
+    transform:scale(1.15);
+  }
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
 }
 
 .page{
-    display:none;
+  animation:fadeIn .3s ease;
 }
 
-.page.active{
-    display:block;
+.page.animate{
+  animation:slideUp .38s ease both;
 }
 
-.modal-bg{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:200;
-    display:none;
-    align-items:flex-end;
+/* =========================
+   HEADER
+========================= */
+
+header{
+  background:linear-gradient(135deg,#5b21b6,#7c3aed);
+  color:white;
+  padding:22px 18px 26px;
+  border-radius:0 0 28px 28px;
+  box-shadow:0 8px 25px rgba(91,33,182,.20);
+  animation:slideDown .5s ease;
 }
 
-.modal-bg.show{
-    display:flex;
+.header-content{
+  max-width:700px;
+  margin:auto;
 }
 
-.modal{
-    background:white;
-    width:100%;
-    max-width:600px;
-    margin:auto;
-    border-radius:25px 25px 0 0;
-    max-height:90vh;
-    overflow:auto;
-    padding:22px;
+.logo-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.close{
-    background:#f3f4f6;
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    font-size:20px;
+.logo-icon{
+  width:45px;
+  height:45px;
+  border-radius:14px;
+  background:rgba(255,255,255,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  animation:pop .6s ease;
 }
 
-.option-title{
-    margin-top:20px;
-    margin-bottom:9px;
-    font-weight:bold;
+.logo h1{
+  font-size:21px;
 }
 
-.options{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
+.logo small{
+  display:block;
+  margin-top:3px;
+  opacity:.82;
 }
 
-.option{
-    border:1px solid #ddd;
-    background:white;
-    padding:9px 12px;
-    border-radius:10px;
-    font-size:13px;
+.status{
+  background:#dcfce7;
+  color:#15803d;
+  padding:7px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+  animation:pulse 2.5s infinite;
 }
 
-.option.selected{
-    background:#ede9fe;
-    border-color:var(--roxo);
-    color:var(--roxo-escuro);
-    font-weight:bold;
+.hero-text{
+  margin-top:22px;
 }
 
-.total-box{
-    margin-top:20px;
-    background:#f5f3ff;
-    padding:15px;
-    border-radius:14px;
-    display:flex;
-    justify-content:space-between;
-    font-weight:bold;
+.hero-text h2{
+  font-size:26px;
+  line-height:1.15;
 }
 
-.main-btn{
-    width:100%;
-    margin-top:13px;
-    padding:14px;
-    border-radius:13px;
-    background:var(--roxo);
-    color:white;
-    font-weight:bold;
-    font-size:15px;
+.hero-text p{
+  margin-top:8px;
+  opacity:.85;
+  font-size:14px;
 }
 
-.cart-empty{
-    text-align:center;
-    padding:45px 20px;
-    color:var(--cinza);
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:18px;
 }
 
-.cart-empty div{
-    font-size:55px;
-    margin-bottom:10px;
+/* =========================
+   SEARCH
+========================= */
+
+.search{
+  background:white;
+  border-radius:18px;
+  padding:12px 15px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 5px 18px rgba(30,20,50,.07);
+  margin-top:-5px;
+  transition:.25s ease;
+  animation:slideUp .45s ease;
 }
+
+.search:focus-within{
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(91,33,182,.15);
+}
+
+.search span{
+  font-size:18px;
+}
+
+.search input{
+  border:0;
+  outline:0;
+  width:100%;
+  font-size:14px;
+  background:transparent;
+}
+
+/* =========================
+   TITULOS
+========================= */
+
+.section-title{
+  margin:25px 0 13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.section-title h2{
+  font-size:19px;
+}
+
+.section-title span{
+  font-size:12px;
+  color:#7c3aed;
+  font-weight:bold;
+}
+
+/* =========================
+   PROMO
+========================= */
+
+.promo{
+  background:linear-gradient(135deg,#ede9fe,#f5f3ff);
+  border:1px solid #ddd6fe;
+  border-radius:20px;
+  padding:17px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:18px;
+  overflow:hidden;
+  position:relative;
+  animation:slideUp .5s ease;
+}
+
+.promo::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-30px;
+  top:-40px;
+  background:rgba(124,58,237,.08);
+  border-radius:50%;
+}
+
+.promo-text{
+  position:relative;
+  z-index:1;
+}
+
+.promo h3{
+  font-size:16px;
+}
+
+.promo p{
+  margin-top:5px;
+  font-size:12px;
+  color:#6b21a8;
+}
+
+.promo-icon{
+  font-size:42px;
+  position:relative;
+  z-index:1;
+  animation:pulse 3s infinite;
+}
+
+/* =========================
+   PRODUTOS
+========================= */
+
+.products{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+
+.product{
+  background:white;
+  border-radius:20px;
+  padding:13px;
+  box-shadow:0 5px 18px rgba(30,20,50,.06);
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+  animation:slideUp .45s ease both;
+}
+
+.product:nth-child(2){
+  animation-delay:.06s;
+}
+
+.product:nth-child(3){
+  animation-delay:.12s;
+}
+
+.product:nth-child(4){
+  animation-delay:.18s;
+}
+
+.product:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(91,33,182,.13);
+}
+
+.product:active{
+  transform:scale(.97);
+}
+
+.product-image{
+  height:115px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#ede9fe,#ddd6fe);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:54px;
+  margin-bottom:11px;
+  transition:.3s ease;
+}
+
+.product:hover .product-image{
+  transform:scale(1.03);
+}
+
+.product h3{
+  font-size:15px;
+}
+
+.product p{
+  color:#7c3aed;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+.product button{
+  width:100%;
+  margin-top:10px;
+  border:0;
+  background:#5b21b6;
+  color:white;
+  border-radius:12px;
+  padding:10px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.product button:hover{
+  background:#4c1d95;
+  transform:translateY(-2px);
+}
+
+.product button:active{
+  transform:scale(.94);
+}
+
+/* =========================
+   FIDELIDADE
+========================= */
+
+.loyalty{
+  background:linear-gradient(135deg,#4c1d95,#7c3aed);
+  color:white;
+  border-radius:23px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(76,29,149,.2);
+  animation:slideUp .5s ease;
+}
+
+.loyalty-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.loyalty h3{
+  font-size:17px;
+}
+
+.points{
+  font-size:25px;
+  font-weight:bold;
+}
+
+.progress{
+  margin-top:15px;
+  height:8px;
+  background:rgba(255,255,255,.2);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:65%;
+  height:100%;
+  background:white;
+  border-radius:20px;
+  animation:slideUp 1s ease;
+}
+
+.loyalty p{
+  font-size:12px;
+  margin-top:10px;
+  opacity:.85;
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info-card{
+  background:white;
+  border-radius:20px;
+  padding:17px;
+  margin-top:18px;
+  box-shadow:0 5px 18px rgba(30,20,50,.06);
+  animation:slideUp .55s ease;
+}
+
+.info-row{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:8px 0;
+}
+
+.info-row + .info-row{
+  border-top:1px solid #f0edf5;
+}
+
+.info-icon{
+  font-size:21px;
+}
+
+.info-row strong{
+  font-size:13px;
+}
+
+.info-row p{
+  font-size:12px;
+  color:#777;
+  margin-top:3px;
+}
+
+/* =========================
+   CATEGORIAS
+========================= */
+
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:4px;
+  scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+  display:none;
+}
+
+.category{
+  flex:none;
+  border:0;
+  background:white;
+  color:#6b7280;
+  padding:10px 15px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(0,0,0,.05);
+  transition:.25s ease;
+}
+
+.category:hover{
+  transform:translateY(-2px);
+}
+
+.category.active{
+  background:#5b21b6;
+  color:white;
+  transform:scale(1.03);
+}
+
+/* =========================
+   CARRINHO
+========================= */
 
 .cart-item{
-    background:white;
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:10px;
-    box-shadow:var(--sombra);
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+  animation:slideUp .3s ease;
 }
 
-.cart-item-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
+.cart-info{
+  flex:1;
 }
 
-.cart-item small{
-    color:var(--cinza);
-    display:block;
-    margin-top:5px;
+.cart-info strong{
+  font-size:14px;
+}
+
+.cart-info small{
+  display:block;
+  color:#888;
+  margin-top:4px;
+  font-size:11px;
+}
+
+.cart-price{
+  color:#5b21b6;
+  font-weight:bold;
+  margin-top:6px;
+}
+
+.quantity{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.quantity button{
+  width:30px;
+  height:30px;
+  border:0;
+  border-radius:9px;
+  background:#ede9fe;
+  color:#5b21b6;
+  font-size:17px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.quantity button:hover{
+  transform:scale(1.08);
+}
+
+.quantity button:active{
+  transform:scale(.85);
+}
+
+.quantity span{
+  min-width:20px;
+  text-align:center;
+  font-weight:bold;
 }
 
 .cart-total{
-    background:white;
-    padding:18px;
-    border-radius:18px;
-    box-shadow:var(--sombra);
-    margin-top:15px;
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  margin-top:15px;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+  animation:slideUp .4s ease;
 }
 
-.cart-total div{
-    display:flex;
-    justify-content:space-between;
-    margin:7px 0;
+.total-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.cart-total .grand{
-    font-size:21px;
-    font-weight:bold;
-    color:var(--roxo-escuro);
-    border-top:1px solid #eee;
-    padding-top:12px;
-    margin-top:12px;
+.total-row strong{
+  font-size:21px;
+  color:#5b21b6;
 }
+
+.primary-button{
+  width:100%;
+  border:0;
+  background:#5b21b6;
+  color:white;
+  border-radius:15px;
+  padding:14px;
+  margin-top:13px;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.primary-button:hover{
+  background:#4c1d95;
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(91,33,182,.2);
+}
+
+.primary-button:active{
+  transform:scale(.96);
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+  text-align:center;
+  padding:50px 20px;
+  animation:pop .45s ease;
+}
+
+.empty-icon{
+  font-size:55px;
+  margin-bottom:12px;
+}
+
+.empty h3{
+  font-size:18px;
+}
+
+.empty p{
+  color:#777;
+  font-size:13px;
+  margin-top:6px;
+}
+
+/* =========================
+   NAV INFERIOR
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:72px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(15px);
+  border-top:1px solid #eee;
+  display:flex;
+  justify-content:center;
+  z-index:50;
+  box-shadow:0 -5px 20px rgba(0,0,0,.05);
+}
+
+.nav-inner{
+  width:100%;
+  max-width:700px;
+  display:flex;
+  justify-content:space-around;
+}
+
+.nav-item{
+  flex:1;
+  border:0;
+  background:none;
+  color:#888;
+  font-size:10px;
+  cursor:pointer;
+  transition:.25s ease;
+  position:relative;
+}
+
+.nav-item span{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+  transition:.25s ease;
+}
+
+.nav-item.active{
+  color:#5b21b6;
+}
+
+.nav-item.active span{
+  transform:translateY(-3px) scale(1.08);
+}
+
+.badge{
+  position:absolute;
+  top:5px;
+  right:calc(50% - 22px);
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  background:#ef4444;
+  color:white;
+  border-radius:20px;
+  font-size:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.badge.bounce{
+  animation:cartBounce .45s ease;
+}
+
+/* =========================
+   MODAIS
+========================= */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(20,10,35,.55);
+  backdrop-filter:blur(4px);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:100;
+  padding:0;
+}
+
+.modal-overlay.show{
+  display:flex;
+  animation:fadeIn .2s ease;
+}
+
+.modal{
+  width:100%;
+  max-width:700px;
+  background:#fff;
+  border-radius:28px 28px 0 0;
+  padding:22px;
+  max-height:90vh;
+  overflow-y:auto;
+  animation:modalIn .35s ease;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.modal-header h2{
+  font-size:20px;
+}
+
+.close{
+  border:0;
+  background:#f3f0f7;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.close:hover{
+  transform:rotate(90deg);
+}
+
+/* =========================
+   FORM
+========================= */
 
 .form-group{
-    margin-top:13px;
+  margin-top:14px;
 }
 
 .form-group label{
-    display:block;
-    font-size:13px;
-    font-weight:bold;
-    margin-bottom:6px;
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:6px;
 }
 
 .form-group input,
-.form-group select,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  border:1px solid #ddd6e8;
+  border-radius:12px;
+  padding:12px;
+  font-size:13px;
+  outline:none;
+  transition:.25s ease;
+  font-family:inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:#7c3aed;
+  box-shadow:0 0 0 3px rgba(124,58,237,.10);
+}
+
 .form-group textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:11px;
-    outline:none;
-    font-family:inherit;
+  resize:none;
+  height:80px;
 }
 
-.success{
-    text-align:center;
-    padding:35px 15px;
+/* =========================
+   TAMANHOS
+========================= */
+
+.sizes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
 }
 
-.success-icon{
-    width:70px;
-    height:70px;
-    background:#dcfce7;
-    color:var(--verde);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:35px;
-    margin:0 auto 15px;
+.size{
+  border:2px solid #eee;
+  background:white;
+  border-radius:14px;
+  padding:12px 5px;
+  text-align:center;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
-@media(min-width:601px){
-    .bottom-nav{
-        left:50%;
-        right:auto;
-        transform:translateX(-50%);
-        width:600px;
-    }
+.size:hover{
+  transform:translateY(-2px);
+}
 
-    body{
-        padding-bottom:90px;
-    }
+.size.active{
+  border-color:#7c3aed;
+  background:#f5f3ff;
+  transform:scale(1.03);
+}
+
+.size strong{
+  display:block;
+  font-size:14px;
+}
+
+.size small{
+  color:#7c3aed;
+  font-weight:bold;
+}
+
+/* =========================
+   EXTRAS
+========================= */
+
+.extras{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.extra{
+  border:1px solid #eee;
+  background:white;
+  border-radius:13px;
+  padding:11px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.extra:hover{
+  transform:translateY(-2px);
+}
+
+.extra.selected{
+  background:#f5f3ff;
+  border-color:#7c3aed;
+}
+
+.extra-info strong{
+  display:block;
+  font-size:12px;
+}
+
+.extra-info small{
+  color:#777;
+  font-size:10px;
+}
+
+.check{
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  border:2px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:12px;
+}
+
+.extra.selected .check{
+  background:#7c3aed;
+  border-color:#7c3aed;
+  animation:check .25s ease;
+}
+
+/* =========================
+   BUILDER TOTAL
+========================= */
+
+.builder-total{
+  margin-top:18px;
+  background:#f5f3ff;
+  border-radius:16px;
+  padding:15px;
+}
+
+.builder-total-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.builder-total strong{
+  font-size:22px;
+  color:#5b21b6;
+}
+
+/* =========================
+   PAGAMENTO
+========================= */
+
+.payment-options{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.payment{
+  border:1px solid #ddd;
+  background:white;
+  border-radius:13px;
+  padding:12px 5px;
+  text-align:center;
+  cursor:pointer;
+  font-size:12px;
+  transition:.2s ease;
+}
+
+.payment:hover{
+  transform:translateY(-2px);
+}
+
+.payment.active{
+  border-color:#7c3aed;
+  background:#f5f3ff;
+  color:#5b21b6;
+  font-weight:bold;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:88px;
+  transform:translateX(-50%) translateY(20px);
+  background:#24113f;
+  color:white;
+  padding:11px 16px;
+  border-radius:13px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  z-index:200;
+  transition:.3s ease;
+  white-space:nowrap;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:380px){
+  .products{
+    grid-template-columns:1fr;
+  }
+
+  .extras{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
+<header>
+  <div class="header-content">
 
-    <div class="header-top">
+    <div class="logo-row">
 
-        <div class="logo">
+      <div class="logo">
+        <div class="logo-icon">🍇</div>
 
-            <div class="logo-icon">🍧</div>
-
-            <div>
-                <h1>Cantinho do Açaí</h1>
-                <span>Portão • RS</span>
-            </div>
-
+        <div>
+          <h1>Cantinho do Açaí</h1>
+          <small>Portão • RS</small>
         </div>
+      </div>
+
+      <div class="status">
+        ● Aberto agora
+      </div>
 
     </div>
 
-    <div class="header-text">
-
-        <h2>Seu açaí do seu jeito 💜</h2>
-
-        <p>Monte seu pedido e aproveite!</p>
-
-        <div class="open-status">
-            <span class="green-dot"></span>
-            Aberto agora
-        </div>
-
+    <div class="hero-text">
+      <h2>Seu açaí do seu jeito 💜</h2>
+      <p>Monte seu pedido e aproveite no local.</p>
     </div>
 
+  </div>
 </header>
 
 
-<!-- ================= INÍCIO ================= -->
+<main class="container">
 
-<main id="homePage" class="page active">
+  <!-- =========================
+       INÍCIO
+  ========================== -->
 
-    <div class="container">
+  <section id="homePage" class="page">
 
-        <div class="search">
-
-            🔎
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Buscar no cardápio..."
-                oninput="buscarProdutos()"
-            >
-
-        </div>
-
-
-        <div class="section-title">
-            <h2>🔥 Promoção</h2>
-            <span>Hoje</span>
-        </div>
-
-        <div class="promo">
-
-            <small>OFERTA ESPECIAL</small>
-
-            <h3>Açaí + 3 complementos</h3>
-
-            <p>
-                Escolha seu tamanho e monte do seu jeito.
-            </p>
-
-            <button onclick="abrirMontador()">
-                Montar agora
-            </button>
-
-        </div>
+    <div class="search">
+      <span>🔍</span>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Buscar no cardápio..."
+        oninput="buscarProdutos()"
+      >
+    </div>
 
 
-        <div class="section-title">
-            <h2>🍧 Mais pedidos</h2>
-        </div>
+    <div class="promo">
 
-        <div id="homeProducts" class="products"></div>
+      <div class="promo-text">
+        <h3>Açaí + 3 complementos</h3>
+        <p>Monte do seu jeito e aproveite!</p>
+      </div>
 
-
-        <div class="loyalty">
-
-            <div class="loyalty-top">
-
-                <div>
-                    <h3>🎁 Clube do Açaí</h3>
-                    <p>Acumule pontos em seus pedidos</p>
-                </div>
-
-                <div class="points">65 pts</div>
-
-            </div>
-
-            <div class="progress">
-                <div></div>
-            </div>
-
-            <p>
-                Faltam 35 pontos para liberar sua próxima recompensa!
-            </p>
-
-        </div>
-
-
-        <div class="section-title">
-            <h2>📍 Onde estamos</h2>
-        </div>
-
-        <div class="info-card">
-
-            <div class="info-line">
-
-                <div class="info-icon">📍</div>
-
-                <div>
-                    <strong>Cantinho do Açaí</strong>
-                    <span>Portão • Rio Grande do Sul</span>
-                </div>
-
-            </div>
-
-            <div class="info-line">
-
-                <div class="info-icon">🕐</div>
-
-                <div>
-                    <strong>Horário de atendimento</strong>
-                    <span>Consulte o horário atualizado da loja</span>
-                </div>
-
-            </div>
-
-        </div>
+      <div class="promo-icon">
+        🍓
+      </div>
 
     </div>
+
+
+    <div class="section-title">
+      <h2>Mais pedidos</h2>
+      <span onclick="mostrarPagina('menuPage')">
+        Ver cardápio →
+      </span>
+    </div>
+
+
+    <div class="products" id="homeProducts"></div>
+
+
+    <div class="section-title">
+      <h2>Fidelidade</h2>
+    </div>
+
+
+    <div class="loyalty">
+
+      <div class="loyalty-top">
+
+        <div>
+          <h3>💜 Clube do Açaí</h3>
+          <small>Seus pontos</small>
+        </div>
+
+        <div class="points">
+          65
+        </div>
+
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+
+      <p>
+        Faltam 35 pontos para ganhar sua próxima recompensa.
+      </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+
+        <div>
+          <strong>Onde estamos</strong>
+          <p>Portão — Rio Grande do Sul</p>
+        </div>
+      </div>
+
+
+      <div class="info-row">
+        <div class="info-icon">🍧</div>
+
+        <div>
+          <strong>Consumo no local</strong>
+          <p>Faça seu pedido e informe o número da mesa.</p>
+        </div>
+      </div>
+
+
+      <div class="info-row">
+        <div class="info-icon">⏰</div>
+
+        <div>
+          <strong>Funcionamento</strong>
+          <p>Consulte nossa equipe para os horários.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CARDÁPIO
+  ========================== -->
+
+  <section id="menuPage" class="page" style="display:none">
+
+    <div class="section-title">
+      <h2>Cardápio</h2>
+    </div>
+
+
+    <div class="categories">
+
+      <button
+        class="category active"
+        onclick="filtrarCategoria('Todos',this)"
+      >
+        Todos
+      </button>
+
+      <button
+        class="category"
+        onclick="filtrarCategoria('Açaí',this)"
+      >
+        🍇 Açaí
+      </button>
+
+      <button
+        class="category"
+        onclick="filtrarCategoria('Bebidas',this)"
+      >
+        🥤 Bebidas
+      </button>
+
+      <button
+        class="category"
+        onclick="filtrarCategoria('Complementos',this)"
+      >
+        🍓 Complementos
+      </button>
+
+    </div>
+
+
+    <div
+      class="products"
+      id="menuProducts"
+      style="margin-top:15px"
+    ></div>
+
+  </section>
+
+
+  <!-- =========================
+       FIDELIDADE
+  ========================== -->
+
+  <section id="loyaltyPage" class="page" style="display:none">
+
+    <div class="section-title">
+      <h2>Minha fidelidade 💜</h2>
+    </div>
+
+
+    <div class="loyalty">
+
+      <div class="loyalty-top">
+
+        <div>
+          <h3>Clube do Açaí</h3>
+          <small>Pontos acumulados</small>
+        </div>
+
+        <div class="points">
+          65
+        </div>
+
+      </div>
+
+
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+
+
+      <p>
+        Mais 35 pontos para sua próxima recompensa!
+      </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-row">
+        <div class="info-icon">⭐</div>
+
+        <div>
+          <strong>Como funciona?</strong>
+
+          <p>
+            A cada compra você acumula pontos
+            e pode trocar por recompensas.
+          </p>
+        </div>
+      </div>
+
+
+      <div class="info-row">
+        <div class="info-icon">🎁</div>
+
+        <div>
+          <strong>Próxima recompensa</strong>
+
+          <p>
+            Continue acumulando para desbloquear
+            sua próxima recompensa.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PEDIDO
+  ========================== -->
+
+  <section id="cartPage" class="page" style="display:none">
+
+    <div class="section-title">
+      <h2>Meu pedido</h2>
+    </div>
+
+
+    <div id="cartItems"></div>
+
+  </section>
 
 </main>
 
 
-<!-- ================= CARDÁPIO ================= -->
-
-<main id="menuPage" class="page">
-
-    <div class="container">
-
-        <div class="section-title">
-            <h2>🍧 Cardápio</h2>
-        </div>
-
-        <div class="categories">
-
-            <button
-                class="category active"
-                onclick="filtrarCategoria('Todos',this)"
-            >
-                Todos
-            </button>
-
-            <button
-                class="category"
-                onclick="filtrarCategoria('Açaí',this)"
-            >
-                Açaí
-            </button>
-
-            <button
-                class="category"
-                onclick="filtrarCategoria('Bebidas',this)"
-            >
-                Bebidas
-            </button>
-
-            <button
-                class="category"
-                onclick="filtrarCategoria('Complementos',this)"
-            >
-                Complementos
-            </button>
-
-        </div>
-
-        <div
-            id="menuProducts"
-            class="products"
-            style="margin-top:15px;"
-        ></div>
-
-    </div>
-
-</main>
-
-
-<!-- ================= FIDELIDADE ================= -->
-
-<main id="loyaltyPage" class="page">
-
-    <div class="container">
-
-        <div class="section-title">
-            <h2>🎁 Clube do Açaí</h2>
-        </div>
-
-        <div class="loyalty">
-
-            <div class="loyalty-top">
-
-                <div>
-                    <h3>Seus pontos</h3>
-                    <p>Cliente demonstração</p>
-                </div>
-
-                <div class="points">65</div>
-
-            </div>
-
-            <div class="progress">
-                <div></div>
-            </div>
-
-            <p>
-                65 de 100 pontos
-            </p>
-
-        </div>
-
-
-        <div class="section-title">
-            <h2>🏆 Recompensas</h2>
-        </div>
-
-        <div class="info-card">
-
-            <div class="info-line">
-                <div class="info-icon">🥤</div>
-                <div>
-                    <strong>100 pontos</strong>
-                    <span>Ganhe um complemento grátis.</span>
-                </div>
-            </div>
-
-            <div class="info-line">
-                <div class="info-icon">🍧</div>
-                <div>
-                    <strong>200 pontos</strong>
-                    <span>Ganhe uma recompensa especial.</span>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</main>
-
-
-<!-- ================= CARRINHO ================= -->
-
-<main id="cartPage" class="page">
-
-    <div class="container">
-
-        <div class="section-title">
-            <h2>🛒 Seu pedido</h2>
-        </div>
-
-        <div id="cartContent"></div>
-
-    </div>
-
-</main>
-
-
-<!-- ================= BOTTOM NAV ================= -->
+<!-- =========================
+     NAVEGAÇÃO
+========================== -->
 
 <nav class="bottom-nav">
 
-    <div class="nav-inner">
+  <div class="nav-inner">
 
-        <button
-            class="nav-btn active"
-            onclick="mostrarPagina('home')"
-            id="navHome"
-        >
-            <span>🏠</span>
-            Início
-        </button>
+    <button
+      class="nav-item active"
+      onclick="mostrarPagina('homePage',this)"
+    >
+      <span>⌂</span>
+      Início
+    </button>
 
-        <button
-            class="nav-btn"
-            onclick="mostrarPagina('menu')"
-            id="navMenu"
-        >
-            <span>🍧</span>
-            Cardápio
-        </button>
 
-        <button
-            class="nav-btn"
-            onclick="mostrarPagina('loyalty')"
-            id="navLoyalty"
-        >
-            <span>🎁</span>
-            Fidelidade
-        </button>
+    <button
+      class="nav-item"
+      onclick="mostrarPagina('menuPage',this)"
+    >
+      <span>🍇</span>
+      Cardápio
+    </button>
 
-        <button
-            class="nav-btn"
-            onclick="mostrarPagina('cart')"
-            id="navCart"
-            style="position:relative;"
-        >
 
-            <span>
-                🛒
-                <b id="cartBadge" class="badge">0</b>
-            </span>
+    <button
+      class="nav-item"
+      onclick="mostrarPagina('loyaltyPage',this)"
+    >
+      <span>💜</span>
+      Fidelidade
+    </button>
 
-            Pedido
 
-        </button>
+    <button
+      class="nav-item"
+      onclick="mostrarPagina('cartPage',this)"
+    >
+      <span>🛒</span>
+      Pedido
 
-    </div>
+      <div
+        id="cartBadge"
+        class="badge"
+        style="display:none"
+      >
+        0
+      </div>
+
+    </button>
+
+  </div>
 
 </nav>
 
 
-<!-- ================= MODAL MONTAR AÇAÍ ================= -->
+<!-- =========================
+     MODAL AÇAÍ
+========================== -->
 
-<div id="builderModal" class="modal-bg">
+<div
+  class="modal-overlay"
+  id="builderModal"
+  onclick="fecharModalFora(event,'builderModal')"
+>
 
-    <div class="modal">
+  <div class="modal">
 
-        <div class="modal-header">
+    <div class="modal-header">
 
-            <h2>🥣 Monte seu açaí</h2>
+      <h2>Monte seu açaí 🍇</h2>
 
-            <button
-                class="close"
-                onclick="fecharMontador()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="option-title">
-            Escolha o tamanho
-        </div>
-
-        <div class="options">
-
-            <button
-                class="option selected"
-                data-size="300"
-                data-price="14.90"
-                onclick="selecionarTamanho(this)"
-            >
-                300 ml — R$ 14,90
-            </button>
-
-            <button
-                class="option"
-                data-size="500"
-                data-price="19.90"
-                onclick="selecionarTamanho(this)"
-            >
-                500 ml — R$ 19,90
-            </button>
-
-            <button
-                class="option"
-                data-size="700"
-                data-price="24.90"
-                onclick="selecionarTamanho(this)"
-            >
-                700 ml — R$ 24,90
-            </button>
-
-        </div>
-
-
-        <div class="option-title">
-            Complementos
-        </div>
-
-        <div class="options">
-
-            <button
-                class="option"
-                data-extra="Banana"
-                data-extra-price="1.50"
-                onclick="toggleExtra(this)"
-            >
-                🍌 Banana + R$ 1,50
-            </button>
-
-            <button
-                class="option"
-                data-extra="Morango"
-                data-extra-price="2.00"
-                onclick="toggleExtra(this)"
-            >
-                🍓 Morango + R$ 2,00
-            </button>
-
-            <button
-                class="option"
-                data-extra="Granola"
-                data-extra-price="1.50"
-                onclick="toggleExtra(this)"
-            >
-                🌾 Granola + R$ 1,50
-            </button>
-
-            <button
-                class="option"
-                data-extra="Leite em pó"
-                data-extra-price="2.00"
-                onclick="toggleExtra(this)"
-            >
-                🥛 Leite em pó + R$ 2,00
-            </button>
-
-            <button
-                class="option"
-                data-extra="Paçoca"
-                data-extra-price="2.00"
-                onclick="toggleExtra(this)"
-            >
-                🥜 Paçoca + R$ 2,00
-            </button>
-
-            <button
-                class="option"
-                data-extra="Leite condensado"
-                data-extra-price="2.50"
-                onclick="toggleExtra(this)"
-            >
-                🍯 Leite condensado + R$ 2,50
-            </button>
-
-        </div>
-
-
-        <div class="total-box">
-
-            <span>Total</span>
-
-            <span id="builderTotal">
-                R$ 14,90
-            </span>
-
-        </div>
-
-        <button
-            class="main-btn"
-            onclick="adicionarAcaiMontado()"
-        >
-            Adicionar ao pedido
-        </button>
+      <button
+        class="close"
+        onclick="fecharModal('builderModal')"
+      >
+        ×
+      </button>
 
     </div>
+
+
+    <div class="form-group">
+
+      <label>Tamanho</label>
+
+      <div class="sizes">
+
+        <div
+          class="size active"
+          data-size="300ml"
+          data-price="14.90"
+          onclick="selecionarTamanho(this)"
+        >
+          <strong>300ml</strong>
+          <small>R$ 14,90</small>
+        </div>
+
+
+        <div
+          class="size"
+          data-size="500ml"
+          data-price="19.90"
+          onclick="selecionarTamanho(this)"
+        >
+          <strong>500ml</strong>
+          <small>R$ 19,90</small>
+        </div>
+
+
+        <div
+          class="size"
+          data-size="700ml"
+          data-price="24.90"
+          onclick="selecionarTamanho(this)"
+        >
+          <strong>700ml</strong>
+          <small>R$ 24,90</small>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Complementos</label>
+
+      <div class="extras">
+
+        <div
+          class="extra"
+          data-name="Banana"
+          data-price="1.50"
+          onclick="toggleExtra(this)"
+        >
+          <div class="extra-info">
+            <strong>Banana</strong>
+            <small>+ R$ 1,50</small>
+          </div>
+
+          <div class="check"></div>
+        </div>
+
+
+        <div
+          class="extra"
+          data-name="Morango"
+          data-price="2.00"
+          onclick="toggleExtra(this)"
+        >
+          <div class="extra-info">
+            <strong>Morango</strong>
+            <small>+ R$ 2,00</small>
+          </div>
+
+          <div class="check"></div>
+        </div>
+
+
+        <div
+          class="extra"
+          data-name="Granola"
+          data-price="1.50"
+          onclick="toggleExtra(this)"
+        >
+          <div class="extra-info">
+            <strong>Granola</strong>
+            <small>+ R$ 1,50</small>
+          </div>
+
+          <div class="check"></div>
+        </div>
+
+
+        <div
+          class="extra"
+          data-name="Leite em pó"
+          data-price="2.00"
+          onclick="toggleExtra(this)"
+        >
+          <div class="extra-info">
+            <strong>Leite em pó</strong>
+            <small>+ R$ 2,00</small>
+          </div>
+
+          <div class="check"></div>
+        </div>
+
+
+        <div
+          class="extra"
+          data-name="Paçoca"
+          data-price="2.00"
+          onclick="toggleExtra(this)"
+        >
+          <div class="extra-info">
+            <strong>Paçoca</strong>
+            <small>+ R$ 2,00</small>
+          </div>
+
+          <div class="check"></div>
+        </div>
+
+
+        <div
+          class="extra"
+          data-name="Leite condensado"
+          data-price="2.50"
+          onclick="toggleExtra(this)"
+        >
+          <div class="extra-info">
+            <strong>Leite condensado</strong>
+            <small>+ R$ 2,50</small>
+          </div>
+
+          <div class="check"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="builder-total">
+
+      <div class="builder-total-row">
+
+        <span>Total</span>
+
+        <strong id="builderTotal">
+          R$ 14,90
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="primary-button"
+      onclick="adicionarAcai()"
+    >
+      Adicionar ao pedido
+    </button>
+
+  </div>
 
 </div>
 
 
-<!-- ================= MODAL CHECKOUT ================= -->
+<!-- =========================
+     CHECKOUT
+========================== -->
 
-<div id="checkoutModal" class="modal-bg">
+<div
+  class="modal-overlay"
+  id="checkoutModal"
+  onclick="fecharModalFora(event,'checkoutModal')"
+>
 
-    <div class="modal">
+  <div class="modal">
 
-        <div class="modal-header">
+    <div class="modal-header">
 
-            <h2>📋 Finalizar pedido</h2>
+      <h2>Finalizar pedido 🛒</h2>
 
-            <button
-                class="close"
-                onclick="fecharCheckout()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Seu nome</label>
-
-            <input
-                id="customerName"
-                type="text"
-                placeholder="Digite seu nome"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>🪑 Número da mesa</label>
-
-            <input
-                id="tableNumber"
-                type="number"
-                min="1"
-                placeholder="Ex: 5"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Forma de pagamento</label>
-
-            <select id="paymentType">
-
-                <option value="Pix">Pix</option>
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="Cartão">Cartão</option>
-
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Observação</label>
-
-            <textarea
-                id="orderNote"
-                rows="3"
-                placeholder="Alguma observação?"
-            ></textarea>
-
-        </div>
-
-
-        <button
-            class="main-btn"
-            onclick="finalizarPedido()"
-        >
-            Enviar pedido pelo WhatsApp
-        </button>
+      <button
+        class="close"
+        onclick="fecharModal('checkoutModal')"
+      >
+        ×
+      </button>
 
     </div>
 
+
+    <div class="form-group">
+
+      <label>Seu nome</label>
+
+      <input
+        type="text"
+        id="customerName"
+        placeholder="Digite seu nome"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Número da mesa</label>
+
+      <input
+        type="number"
+        id="tableNumber"
+        placeholder="Ex: 5"
+        min="1"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Forma de pagamento</label>
+
+      <div class="payment-options">
+
+        <div
+          class="payment active"
+          onclick="selecionarPagamento(this,'Pix')"
+        >
+          💜 Pix
+        </div>
+
+
+        <div
+          class="payment"
+          onclick="selecionarPagamento(this,'Dinheiro')"
+        >
+          💵 Dinheiro
+        </div>
+
+
+        <div
+          class="payment"
+          onclick="selecionarPagamento(this,'Cartão')"
+        >
+          💳 Cartão
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Observação</label>
+
+      <textarea
+        id="observation"
+        placeholder="Alguma observação?"
+      ></textarea>
+
+    </div>
+
+
+    <button
+      class="primary-button"
+      onclick="enviarPedido()"
+    >
+      Enviar pedido pelo WhatsApp
+    </button>
+
+  </div>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast"
+>
 </div>
 
 
 <script>
 
-/* =========================================================
-   CONFIGURAÇÕES
-========================================================= */
+/* =========================
+   CONFIGURAÇÃO
+========================= */
 
 const WHATSAPP = "5551980535187";
 
 
-/* =========================================================
+/* =========================
    PRODUTOS
-========================================================= */
+========================= */
 
 const produtos = [
 
-    {
-        id:1,
-        nome:"Açaí 300 ml",
-        descricao:"Açaí cremoso para matar a vontade.",
-        preco:14.90,
-        emoji:"🍧",
-        categoria:"Açaí"
-    },
+  {
+    id:1,
+    nome:"Açaí 300 ml",
+    preco:14.90,
+    categoria:"Açaí",
+    emoji:"🍇"
+  },
 
-    {
-        id:2,
-        nome:"Açaí 500 ml",
-        descricao:"Tamanho ideal para aproveitar bastante.",
-        preco:19.90,
-        emoji:"🍧",
-        categoria:"Açaí"
-    },
+  {
+    id:2,
+    nome:"Açaí 500 ml",
+    preco:19.90,
+    categoria:"Açaí",
+    emoji:"🍇"
+  },
 
-    {
-        id:3,
-        nome:"Açaí 700 ml",
-        descricao:"Para quem realmente ama açaí.",
-        preco:24.90,
-        emoji:"🍧",
-        categoria:"Açaí"
-    },
+  {
+    id:3,
+    nome:"Açaí 700 ml",
+    preco:24.90,
+    categoria:"Açaí",
+    emoji:"🍇"
+  },
 
-    {
-        id:4,
-        nome:"Açaí Especial",
-        descricao:"Açaí com complementos selecionados.",
-        preco:26.90,
-        emoji:"🍓",
-        categoria:"Açaí"
-    },
+  {
+    id:4,
+    nome:"Açaí Especial",
+    preco:26.90,
+    categoria:"Açaí",
+    emoji:"🍓"
+  },
 
-    {
-        id:5,
-        nome:"Banana",
-        descricao:"Complemento para seu açaí.",
-        preco:1.50,
-        emoji:"🍌",
-        categoria:"Complementos"
-    },
+  {
+    id:5,
+    nome:"Banana",
+    preco:1.50,
+    categoria:"Complementos",
+    emoji:"🍌"
+  },
 
-    {
-        id:6,
-        nome:"Morango",
-        descricao:"Morangos para deixar seu açaí ainda melhor.",
-        preco:2.00,
-        emoji:"🍓",
-        categoria:"Complementos"
-    },
+  {
+    id:6,
+    nome:"Morango",
+    preco:2.00,
+    categoria:"Complementos",
+    emoji:"🍓"
+  },
 
-    {
-        id:7,
-        nome:"Granola",
-        descricao:"Crocante e deliciosa.",
-        preco:1.50,
-        emoji:"🌾",
-        categoria:"Complementos"
-    },
+  {
+    id:7,
+    nome:"Granola",
+    preco:1.50,
+    categoria:"Complementos",
+    emoji:"🥣"
+  },
 
-    {
-        id:8,
-        nome:"Leite em pó",
-        descricao:"Clássico para combinar com açaí.",
-        preco:2.00,
-        emoji:"🥛",
-        categoria:"Complementos"
-    },
+  {
+    id:8,
+    nome:"Leite em pó",
+    preco:2.00,
+    categoria:"Complementos",
+    emoji:"🥛"
+  },
 
-    {
-        id:9,
-        nome:"Água",
-        descricao:"Água mineral gelada.",
-        preco:3.00,
-        emoji:"💧",
-        categoria:"Bebidas"
-    },
+  {
+    id:9,
+    nome:"Água",
+    preco:3.00,
+    categoria:"Bebidas",
+    emoji:"💧"
+  },
 
-    {
-        id:10,
-        nome:"Refrigerante",
-        descricao:"Refrigerante gelado.",
-        preco:5.00,
-        emoji:"🥤",
-        categoria:"Bebidas"
-    }
+  {
+    id:10,
+    nome:"Refrigerante",
+    preco:5.00,
+    categoria:"Bebidas",
+    emoji:"🥤"
+  }
 
 ];
 
 
-/* =========================================================
-   CARRINHO
-========================================================= */
-
 let carrinho = [];
 
-
-/* =========================================================
-   FORMATAÇÃO
-========================================================= */
-
-function formatar(valor){
-
-    return Number(valor)
-        .toFixed(2)
-        .replace(".",",");
-
-}
-
-
-/* =========================================================
-   RENDERIZA PRODUTOS
-========================================================= */
-
-function renderProdutos(lista, elemento){
-
-    if(!elemento) return;
-
-    elemento.innerHTML = "";
-
-    if(lista.length === 0){
-
-        elemento.innerHTML = `
-            <div class="cart-empty">
-                <div>🔎</div>
-                <strong>Nenhum produto encontrado</strong>
-                <p style="margin-top:6px;">
-                    Tente procurar outro produto.
-                </p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    lista.forEach(produto => {
-
-        const div = document.createElement("div");
-
-        div.className = "product";
-
-        div.innerHTML = `
-
-            <div class="product-image">
-                ${produto.emoji}
-            </div>
-
-            <div class="product-info">
-
-                <h3>${produto.nome}</h3>
-
-                <p>
-                    ${produto.descricao}
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        R$ ${formatar(produto.preco)}
-                    </span>
-
-                    <button
-                        class="add"
-                        onclick="adicionarProduto(${produto.id})"
-                    >
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-        `;
-
-        elemento.appendChild(div);
-
-    });
-
-}
-
-
-/* =========================================================
-   ADICIONAR PRODUTO
-========================================================= */
-
-function adicionarProduto(id){
-
-    const produto = produtos.find(p => p.id === id);
-
-    if(!produto) return;
-
-
-    const itemExistente = carrinho.find(item =>
-        item.nome === produto.nome &&
-        !item.detalhes
-    );
-
-
-    if(itemExistente){
-
-        itemExistente.quantidade++;
-
-    }else{
-
-        carrinho.push({
-
-            nome:produto.nome,
-
-            preco:produto.preco,
-
-            quantidade:1,
-
-            detalhes:""
-
-        });
-
-    }
-
-
-    atualizarCarrinho();
-
-    mostrarPagina("cart");
-
-}
-
-
-/* =========================================================
-   MONTADOR
-========================================================= */
-
 let tamanhoSelecionado = {
-    nome:"300 ml",
-    preco:14.90
+  nome:"300ml",
+  preco:14.90
 };
 
 let extrasSelecionados = [];
 
-
-function abrirMontador(){
-
-    tamanhoSelecionado = {
-        nome:"300 ml",
-        preco:14.90
-    };
-
-    extrasSelecionados = [];
+let pagamentoSelecionado = "Pix";
 
 
-    document
-        .querySelectorAll("[data-size]")
-        .forEach((botao,index) => {
+/* =========================
+   FORMATAÇÃO
+========================= */
 
-            botao.classList.toggle("selected",index === 0);
+function formatarPreco(valor){
 
-        });
-
-
-    document
-        .querySelectorAll("[data-extra]")
-        .forEach(botao => {
-
-            botao.classList.remove("selected");
-
-        });
-
-
-    atualizarTotalMontador();
-
-
-    document
-        .getElementById("builderModal")
-        .classList.add("show");
+  return valor.toLocaleString("pt-BR",{
+    style:"currency",
+    currency:"BRL"
+  });
 
 }
 
 
-function fecharMontador(){
+/* =========================
+   TOAST
+========================= */
 
-    document
-        .getElementById("builderModal")
-        .classList.remove("show");
+function mostrarToast(mensagem){
 
-}
+  const toast = document.getElementById("toast");
 
+  toast.textContent = mensagem;
 
-function selecionarTamanho(botao){
+  toast.classList.add("show");
 
-    document
-        .querySelectorAll("[data-size]")
-        .forEach(b => b.classList.remove("selected"));
+  setTimeout(()=>{
 
+    toast.classList.remove("show");
 
-    botao.classList.add("selected");
-
-
-    tamanhoSelecionado = {
-
-        nome:botao.dataset.size + " ml",
-
-        preco:parseFloat(botao.dataset.price)
-
-    };
-
-
-    atualizarTotalMontador();
+  },2200);
 
 }
 
 
-function toggleExtra(botao){
+/* =========================
+   NAVEGAÇÃO
+========================= */
 
-    const nome = botao.dataset.extra;
+function mostrarPagina(id,botao=null){
 
-    const preco = parseFloat(botao.dataset.extraPrice);
+  document.querySelectorAll(".page").forEach(page=>{
 
+    page.style.display="none";
 
-    botao.classList.toggle("selected");
-
-
-    const existente =
-        extrasSelecionados.find(e => e.nome === nome);
-
-
-    if(existente){
-
-        extrasSelecionados =
-            extrasSelecionados.filter(e => e.nome !== nome);
-
-    }else{
-
-        extrasSelecionados.push({
-
-            nome:nome,
-
-            preco:preco
-
-        });
-
-    }
+  });
 
 
-    atualizarTotalMontador();
+  const pagina = document.getElementById(id);
 
-}
-
-
-function atualizarTotalMontador(){
-
-    let total = tamanhoSelecionado.preco;
+  pagina.style.display="block";
 
 
-    extrasSelecionados.forEach(extra => {
+  pagina.classList.remove("animate");
 
-        total += extra.preco;
+  void pagina.offsetWidth;
+
+  pagina.classList.add("animate");
+
+
+  if(botao){
+
+    document.querySelectorAll(".nav-item").forEach(item=>{
+
+      item.classList.remove("active");
 
     });
 
+    botao.classList.add("active");
 
-    document.getElementById("builderTotal").innerText =
-        "R$ " + formatar(total);
+  }else{
+
+    document.querySelectorAll(".nav-item").forEach(item=>{
+
+      item.classList.remove("active");
+
+    });
+
+  }
+
+
+  if(id==="cartPage"){
+
+    renderCarrinho();
+
+  }
 
 }
 
 
-function adicionarAcaiMontado(){
+/* =========================
+   RENDER PRODUTOS
+========================= */
 
-    let total = tamanhoSelecionado.preco;
+function renderProdutos(lista,containerId){
 
+  const container = document.getElementById(containerId);
 
-    extrasSelecionados.forEach(extra => {
+  container.innerHTML="";
 
-        total += extra.preco;
 
-    });
+  if(lista.length===0){
 
+    container.innerHTML=`
 
-    const detalhes =
-        extrasSelecionados.length > 0
-        ?
-        "Complementos: " +
-        extrasSelecionados.map(e => e.nome).join(", ")
-        :
-        "Sem complementos";
+      <div class="empty" style="grid-column:1/-1">
 
-
-    carrinho.push({
-
-        nome:"Açaí " + tamanhoSelecionado.nome,
-
-        preco:total,
-
-        quantidade:1,
-
-        detalhes:detalhes
-
-    });
-
-
-    atualizarCarrinho();
-
-
-    fecharMontador();
-
-
-    mostrarPagina("cart");
-
-}
-
-
-/* =========================================================
-   CARRINHO
-========================================================= */
-
-function atualizarCarrinho(){
-
-    const lista =
-        document.getElementById("cartContent");
-
-
-    if(!lista) return;
-
-
-    lista.innerHTML = "";
-
-
-    let total = 0;
-
-    let quantidadeTotal = 0;
-
-
-    if(carrinho.length === 0){
-
-        lista.innerHTML = `
-
-            <div class="cart-empty">
-
-                <div>🛒</div>
-
-                <strong>Seu pedido está vazio</strong>
-
-                <p style="margin-top:6px;">
-                    Adicione algum produto do cardápio.
-                </p>
-
-                <button
-                    class="main-btn"
-                    onclick="mostrarPagina('menu')"
-                    style="max-width:250px;"
-                >
-                    Ver cardápio
-                </button>
-
-            </div>
-
-        `;
-
-
-        atualizarBadge(0);
-
-        return;
-
-    }
-
-
-    carrinho.forEach((item,index) => {
-
-        if(!item.quantidade){
-
-            item.quantidade = 1;
-
-        }
-
-
-        const subtotal =
-            item.preco * item.quantidade;
-
-
-        total += subtotal;
-
-        quantidadeTotal += item.quantidade;
-
-
-        lista.innerHTML += `
-
-            <div class="cart-item">
-
-                <div class="cart-item-top">
-
-                    <div>
-
-                        <strong>
-                            ${item.nome}
-                        </strong>
-
-                        ${
-                            item.detalhes
-                            ?
-                            `<small>${item.detalhes}</small>`
-                            :
-                            ""
-                        }
-
-                        <small>
-                            R$ ${formatar(item.preco)} cada
-                        </small>
-
-                    </div>
-
-
-                    <strong>
-                        R$ ${formatar(subtotal)}
-                    </strong>
-
-                </div>
-
-
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:space-between;
-                    margin-top:12px;
-                ">
-
-
-                    <div style="
-                        display:flex;
-                        align-items:center;
-                        gap:8px;
-                    ">
-
-                        <button
-                            onclick="alterarQuantidade(${index},-1)"
-                            style="
-                                width:32px;
-                                height:32px;
-                                border-radius:9px;
-                                background:#ede9fe;
-                                color:var(--roxo);
-                                font-size:20px;
-                                font-weight:bold;
-                            "
-                        >
-                            −
-                        </button>
-
-
-                        <strong
-                            style="
-                                min-width:25px;
-                                text-align:center;
-                            "
-                        >
-                            ${item.quantidade}
-                        </strong>
-
-
-                        <button
-                            onclick="alterarQuantidade(${index},1)"
-                            style="
-                                width:32px;
-                                height:32px;
-                                border-radius:9px;
-                                background:var(--roxo);
-                                color:white;
-                                font-size:20px;
-                                font-weight:bold;
-                            "
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-
-                    <button
-                        onclick="removerProduto(${index})"
-                        style="
-                            background:#fee2e2;
-                            color:var(--vermelho);
-                            padding:8px 11px;
-                            border-radius:9px;
-                            font-size:13px;
-                        "
-                    >
-                        🗑️ Remover
-                    </button>
-
-                </div>
-
-            </div>
-
-        `;
-
-    });
-
-
-    lista.innerHTML += `
-
-        <div class="cart-total">
-
-            <div>
-
-                <span>
-                    Itens
-                </span>
-
-                <strong>
-                    ${quantidadeTotal}
-                </strong>
-
-            </div>
-
-
-            <div class="grand">
-
-                <span>
-                    Total
-                </span>
-
-                <span>
-                    R$ ${formatar(total)}
-                </span>
-
-            </div>
-
-
-            <button
-                class="main-btn"
-                onclick="abrirCheckout()"
-            >
-                Finalizar pedido
-            </button>
-
+        <div class="empty-icon">
+          🔍
         </div>
+
+        <h3>Nada encontrado</h3>
+
+        <p>
+          Tente procurar por outro produto.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  lista.forEach((produto,index)=>{
+
+    const card = document.createElement("div");
+
+    card.className="product";
+
+    card.style.animationDelay=(index * .05)+"s";
+
+
+    card.innerHTML=`
+
+      <div class="product-image">
+        ${produto.emoji}
+      </div>
+
+      <h3>
+        ${produto.nome}
+      </h3>
+
+      <p>
+        ${formatarPreco(produto.preco)}
+      </p>
+
+      <button
+        onclick="adicionarProduto(${produto.id})"
+      >
+        + Adicionar
+      </button>
 
     `;
 
 
-    atualizarBadge(quantidadeTotal);
+    container.appendChild(card);
+
+  });
 
 }
 
 
-/* =========================================================
-   ALTERAR QUANTIDADE
-========================================================= */
+/* =========================
+   PRODUTOS HOME
+========================= */
 
-function alterarQuantidade(index,alteracao){
+function renderHome(){
 
-    if(!carrinho[index]) return;
-
-
-    carrinho[index].quantidade += alteracao;
-
-
-    if(carrinho[index].quantidade <= 0){
-
-        carrinho.splice(index,1);
-
-    }
-
-
-    atualizarCarrinho();
+  renderProdutos(
+    produtos.slice(0,4),
+    "homeProducts"
+  );
 
 }
 
 
-/* =========================================================
-   REMOVER PRODUTO
-========================================================= */
+/* =========================
+   MENU
+========================= */
 
-function removerProduto(index){
+function renderMenu(){
 
-    if(!carrinho[index]) return;
-
-
-    carrinho.splice(index,1);
-
-
-    atualizarCarrinho();
+  renderProdutos(
+    produtos,
+    "menuProducts"
+  );
 
 }
 
 
-/* =========================================================
-   BADGE
-========================================================= */
-
-function atualizarBadge(quantidade){
-
-    const badge =
-        document.getElementById("cartBadge");
-
-
-    if(!badge) return;
-
-
-    badge.textContent = quantidade;
-
-
-    if(quantidade > 0){
-
-        badge.style.display = "flex";
-
-    }else{
-
-        badge.style.display = "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   CHECKOUT
-========================================================= */
-
-function abrirCheckout(){
-
-    if(!carrinho.length){
-
-        alert("Seu carrinho está vazio.");
-
-        return;
-
-    }
-
-
-    document
-        .getElementById("checkoutModal")
-        .classList.add("show");
-
-}
-
-
-function fecharCheckout(){
-
-    document
-        .getElementById("checkoutModal")
-        .classList.remove("show");
-
-}
-
-
-function finalizarPedido(){
-
-    const nome =
-        document
-        .getElementById("customerName")
-        .value.trim();
-
-
-    if(!nome){
-
-        alert("Digite seu nome.");
-
-        return;
-
-    }
-
-
-    const mesa =
-        document
-        .getElementById("tableNumber")
-        .value.trim();
-
-
-    if(!mesa){
-
-        alert("Digite o número da mesa.");
-
-        return;
-
-    }
-
-
-    const pagamento =
-        document
-        .getElementById("paymentType")
-        .value;
-
-
-    const observacao =
-        document
-        .getElementById("orderNote")
-        .value.trim();
-
-
-    let total = 0;
-
-
-    let mensagem =
-        "🍧 *NOVO PEDIDO - CANTINHO DO AÇAÍ*\n\n";
-
-
-    mensagem +=
-        "👤 Cliente: " +
-        nome +
-        "\n";
-
-
-    mensagem +=
-        "🪑 Mesa: " +
-        mesa +
-        "\n";
-
-
-    mensagem +=
-        "💳 Pagamento: " +
-        pagamento +
-        "\n\n";
-
-
-    mensagem +=
-        "*ITENS:*\n";
-
-
-    carrinho.forEach(item => {
-
-        const quantidade =
-            item.quantidade || 1;
-
-
-        const subtotal =
-            item.preco * quantidade;
-
-
-        total += subtotal;
-
-
-        mensagem +=
-            "• " +
-            quantidade +
-            "x " +
-            item.nome +
-            " - R$ " +
-            formatar(subtotal);
-
-
-        if(item.detalhes){
-
-            mensagem +=
-                " (" +
-                item.detalhes +
-                ")";
-
-        }
-
-
-        mensagem += "\n";
-
-    });
-
-
-    mensagem +=
-        "\n💰 *TOTAL: R$ " +
-        formatar(total) +
-        "*";
-
-
-    if(observacao){
-
-        mensagem +=
-            "\n\n📝 Observação: " +
-            observacao;
-
-    }
-
-
-    const url =
-        "https://wa.me/" +
-        WHATSAPP +
-        "?text=" +
-        encodeURIComponent(mensagem);
-
-
-    window.open(url,"_blank");
-
-
-    fecharCheckout();
-
-}
-
-
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
-
-function mostrarPagina(pagina){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(p =>
-            p.classList.remove("active")
-        );
-
-
-    document
-        .querySelectorAll(".nav-btn")
-        .forEach(n =>
-            n.classList.remove("active")
-        );
-
-
-    if(pagina === "home"){
-
-        document
-            .getElementById("homePage")
-            .classList.add("active");
-
-        document
-            .getElementById("navHome")
-            .classList.add("active");
-
-    }
-
-
-    if(pagina === "menu"){
-
-        document
-            .getElementById("menuPage")
-            .classList.add("active");
-
-        document
-            .getElementById("navMenu")
-            .classList.add("active");
-
-    }
-
-
-    if(pagina === "loyalty"){
-
-        document
-            .getElementById("loyaltyPage")
-            .classList.add("active");
-
-        document
-            .getElementById("navLoyalty")
-            .classList.add("active");
-
-    }
-
-
-    if(pagina === "cart"){
-
-        document
-            .getElementById("cartPage")
-            .classList.add("active");
-
-        document
-            .getElementById("navCart")
-            .classList.add("active");
-
-        atualizarCarrinho();
-
-    }
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-}
-
-
-/* =========================================================
-   BUSCA
-========================================================= */
-
-function buscarProdutos(){
-
-    const termo =
-        document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    const filtrados =
-        produtos.filter(p =>
-            p.nome
-            .toLowerCase()
-            .includes(termo)
-        );
-
-
-    renderProdutos(
-
-        filtrados,
-
-        document.getElementById("homeProducts")
-
-    );
-
-}
-
-
-/* =========================================================
-   FILTRO DE CATEGORIAS
-========================================================= */
+/* =========================
+   FILTRO CATEGORIA
+========================= */
 
 function filtrarCategoria(categoria,botao){
 
-    document
-        .querySelectorAll(".category")
-        .forEach(b =>
-            b.classList.remove("active")
-        );
+  document.querySelectorAll(".category").forEach(item=>{
+
+    item.classList.remove("active");
+
+  });
 
 
-    botao.classList.add("active");
+  botao.classList.add("active");
 
 
-    let filtrados;
+  let lista = produtos;
 
 
-    if(categoria === "Todos"){
+  if(categoria!=="Todos"){
 
-        filtrados = produtos;
+    lista = produtos.filter(produto=>{
 
-    }else{
+      return produto.categoria===categoria;
 
-        filtrados =
-            produtos.filter(p =>
-                p.categoria === categoria
-            );
+    });
 
-    }
+  }
 
 
-    renderProdutos(
-
-        filtrados,
-
-        document.getElementById("menuProducts")
-
-    );
+  renderProdutos(lista,"menuProducts");
 
 }
 
 
-/* =========================================================
-   FECHAR MODAIS CLICANDO FORA
-========================================================= */
+/* =========================
+   BUSCA
+========================= */
 
-document
+function buscarProdutos(){
+
+  const texto =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  if(!texto){
+
+    renderHome();
+
+    return;
+
+  }
+
+
+  const encontrados = produtos.filter(produto=>{
+
+    return produto.nome
+      .toLowerCase()
+      .includes(texto);
+
+  });
+
+
+  renderProdutos(
+    encontrados,
+    "homeProducts"
+  );
+
+}
+
+
+/* =========================
+   ADICIONAR PRODUTO
+========================= */
+
+function adicionarProduto(id){
+
+  const produto = produtos.find(
+    item=>item.id===id
+  );
+
+
+  if(!produto)return;
+
+
+  const existente = carrinho.find(item=>{
+
+    return item.id===produto.id &&
+           !item.detalhes;
+
+  });
+
+
+  if(existente){
+
+    existente.quantidade++;
+
+  }else{
+
+    carrinho.push({
+
+      ...produto,
+      quantidade:1
+
+    });
+
+  }
+
+
+  atualizarCarrinho();
+
+
+  mostrarToast(
+    produto.nome + " adicionado! 💜"
+  );
+
+}
+
+
+/* =========================
+   BUILDER
+========================= */
+
+function abrirBuilder(){
+
+  tamanhoSelecionado={
+    nome:"300ml",
+    preco:14.90
+  };
+
+
+  extrasSelecionados=[];
+
+
+  document
+    .querySelectorAll(".size")
+    .forEach((item,index)=>{
+
+      item.classList.toggle(
+        "active",
+        index===0
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(".extra")
+    .forEach(item=>{
+
+      item.classList.remove("selected");
+
+    });
+
+
+  atualizarBuilderTotal();
+
+
+  document
     .getElementById("builderModal")
-    .addEventListener("click",function(event){
+    .classList.add("show");
 
-        if(event.target === this){
+}
 
-            fecharMontador();
 
-        }
+function fecharModal(id){
+
+  document
+    .getElementById(id)
+    .classList.remove("show");
+
+}
+
+
+function fecharModalFora(event,id){
+
+  if(event.target.id===id){
+
+    fecharModal(id);
+
+  }
+
+}
+
+
+/* =========================
+   TAMANHO
+========================= */
+
+function selecionarTamanho(elemento){
+
+  document
+    .querySelectorAll(".size")
+    .forEach(item=>{
+
+      item.classList.remove("active");
 
     });
 
 
-document
+  elemento.classList.add("active");
+
+
+  tamanhoSelecionado={
+
+    nome:elemento.dataset.size,
+
+    preco:parseFloat(
+      elemento.dataset.price
+    )
+
+  };
+
+
+  atualizarBuilderTotal();
+
+}
+
+
+/* =========================
+   EXTRAS
+========================= */
+
+function toggleExtra(elemento){
+
+  const nome = elemento.dataset.name;
+
+  const preco =
+    parseFloat(elemento.dataset.price);
+
+
+  const index =
+    extrasSelecionados.findIndex(
+      item=>item.nome===nome
+    );
+
+
+  if(index>=0){
+
+    extrasSelecionados.splice(
+      index,
+      1
+    );
+
+    elemento.classList.remove(
+      "selected"
+    );
+
+  }else{
+
+    extrasSelecionados.push({
+
+      nome,
+      preco
+
+    });
+
+    elemento.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  atualizarBuilderTotal();
+
+}
+
+
+/* =========================
+   TOTAL BUILDER
+========================= */
+
+function calcularBuilderTotal(){
+
+  let total =
+    tamanhoSelecionado.preco;
+
+
+  extrasSelecionados.forEach(extra=>{
+
+    total += extra.preco;
+
+  });
+
+
+  return total;
+
+}
+
+
+function atualizarBuilderTotal(){
+
+  const total =
+    calcularBuilderTotal();
+
+
+  document
+    .getElementById("builderTotal")
+    .textContent =
+    formatarPreco(total);
+
+}
+
+
+/* =========================
+   ADICIONAR AÇAÍ
+========================= */
+
+function adicionarAcai(){
+
+  const total =
+    calcularBuilderTotal();
+
+
+  const detalhes = [
+
+    tamanhoSelecionado.nome,
+
+    ...extrasSelecionados.map(
+      extra=>extra.nome
+    )
+
+  ];
+
+
+  carrinho.push({
+
+    id:"acai-"+Date.now(),
+
+    nome:"Açaí personalizado",
+
+    preco:total,
+
+    quantidade:1,
+
+    detalhes:detalhes.join(", ")
+
+  });
+
+
+  atualizarCarrinho();
+
+
+  fecharModal("builderModal");
+
+
+  mostrarToast(
+    "Açaí personalizado adicionado! 🍇"
+  );
+
+}
+
+
+/* =========================
+   CARRINHO
+========================= */
+
+function atualizarCarrinho(){
+
+  renderCarrinho();
+
+
+  const quantidade =
+    carrinho.reduce(
+      (total,item)=>total+item.quantidade,
+      0
+    );
+
+
+  const badge =
+    document.getElementById("cartBadge");
+
+
+  if(quantidade>0){
+
+    badge.style.display="flex";
+
+    badge.textContent=quantidade;
+
+
+    badge.classList.remove("bounce");
+
+    void badge.offsetWidth;
+
+    badge.classList.add("bounce");
+
+  }else{
+
+    badge.style.display="none";
+
+  }
+
+}
+
+
+function renderCarrinho(){
+
+  const container =
+    document.getElementById("cartItems");
+
+
+  if(carrinho.length===0){
+
+    container.innerHTML=`
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          🛒
+        </div>
+
+        <h3>
+          Seu pedido está vazio
+        </h3>
+
+        <p>
+          Escolha algo delicioso no cardápio.
+        </p>
+
+        <button
+          class="primary-button"
+          onclick="mostrarPagina('menuPage')"
+        >
+          Ver cardápio
+        </button>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html="";
+
+  let total=0;
+
+
+  carrinho.forEach((item,index)=>{
+
+    const subtotal =
+      item.preco*item.quantidade;
+
+
+    total += subtotal;
+
+
+    html+=`
+
+      <div class="cart-item">
+
+        <div class="cart-info">
+
+          <strong>
+            ${item.nome}
+          </strong>
+
+          ${
+            item.detalhes
+            ?
+            `<small>${item.detalhes}</small>`
+            :
+            ""
+          }
+
+          <div class="cart-price">
+            ${formatarPreco(subtotal)}
+          </div>
+
+        </div>
+
+
+        <div class="quantity">
+
+          <button
+            onclick="alterarQuantidade(${index},-1)"
+          >
+            −
+          </button>
+
+          <span>
+            ${item.quantidade}
+          </span>
+
+          <button
+            onclick="alterarQuantidade(${index},1)"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  html+=`
+
+    <div class="cart-total">
+
+      <div class="total-row">
+
+        <span>
+          Total
+        </span>
+
+        <strong>
+          ${formatarPreco(total)}
+        </strong>
+
+      </div>
+
+
+      <button
+        class="primary-button"
+        onclick="abrirCheckout()"
+      >
+        Finalizar pedido
+      </button>
+
+    </div>
+
+  `;
+
+
+  container.innerHTML=html;
+
+}
+
+
+/* =========================
+   QUANTIDADE
+========================= */
+
+function alterarQuantidade(index,quantidade){
+
+  carrinho[index].quantidade += quantidade;
+
+
+  if(carrinho[index].quantidade<=0){
+
+    carrinho.splice(index,1);
+
+  }
+
+
+  atualizarCarrinho();
+
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+function abrirCheckout(){
+
+  if(carrinho.length===0){
+
+    mostrarToast(
+      "Adicione algum produto primeiro."
+    );
+
+    return;
+
+  }
+
+
+  document
     .getElementById("checkoutModal")
-    .addEventListener("click",function(event){
+    .classList.add("show");
 
-        if(event.target === this){
+}
 
-            fecharCheckout();
 
-        }
+/* =========================
+   PAGAMENTO
+========================= */
+
+function selecionarPagamento(elemento,pagamento){
+
+  document
+    .querySelectorAll(".payment")
+    .forEach(item=>{
+
+      item.classList.remove("active");
 
     });
 
 
-/* =========================================================
+  elemento.classList.add("active");
+
+
+  pagamentoSelecionado =
+    pagamento;
+
+}
+
+
+/* =========================
+   ENVIAR WHATSAPP
+========================= */
+
+function enviarPedido(){
+
+  const nome =
+    document
+      .getElementById("customerName")
+      .value
+      .trim();
+
+
+  const mesa =
+    document
+      .getElementById("tableNumber")
+      .value
+      .trim();
+
+
+  const observacao =
+    document
+      .getElementById("observation")
+      .value
+      .trim();
+
+
+  if(!nome){
+
+    mostrarToast(
+      "Digite seu nome."
+    );
+
+    return;
+
+  }
+
+
+  if(!mesa){
+
+    mostrarToast(
+      "Informe o número da mesa."
+    );
+
+    return;
+
+  }
+
+
+  let mensagem =
+    "🍇 *NOVO PEDIDO — CANTINHO DO AÇAÍ*%0A%0A";
+
+
+  mensagem +=
+    "*Cliente:* "+nome+"%0A";
+
+  mensagem +=
+    "*Mesa:* "+mesa+"%0A";
+
+  mensagem +=
+    "*Pagamento:* "+
+    pagamentoSelecionado+
+    "%0A%0A";
+
+
+  mensagem +=
+    "*Pedido:*%0A";
+
+
+  let total=0;
+
+
+  carrinho.forEach(item=>{
+
+    const subtotal =
+      item.preco*item.quantidade;
+
+
+    total += subtotal;
+
+
+    mensagem +=
+      "• "+
+      item.quantidade+
+      "x "+
+      item.nome+
+      " — "+
+      formatarPreco(item.preco);
+
+
+    if(item.detalhes){
+
+      mensagem +=
+        " ("+
+        item.detalhes+
+        ")";
+
+    }
+
+
+    mensagem +=
+      "%0A";
+
+  });
+
+
+  mensagem +=
+    "%0A*TOTAL:* "+
+    formatarPreco(total);
+
+
+  if(observacao){
+
+    mensagem +=
+      "%0A%0A*Observação:* "+
+      observacao;
+
+  }
+
+
+  const url =
+    "https://wa.me/"+
+    WHATSAPP+
+    "?text="+
+    encodeURIComponent(
+      decodeURIComponent(mensagem)
+    );
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+
+  fecharModal("checkoutModal");
+
+}
+
+
+/* =========================
    INICIALIZAÇÃO
-========================================================= */
+========================= */
 
-renderProdutos(
+renderHome();
 
-    produtos.slice(0,4),
-
-    document.getElementById("homeProducts")
-
-);
-
-
-renderProdutos(
-
-    produtos,
-
-    document.getElementById("menuProducts")
-
-);
-
+renderMenu();
 
 atualizarCarrinho();
 
