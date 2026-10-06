@@ -35,12 +35,8 @@ body{
 ========================= */
 
 @keyframes fadeIn{
-  from{
-    opacity:0;
-  }
-  to{
-    opacity:1;
-  }
+  from{opacity:0}
+  to{opacity:1}
 }
 
 @keyframes slideUp{
@@ -70,9 +66,11 @@ body{
     transform:scale(.92);
     opacity:0;
   }
+
   70%{
     transform:scale(1.03);
   }
+
   100%{
     transform:scale(1);
     opacity:1;
@@ -83,24 +81,17 @@ body{
   0%,100%{
     transform:scale(1);
   }
+
   50%{
     transform:scale(1.06);
   }
 }
 
 @keyframes cartBounce{
-  0%{
-    transform:scale(1);
-  }
-  35%{
-    transform:scale(1.18);
-  }
-  70%{
-    transform:scale(.95);
-  }
-  100%{
-    transform:scale(1);
-  }
+  0%{transform:scale(1)}
+  35%{transform:scale(1.18)}
+  70%{transform:scale(.95)}
+  100%{transform:scale(1)}
 }
 
 @keyframes modalIn{
@@ -108,18 +99,10 @@ body{
     opacity:0;
     transform:translateY(40px) scale(.97);
   }
+
   to{
     opacity:1;
     transform:translateY(0) scale(1);
-  }
-}
-
-@keyframes shimmer{
-  0%{
-    background-position:-400px 0;
-  }
-  100%{
-    background-position:400px 0;
   }
 }
 
@@ -128,9 +111,11 @@ body{
     transform:scale(.5);
     opacity:0;
   }
+
   70%{
     transform:scale(1.15);
   }
+
   100%{
     transform:scale(1);
     opacity:1;
@@ -285,6 +270,7 @@ header{
   font-size:12px;
   color:#7c3aed;
   font-weight:bold;
+  cursor:pointer;
 }
 
 /* =========================
@@ -357,18 +343,6 @@ header{
     transform .25s ease,
     box-shadow .25s ease;
   animation:slideUp .45s ease both;
-}
-
-.product:nth-child(2){
-  animation-delay:.06s;
-}
-
-.product:nth-child(3){
-  animation-delay:.12s;
-}
-
-.product:nth-child(4){
-  animation-delay:.18s;
 }
 
 .product:hover{
@@ -574,6 +548,7 @@ header{
 
 .cart-info{
   flex:1;
+  padding-right:10px;
 }
 
 .cart-info strong{
@@ -585,6 +560,7 @@ header{
   color:#888;
   margin-top:4px;
   font-size:11px;
+  line-height:1.4;
 }
 
 .cart-price{
@@ -695,7 +671,7 @@ header{
 }
 
 /* =========================
-   NAV INFERIOR
+   NAVEGAÇÃO
 ========================= */
 
 .bottom-nav{
@@ -780,7 +756,6 @@ header{
   align-items:flex-end;
   justify-content:center;
   z-index:100;
-  padding:0;
 }
 
 .modal-overlay.show{
@@ -906,8 +881,33 @@ header{
 }
 
 /* =========================
-   EXTRAS
+   COMPLEMENTOS
 ========================= */
+
+.free-info{
+  background:#f5f3ff;
+  color:#5b21b6;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:10px;
+  font-size:12px;
+  line-height:1.4;
+}
+
+.free-info strong{
+  display:block;
+  margin-bottom:2px;
+}
+
+.extra-counter{
+  margin-bottom:10px;
+  font-size:12px;
+  color:#666;
+}
+
+.extra-counter strong{
+  color:#5b21b6;
+}
 
 .extras{
   display:grid;
@@ -1019,6 +1019,113 @@ header{
 }
 
 /* =========================
+   CONFIRMAÇÃO
+========================= */
+
+.confirmation-box{
+  background:#f7f5fb;
+  border-radius:18px;
+  padding:15px;
+}
+
+.confirmation-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.confirmation-title span{
+  font-size:23px;
+}
+
+.confirmation-title strong{
+  font-size:16px;
+}
+
+.confirm-item{
+  background:white;
+  border-radius:13px;
+  padding:12px;
+  margin-bottom:8px;
+}
+
+.confirm-item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.confirm-item strong{
+  font-size:13px;
+}
+
+.confirm-item-price{
+  color:#5b21b6;
+  font-weight:bold;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.confirm-details{
+  margin-top:5px;
+  color:#777;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.confirm-summary{
+  margin-top:12px;
+  background:white;
+  border-radius:14px;
+  padding:13px;
+}
+
+.confirm-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+.confirm-row:last-child{
+  margin-bottom:0;
+}
+
+.confirm-total{
+  border-top:1px solid #eee;
+  margin-top:10px;
+  padding-top:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.confirm-total strong{
+  color:#5b21b6;
+  font-size:21px;
+}
+
+.secondary-button{
+  width:100%;
+  border:1px solid #ddd6e8;
+  background:white;
+  color:#5b21b6;
+  border-radius:15px;
+  padding:13px;
+  margin-top:10px;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.secondary-button:hover{
+  background:#f5f3ff;
+  transform:translateY(-2px);
+}
+
+/* =========================
    TOAST
 ========================= */
 
@@ -1049,6 +1156,7 @@ header{
 ========================= */
 
 @media(max-width:380px){
+
   .products{
     grid-template-columns:1fr;
   }
@@ -1056,6 +1164,7 @@ header{
   .extras{
     grid-template-columns:1fr;
   }
+
 }
 </style>
 </head>
@@ -1063,17 +1172,22 @@ header{
 <body>
 
 <header>
+
   <div class="header-content">
 
     <div class="logo-row">
 
       <div class="logo">
-        <div class="logo-icon">🍇</div>
+
+        <div class="logo-icon">
+          🍇
+        </div>
 
         <div>
           <h1>Cantinho do Açaí</h1>
           <small>Portão • RS</small>
         </div>
+
       </div>
 
       <div class="status">
@@ -1083,272 +1197,395 @@ header{
     </div>
 
     <div class="hero-text">
-      <h2>Seu açaí do seu jeito 💜</h2>
-      <p>Monte seu pedido e aproveite no local.</p>
+
+      <h2>
+        Seu açaí do seu jeito 💜
+      </h2>
+
+      <p>
+        Monte seu pedido e aproveite no local.
+      </p>
+
     </div>
 
   </div>
+
 </header>
 
 
 <main class="container">
 
-  <!-- =========================
-       INÍCIO
-  ========================== -->
+<!-- =========================
+     INÍCIO
+========================= -->
 
-  <section id="homePage" class="page">
+<section id="homePage" class="page">
 
-    <div class="search">
-      <span>🔍</span>
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Buscar no cardápio..."
-        oninput="buscarProdutos()"
-      >
-    </div>
+  <div class="search">
 
+    <span>🔍</span>
 
-    <div class="promo">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Buscar no cardápio..."
+      oninput="buscarProdutos()"
+    >
 
-      <div class="promo-text">
-        <h3>Açaí + 3 complementos</h3>
-        <p>Monte do seu jeito e aproveite!</p>
-      </div>
-
-      <div class="promo-icon">
-        🍓
-      </div>
-
-    </div>
+  </div>
 
 
-    <div class="section-title">
-      <h2>Mais pedidos</h2>
-      <span onclick="mostrarPagina('menuPage')">
-        Ver cardápio →
-      </span>
-    </div>
+  <div class="promo">
 
+    <div class="promo-text">
 
-    <div class="products" id="homeProducts"></div>
-
-
-    <div class="section-title">
-      <h2>Fidelidade</h2>
-    </div>
-
-
-    <div class="loyalty">
-
-      <div class="loyalty-top">
-
-        <div>
-          <h3>💜 Clube do Açaí</h3>
-          <small>Seus pontos</small>
-        </div>
-
-        <div class="points">
-          65
-        </div>
-
-      </div>
-
-      <div class="progress">
-        <div class="progress-bar"></div>
-      </div>
+      <h3>
+        Açaí + 3 complementos
+      </h3>
 
       <p>
-        Faltam 35 pontos para ganhar sua próxima recompensa.
+        Escolha até 3 complementos grátis!
       </p>
 
     </div>
 
-
-    <div class="info-card">
-
-      <div class="info-row">
-        <div class="info-icon">📍</div>
-
-        <div>
-          <strong>Onde estamos</strong>
-          <p>Portão — Rio Grande do Sul</p>
-        </div>
-      </div>
-
-
-      <div class="info-row">
-        <div class="info-icon">🍧</div>
-
-        <div>
-          <strong>Consumo no local</strong>
-          <p>Faça seu pedido e informe o número da mesa.</p>
-        </div>
-      </div>
-
-
-      <div class="info-row">
-        <div class="info-icon">⏰</div>
-
-        <div>
-          <strong>Funcionamento</strong>
-          <p>Consulte nossa equipe para os horários.</p>
-        </div>
-      </div>
-
+    <div class="promo-icon">
+      🍓
     </div>
 
-  </section>
+  </div>
 
 
-  <!-- =========================
-       CARDÁPIO
-  ========================== -->
+  <div class="section-title">
 
-  <section id="menuPage" class="page" style="display:none">
+    <h2>
+      Mais pedidos
+    </h2>
 
-    <div class="section-title">
-      <h2>Cardápio</h2>
-    </div>
+    <span onclick="mostrarPagina('menuPage')">
+      Ver cardápio →
+    </span>
 
-
-    <div class="categories">
-
-      <button
-        class="category active"
-        onclick="filtrarCategoria('Todos',this)"
-      >
-        Todos
-      </button>
-
-      <button
-        class="category"
-        onclick="filtrarCategoria('Açaí',this)"
-      >
-        🍇 Açaí
-      </button>
-
-      <button
-        class="category"
-        onclick="filtrarCategoria('Bebidas',this)"
-      >
-        🥤 Bebidas
-      </button>
-
-      <button
-        class="category"
-        onclick="filtrarCategoria('Complementos',this)"
-      >
-        🍓 Complementos
-      </button>
-
-    </div>
+  </div>
 
 
-    <div
-      class="products"
-      id="menuProducts"
-      style="margin-top:15px"
-    ></div>
-
-  </section>
+  <div
+    class="products"
+    id="homeProducts"
+  ></div>
 
 
-  <!-- =========================
-       FIDELIDADE
-  ========================== -->
+  <div class="section-title">
 
-  <section id="loyaltyPage" class="page" style="display:none">
+    <h2>
+      Fidelidade
+    </h2>
 
-    <div class="section-title">
-      <h2>Minha fidelidade 💜</h2>
-    </div>
+  </div>
 
 
-    <div class="loyalty">
+  <div class="loyalty">
 
-      <div class="loyalty-top">
+    <div class="loyalty-top">
 
-        <div>
-          <h3>Clube do Açaí</h3>
-          <small>Pontos acumulados</small>
-        </div>
+      <div>
 
-        <div class="points">
-          65
-        </div>
+        <h3>
+          💜 Clube do Açaí
+        </h3>
+
+        <small>
+          Seus pontos
+        </small>
 
       </div>
 
-
-      <div class="progress">
-        <div class="progress-bar"></div>
-      </div>
-
-
-      <p>
-        Mais 35 pontos para sua próxima recompensa!
-      </p>
-
-    </div>
-
-
-    <div class="info-card">
-
-      <div class="info-row">
-        <div class="info-icon">⭐</div>
-
-        <div>
-          <strong>Como funciona?</strong>
-
-          <p>
-            A cada compra você acumula pontos
-            e pode trocar por recompensas.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="info-row">
-        <div class="info-icon">🎁</div>
-
-        <div>
-          <strong>Próxima recompensa</strong>
-
-          <p>
-            Continue acumulando para desbloquear
-            sua próxima recompensa.
-          </p>
-        </div>
+      <div class="points">
+        65
       </div>
 
     </div>
 
-  </section>
 
+    <div class="progress">
 
-  <!-- =========================
-       PEDIDO
-  ========================== -->
+      <div class="progress-bar"></div>
 
-  <section id="cartPage" class="page" style="display:none">
-
-    <div class="section-title">
-      <h2>Meu pedido</h2>
     </div>
 
 
-    <div id="cartItems"></div>
+    <p>
+      Faltam 35 pontos para ganhar sua próxima recompensa.
+    </p>
 
-  </section>
+  </div>
+
+
+  <div class="info-card">
+
+    <div class="info-row">
+
+      <div class="info-icon">
+        📍
+      </div>
+
+      <div>
+
+        <strong>
+          Onde estamos
+        </strong>
+
+        <p>
+          Portão — Rio Grande do Sul
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-row">
+
+      <div class="info-icon">
+        🍧
+      </div>
+
+      <div>
+
+        <strong>
+          Consumo no local
+        </strong>
+
+        <p>
+          Faça seu pedido e informe o número da mesa.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-row">
+
+      <div class="info-icon">
+        ⏰
+      </div>
+
+      <div>
+
+        <strong>
+          Funcionamento
+        </strong>
+
+        <p>
+          Consulte nossa equipe para os horários.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     CARDÁPIO
+========================= -->
+
+<section
+  id="menuPage"
+  class="page"
+  style="display:none"
+>
+
+  <div class="section-title">
+
+    <h2>
+      Cardápio
+    </h2>
+
+  </div>
+
+
+  <div class="categories">
+
+    <button
+      class="category active"
+      onclick="filtrarCategoria('Todos',this)"
+    >
+      Todos
+    </button>
+
+    <button
+      class="category"
+      onclick="filtrarCategoria('Açaí',this)"
+    >
+      🍇 Açaí
+    </button>
+
+    <button
+      class="category"
+      onclick="filtrarCategoria('Bebidas',this)"
+    >
+      🥤 Bebidas
+    </button>
+
+    <button
+      class="category"
+      onclick="filtrarCategoria('Complementos',this)"
+    >
+      🍓 Complementos
+    </button>
+
+  </div>
+
+
+  <div
+    class="products"
+    id="menuProducts"
+    style="margin-top:15px"
+  ></div>
+
+</section>
+
+
+<!-- =========================
+     FIDELIDADE
+========================= -->
+
+<section
+  id="loyaltyPage"
+  class="page"
+  style="display:none"
+>
+
+  <div class="section-title">
+
+    <h2>
+      Minha fidelidade 💜
+    </h2>
+
+  </div>
+
+
+  <div class="loyalty">
+
+    <div class="loyalty-top">
+
+      <div>
+
+        <h3>
+          Clube do Açaí
+        </h3>
+
+        <small>
+          Pontos acumulados
+        </small>
+
+      </div>
+
+      <div class="points">
+        65
+      </div>
+
+    </div>
+
+
+    <div class="progress">
+
+      <div class="progress-bar"></div>
+
+    </div>
+
+
+    <p>
+      Mais 35 pontos para sua próxima recompensa!
+    </p>
+
+  </div>
+
+
+  <div class="info-card">
+
+    <div class="info-row">
+
+      <div class="info-icon">
+        ⭐
+      </div>
+
+      <div>
+
+        <strong>
+          Como funciona?
+        </strong>
+
+        <p>
+          A cada compra você acumula pontos
+          e pode trocar por recompensas.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-row">
+
+      <div class="info-icon">
+        🎁
+      </div>
+
+      <div>
+
+        <strong>
+          Próxima recompensa
+        </strong>
+
+        <p>
+          Continue acumulando para desbloquear
+          sua próxima recompensa.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PEDIDO
+========================= -->
+
+<section
+  id="cartPage"
+  class="page"
+  style="display:none"
+>
+
+  <div class="section-title">
+
+    <h2>
+      Meu pedido
+    </h2>
+
+  </div>
+
+
+  <div id="cartItems"></div>
+
+</section>
 
 </main>
 
 
 <!-- =========================
      NAVEGAÇÃO
-========================== -->
+========================= -->
 
 <nav class="bottom-nav">
 
@@ -1358,8 +1595,13 @@ header{
       class="nav-item active"
       onclick="mostrarPagina('homePage',this)"
     >
-      <span>⌂</span>
+
+      <span>
+        ⌂
+      </span>
+
       Início
+
     </button>
 
 
@@ -1367,8 +1609,13 @@ header{
       class="nav-item"
       onclick="mostrarPagina('menuPage',this)"
     >
-      <span>🍇</span>
+
+      <span>
+        🍇
+      </span>
+
       Cardápio
+
     </button>
 
 
@@ -1376,8 +1623,13 @@ header{
       class="nav-item"
       onclick="mostrarPagina('loyaltyPage',this)"
     >
-      <span>💜</span>
+
+      <span>
+        💜
+      </span>
+
       Fidelidade
+
     </button>
 
 
@@ -1385,7 +1637,11 @@ header{
       class="nav-item"
       onclick="mostrarPagina('cartPage',this)"
     >
-      <span>🛒</span>
+
+      <span>
+        🛒
+      </span>
+
       Pedido
 
       <div
@@ -1404,8 +1660,8 @@ header{
 
 
 <!-- =========================
-     MODAL AÇAÍ
-========================== -->
+     MODAL MONTAR AÇAÍ
+========================= -->
 
 <div
   class="modal-overlay"
@@ -1417,7 +1673,9 @@ header{
 
     <div class="modal-header">
 
-      <h2>Monte seu açaí 🍇</h2>
+      <h2>
+        Monte seu açaí 🍇
+      </h2>
 
       <button
         class="close"
@@ -1431,7 +1689,10 @@ header{
 
     <div class="form-group">
 
-      <label>Tamanho</label>
+      <label>
+        Tamanho
+      </label>
+
 
       <div class="sizes">
 
@@ -1441,8 +1702,15 @@ header{
           data-price="14.90"
           onclick="selecionarTamanho(this)"
         >
-          <strong>300ml</strong>
-          <small>R$ 14,90</small>
+
+          <strong>
+            300ml
+          </strong>
+
+          <small>
+            R$ 14,90
+          </small>
+
         </div>
 
 
@@ -1452,8 +1720,15 @@ header{
           data-price="19.90"
           onclick="selecionarTamanho(this)"
         >
-          <strong>500ml</strong>
-          <small>R$ 19,90</small>
+
+          <strong>
+            500ml
+          </strong>
+
+          <small>
+            R$ 19,90
+          </small>
+
         </div>
 
 
@@ -1463,8 +1738,15 @@ header{
           data-price="24.90"
           onclick="selecionarTamanho(this)"
         >
-          <strong>700ml</strong>
-          <small>R$ 24,90</small>
+
+          <strong>
+            700ml
+          </strong>
+
+          <small>
+            R$ 24,90
+          </small>
+
         </div>
 
       </div>
@@ -1474,7 +1756,30 @@ header{
 
     <div class="form-group">
 
-      <label>Complementos</label>
+      <label>
+        Complementos
+      </label>
+
+
+      <div class="free-info">
+
+        <strong>
+          🎁 3 complementos grátis
+        </strong>
+
+        Escolha até 3. A partir do 4º,
+        será cobrado o valor do complemento.
+
+      </div>
+
+
+      <div
+        class="extra-counter"
+        id="extraCounter"
+      >
+        <strong>0</strong> de 3 complementos grátis
+      </div>
+
 
       <div class="extras">
 
@@ -1484,12 +1789,21 @@ header{
           data-price="1.50"
           onclick="toggleExtra(this)"
         >
+
           <div class="extra-info">
-            <strong>Banana</strong>
-            <small>+ R$ 1,50</small>
+
+            <strong>
+              Banana
+            </strong>
+
+            <small>
+              + R$ 1,50 após os 3 grátis
+            </small>
+
           </div>
 
           <div class="check"></div>
+
         </div>
 
 
@@ -1499,12 +1813,21 @@ header{
           data-price="2.00"
           onclick="toggleExtra(this)"
         >
+
           <div class="extra-info">
-            <strong>Morango</strong>
-            <small>+ R$ 2,00</small>
+
+            <strong>
+              Morango
+            </strong>
+
+            <small>
+              + R$ 2,00 após os 3 grátis
+            </small>
+
           </div>
 
           <div class="check"></div>
+
         </div>
 
 
@@ -1514,12 +1837,21 @@ header{
           data-price="1.50"
           onclick="toggleExtra(this)"
         >
+
           <div class="extra-info">
-            <strong>Granola</strong>
-            <small>+ R$ 1,50</small>
+
+            <strong>
+              Granola
+            </strong>
+
+            <small>
+              + R$ 1,50 após os 3 grátis
+            </small>
+
           </div>
 
           <div class="check"></div>
+
         </div>
 
 
@@ -1529,12 +1861,21 @@ header{
           data-price="2.00"
           onclick="toggleExtra(this)"
         >
+
           <div class="extra-info">
-            <strong>Leite em pó</strong>
-            <small>+ R$ 2,00</small>
+
+            <strong>
+              Leite em pó
+            </strong>
+
+            <small>
+              + R$ 2,00 após os 3 grátis
+            </small>
+
           </div>
 
           <div class="check"></div>
+
         </div>
 
 
@@ -1544,12 +1885,21 @@ header{
           data-price="2.00"
           onclick="toggleExtra(this)"
         >
+
           <div class="extra-info">
-            <strong>Paçoca</strong>
-            <small>+ R$ 2,00</small>
+
+            <strong>
+              Paçoca
+            </strong>
+
+            <small>
+              + R$ 2,00 após os 3 grátis
+            </small>
+
           </div>
 
           <div class="check"></div>
+
         </div>
 
 
@@ -1559,12 +1909,21 @@ header{
           data-price="2.50"
           onclick="toggleExtra(this)"
         >
+
           <div class="extra-info">
-            <strong>Leite condensado</strong>
-            <small>+ R$ 2,50</small>
+
+            <strong>
+              Leite condensado
+            </strong>
+
+            <small>
+              + R$ 2,50 após os 3 grátis
+            </small>
+
           </div>
 
           <div class="check"></div>
+
         </div>
 
       </div>
@@ -1576,7 +1935,9 @@ header{
 
       <div class="builder-total-row">
 
-        <span>Total</span>
+        <span>
+          Total
+        </span>
 
         <strong id="builderTotal">
           R$ 14,90
@@ -1601,7 +1962,7 @@ header{
 
 <!-- =========================
      CHECKOUT
-========================== -->
+========================= -->
 
 <div
   class="modal-overlay"
@@ -1613,7 +1974,9 @@ header{
 
     <div class="modal-header">
 
-      <h2>Finalizar pedido 🛒</h2>
+      <h2>
+        Finalizar pedido 🛒
+      </h2>
 
       <button
         class="close"
@@ -1627,7 +1990,9 @@ header{
 
     <div class="form-group">
 
-      <label>Seu nome</label>
+      <label>
+        Seu nome
+      </label>
 
       <input
         type="text"
@@ -1640,7 +2005,9 @@ header{
 
     <div class="form-group">
 
-      <label>Número da mesa</label>
+      <label>
+        Número da mesa
+      </label>
 
       <input
         type="number"
@@ -1654,7 +2021,10 @@ header{
 
     <div class="form-group">
 
-      <label>Forma de pagamento</label>
+      <label>
+        Forma de pagamento
+      </label>
+
 
       <div class="payment-options">
 
@@ -1688,7 +2058,9 @@ header{
 
     <div class="form-group">
 
-      <label>Observação</label>
+      <label>
+        Observação
+      </label>
 
       <textarea
         id="observation"
@@ -1700,9 +2072,76 @@ header{
 
     <button
       class="primary-button"
-      onclick="enviarPedido()"
+      onclick="abrirConfirmacao()"
     >
-      Enviar pedido pelo WhatsApp
+      Conferir pedido
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     MODAL CONFIRMAÇÃO
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="confirmationModal"
+  onclick="fecharModalFora(event,'confirmationModal')"
+>
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h2>
+        Confirmar pedido
+      </h2>
+
+      <button
+        class="close"
+        onclick="fecharModal('confirmationModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="confirmation-title">
+
+      <span>
+        👀
+      </span>
+
+      <strong>
+        Confira se está tudo certo
+      </strong>
+
+    </div>
+
+
+    <div
+      class="confirmation-box"
+      id="confirmationContent"
+    ></div>
+
+
+    <button
+      class="secondary-button"
+      onclick="voltarParaCheckout()"
+    >
+      ← Voltar e editar
+    </button>
+
+
+    <button
+      class="primary-button"
+      onclick="confirmarEEnviarPedido()"
+    >
+      ✓ Confirmar e enviar pelo WhatsApp
     </button>
 
   </div>
@@ -1713,8 +2152,7 @@ header{
 <div
   class="toast"
   id="toast"
->
-</div>
+></div>
 
 
 <script>
@@ -1724,6 +2162,8 @@ header{
 ========================= */
 
 const WHATSAPP = "5551980535187";
+
+const LIMITE_GRATIS = 3;
 
 
 /* =========================
@@ -1737,7 +2177,8 @@ const produtos = [
     nome:"Açaí 300 ml",
     preco:14.90,
     categoria:"Açaí",
-    emoji:"🍇"
+    emoji:"🍇",
+    acai:true
   },
 
   {
@@ -1745,7 +2186,8 @@ const produtos = [
     nome:"Açaí 500 ml",
     preco:19.90,
     categoria:"Açaí",
-    emoji:"🍇"
+    emoji:"🍇",
+    acai:true
   },
 
   {
@@ -1753,7 +2195,8 @@ const produtos = [
     nome:"Açaí 700 ml",
     preco:24.90,
     categoria:"Açaí",
-    emoji:"🍇"
+    emoji:"🍇",
+    acai:true
   },
 
   {
@@ -1761,7 +2204,8 @@ const produtos = [
     nome:"Açaí Especial",
     preco:26.90,
     categoria:"Açaí",
-    emoji:"🍓"
+    emoji:"🍓",
+    acai:true
   },
 
   {
@@ -1833,10 +2277,13 @@ let pagamentoSelecionado = "Pix";
 
 function formatarPreco(valor){
 
-  return valor.toLocaleString("pt-BR",{
-    style:"currency",
-    currency:"BRL"
-  });
+  return valor.toLocaleString(
+    "pt-BR",
+    {
+      style:"currency",
+      currency:"BRL"
+    }
+  );
 
 }
 
@@ -1847,9 +2294,11 @@ function formatarPreco(valor){
 
 function mostrarToast(mensagem){
 
-  const toast = document.getElementById("toast");
+  const toast =
+    document.getElementById("toast");
 
-  toast.textContent = mensagem;
+  toast.textContent =
+    mensagem;
 
   toast.classList.add("show");
 
@@ -1868,14 +2317,18 @@ function mostrarToast(mensagem){
 
 function mostrarPagina(id,botao=null){
 
-  document.querySelectorAll(".page").forEach(page=>{
+  document
+    .querySelectorAll(".page")
+    .forEach(page=>{
 
-    page.style.display="none";
+      page.style.display="none";
 
-  });
+    });
 
 
-  const pagina = document.getElementById(id);
+  const pagina =
+    document.getElementById(id);
+
 
   pagina.style.display="block";
 
@@ -1889,21 +2342,15 @@ function mostrarPagina(id,botao=null){
 
   if(botao){
 
-    document.querySelectorAll(".nav-item").forEach(item=>{
+    document
+      .querySelectorAll(".nav-item")
+      .forEach(item=>{
 
-      item.classList.remove("active");
+        item.classList.remove("active");
 
-    });
+      });
 
     botao.classList.add("active");
-
-  }else{
-
-    document.querySelectorAll(".nav-item").forEach(item=>{
-
-      item.classList.remove("active");
-
-    });
 
   }
 
@@ -1921,9 +2368,16 @@ function mostrarPagina(id,botao=null){
    RENDER PRODUTOS
 ========================= */
 
-function renderProdutos(lista,containerId){
+function renderProdutos(
+  lista,
+  containerId
+){
 
-  const container = document.getElementById(containerId);
+  const container =
+    document.getElementById(
+      containerId
+    );
+
 
   container.innerHTML="";
 
@@ -1932,13 +2386,18 @@ function renderProdutos(lista,containerId){
 
     container.innerHTML=`
 
-      <div class="empty" style="grid-column:1/-1">
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
 
         <div class="empty-icon">
           🔍
         </div>
 
-        <h3>Nada encontrado</h3>
+        <h3>
+          Nada encontrado
+        </h3>
 
         <p>
           Tente procurar por outro produto.
@@ -1953,47 +2412,82 @@ function renderProdutos(lista,containerId){
   }
 
 
-  lista.forEach((produto,index)=>{
+  lista.forEach(
+    (produto,index)=>{
 
-    const card = document.createElement("div");
-
-    card.className="product";
-
-    card.style.animationDelay=(index * .05)+"s";
+      const card =
+        document.createElement("div");
 
 
-    card.innerHTML=`
+      card.className="product";
 
-      <div class="product-image">
-        ${produto.emoji}
-      </div>
-
-      <h3>
-        ${produto.nome}
-      </h3>
-
-      <p>
-        ${formatarPreco(produto.preco)}
-      </p>
-
-      <button
-        onclick="adicionarProduto(${produto.id})"
-      >
-        + Adicionar
-      </button>
-
-    `;
+      card.style.animationDelay =
+        (index*.05)+"s";
 
 
-    container.appendChild(card);
+      const botao = produto.acai
 
-  });
+        ? `
+          <button
+            onclick="abrirBuilder()"
+          >
+            Montar meu açaí
+          </button>
+        `
+
+        : `
+          <button
+            onclick="adicionarProduto(${produto.id})"
+          >
+            + Adicionar
+          </button>
+        `;
+
+
+      card.innerHTML=`
+
+        <div class="product-image">
+          ${produto.emoji}
+        </div>
+
+        <h3>
+          ${produto.nome}
+        </h3>
+
+        <p>
+          ${formatarPreco(produto.preco)}
+        </p>
+
+        ${
+          produto.acai
+          ?
+          `<small style="
+            display:block;
+            color:#777;
+            margin-top:5px;
+            font-size:10px;
+          ">
+            3 complementos grátis
+          </small>`
+          :
+          ""
+        }
+
+        ${botao}
+
+      `;
+
+
+      container.appendChild(card);
+
+    }
+  );
 
 }
 
 
 /* =========================
-   PRODUTOS HOME
+   HOME
 ========================= */
 
 function renderHome(){
@@ -2021,36 +2515,44 @@ function renderMenu(){
 
 
 /* =========================
-   FILTRO CATEGORIA
+   FILTRO
 ========================= */
 
-function filtrarCategoria(categoria,botao){
+function filtrarCategoria(
+  categoria,
+  botao
+){
 
-  document.querySelectorAll(".category").forEach(item=>{
+  document
+    .querySelectorAll(".category")
+    .forEach(item=>{
 
-    item.classList.remove("active");
+      item.classList.remove("active");
 
-  });
+    });
 
 
   botao.classList.add("active");
 
 
-  let lista = produtos;
+  let lista=produtos;
 
 
   if(categoria!=="Todos"){
 
-    lista = produtos.filter(produto=>{
-
-      return produto.categoria===categoria;
-
-    });
+    lista =
+      produtos.filter(
+        produto=>
+          produto.categoria===categoria
+      );
 
   }
 
 
-  renderProdutos(lista,"menuProducts");
+  renderProdutos(
+    lista,
+    "menuProducts"
+  );
 
 }
 
@@ -2078,13 +2580,13 @@ function buscarProdutos(){
   }
 
 
-  const encontrados = produtos.filter(produto=>{
-
-    return produto.nome
-      .toLowerCase()
-      .includes(texto);
-
-  });
+  const encontrados =
+    produtos.filter(
+      produto=>
+        produto.nome
+          .toLowerCase()
+          .includes(texto)
+    );
 
 
   renderProdutos(
@@ -2101,20 +2603,21 @@ function buscarProdutos(){
 
 function adicionarProduto(id){
 
-  const produto = produtos.find(
-    item=>item.id===id
-  );
+  const produto =
+    produtos.find(
+      item=>item.id===id
+    );
 
 
   if(!produto)return;
 
 
-  const existente = carrinho.find(item=>{
-
-    return item.id===produto.id &&
-           !item.detalhes;
-
-  });
+  const existente =
+    carrinho.find(
+      item=>
+        item.id===produto.id &&
+        !item.detalhes
+    );
 
 
   if(existente){
@@ -2126,6 +2629,7 @@ function adicionarProduto(id){
     carrinho.push({
 
       ...produto,
+
       quantidade:1
 
     });
@@ -2137,14 +2641,15 @@ function adicionarProduto(id){
 
 
   mostrarToast(
-    produto.nome + " adicionado! 💜"
+    produto.nome+
+    " adicionado! 💜"
   );
 
 }
 
 
 /* =========================
-   BUILDER
+   ABRIR MONTADOR
 ========================= */
 
 function abrirBuilder(){
@@ -2160,21 +2665,25 @@ function abrirBuilder(){
 
   document
     .querySelectorAll(".size")
-    .forEach((item,index)=>{
+    .forEach(
+      (item,index)=>{
 
-      item.classList.toggle(
-        "active",
-        index===0
-      );
+        item.classList.toggle(
+          "active",
+          index===0
+        );
 
-    });
+      }
+    );
 
 
   document
     .querySelectorAll(".extra")
     .forEach(item=>{
 
-      item.classList.remove("selected");
+      item.classList.remove(
+        "selected"
+      );
 
     });
 
@@ -2198,7 +2707,10 @@ function fecharModal(id){
 }
 
 
-function fecharModalFora(event,id){
+function fecharModalFora(
+  event,
+  id
+){
 
   if(event.target.id===id){
 
@@ -2213,18 +2725,24 @@ function fecharModalFora(event,id){
    TAMANHO
 ========================= */
 
-function selecionarTamanho(elemento){
+function selecionarTamanho(
+  elemento
+){
 
   document
     .querySelectorAll(".size")
     .forEach(item=>{
 
-      item.classList.remove("active");
+      item.classList.remove(
+        "active"
+      );
 
     });
 
 
-  elemento.classList.add("active");
+  elemento.classList.add(
+    "active"
+  );
 
 
   tamanhoSelecionado={
@@ -2244,15 +2762,21 @@ function selecionarTamanho(elemento){
 
 
 /* =========================
-   EXTRAS
+   COMPLEMENTOS
 ========================= */
 
-function toggleExtra(elemento){
+function toggleExtra(
+  elemento
+){
 
-  const nome = elemento.dataset.name;
+  const nome =
+    elemento.dataset.name;
+
 
   const preco =
-    parseFloat(elemento.dataset.price);
+    parseFloat(
+      elemento.dataset.price
+    );
 
 
   const index =
@@ -2268,6 +2792,7 @@ function toggleExtra(elemento){
       1
     );
 
+
     elemento.classList.remove(
       "selected"
     );
@@ -2276,10 +2801,12 @@ function toggleExtra(elemento){
 
     extrasSelecionados.push({
 
-      nome,
-      preco
+      nome:nome,
+
+      preco:preco
 
     });
+
 
     elemento.classList.add(
       "selected"
@@ -2294,7 +2821,7 @@ function toggleExtra(elemento){
 
 
 /* =========================
-   TOTAL BUILDER
+   TOTAL DO AÇAÍ
 ========================= */
 
 function calcularBuilderTotal(){
@@ -2303,17 +2830,33 @@ function calcularBuilderTotal(){
     tamanhoSelecionado.preco;
 
 
-  extrasSelecionados.forEach(extra=>{
+  extrasSelecionados.forEach(
+    (extra,index)=>{
 
-    total += extra.preco;
+      /*
+        Os 3 primeiros são grátis.
+        A partir do quarto,
+        começa a cobrança.
+      */
 
-  });
+      if(index>=LIMITE_GRATIS){
+
+        total += extra.preco;
+
+      }
+
+    }
+  );
 
 
   return total;
 
 }
 
+
+/* =========================
+   ATUALIZAR TOTAL
+========================= */
 
 function atualizarBuilderTotal(){
 
@@ -2325,6 +2868,44 @@ function atualizarBuilderTotal(){
     .getElementById("builderTotal")
     .textContent =
     formatarPreco(total);
+
+
+  const quantidade =
+    extrasSelecionados.length;
+
+
+  const counter =
+    document.getElementById(
+      "extraCounter"
+    );
+
+
+  if(quantidade<=LIMITE_GRATIS){
+
+    counter.innerHTML=
+      `<strong>
+        ${quantidade}
+      </strong>
+      de ${LIMITE_GRATIS}
+      complementos grátis`;
+
+  }else{
+
+    const cobrados =
+      quantidade-LIMITE_GRATIS;
+
+
+    counter.innerHTML=
+      `<strong>
+        ${quantidade}
+      </strong>
+      complementos selecionados —
+      <strong>
+        ${cobrados}
+      </strong>
+      cobrado(s)`;
+
+  }
 
 }
 
@@ -2339,28 +2920,40 @@ function adicionarAcai(){
     calcularBuilderTotal();
 
 
-  const detalhes = [
+  const detalhes =
+    extrasSelecionados.length>0
 
-    tamanhoSelecionado.nome,
+      ?
 
-    ...extrasSelecionados.map(
-      extra=>extra.nome
-    )
+      [
+        tamanhoSelecionado.nome,
 
-  ];
+        ...extrasSelecionados.map(
+          extra=>extra.nome
+        )
+      ].join(", ")
+
+      :
+
+      tamanhoSelecionado.nome;
 
 
   carrinho.push({
 
-    id:"acai-"+Date.now(),
+    id:
+      "acai-"+Date.now(),
 
-    nome:"Açaí personalizado",
+    nome:
+      "Açaí personalizado",
 
-    preco:total,
+    preco:
+      total,
 
-    quantidade:1,
+    quantidade:
+      1,
 
-    detalhes:detalhes.join(", ")
+    detalhes:
+      detalhes
 
   });
 
@@ -2368,11 +2961,13 @@ function adicionarAcai(){
   atualizarCarrinho();
 
 
-  fecharModal("builderModal");
+  fecharModal(
+    "builderModal"
+  );
 
 
   mostrarToast(
-    "Açaí personalizado adicionado! 🍇"
+    "Açaí adicionado! 🍇"
   );
 
 }
@@ -2389,27 +2984,35 @@ function atualizarCarrinho(){
 
   const quantidade =
     carrinho.reduce(
-      (total,item)=>total+item.quantidade,
+      (total,item)=>
+        total+item.quantidade,
       0
     );
 
 
   const badge =
-    document.getElementById("cartBadge");
+    document.getElementById(
+      "cartBadge"
+    );
 
 
   if(quantidade>0){
 
     badge.style.display="flex";
 
-    badge.textContent=quantidade;
+    badge.textContent=
+      quantidade;
 
 
-    badge.classList.remove("bounce");
+    badge.classList.remove(
+      "bounce"
+    );
 
     void badge.offsetWidth;
 
-    badge.classList.add("bounce");
+    badge.classList.add(
+      "bounce"
+    );
 
   }else{
 
@@ -2423,7 +3026,9 @@ function atualizarCarrinho(){
 function renderCarrinho(){
 
   const container =
-    document.getElementById("cartItems");
+    document.getElementById(
+      "cartItems"
+    );
 
 
   if(carrinho.length===0){
@@ -2465,65 +3070,70 @@ function renderCarrinho(){
   let total=0;
 
 
-  carrinho.forEach((item,index)=>{
+  carrinho.forEach(
+    (item,index)=>{
 
-    const subtotal =
-      item.preco*item.quantidade;
+      const subtotal =
+        item.preco*
+        item.quantidade;
 
 
-    total += subtotal;
+      total += subtotal;
 
 
-    html+=`
+      html+=`
 
-      <div class="cart-item">
+        <div class="cart-item">
 
-        <div class="cart-info">
+          <div class="cart-info">
 
-          <strong>
-            ${item.nome}
-          </strong>
+            <strong>
+              ${item.nome}
+            </strong>
 
-          ${
-            item.detalhes
-            ?
-            `<small>${item.detalhes}</small>`
-            :
-            ""
-          }
+            ${
+              item.detalhes
+              ?
+              `<small>
+                ${item.detalhes}
+              </small>`
+              :
+              ""
+            }
 
-          <div class="cart-price">
-            ${formatarPreco(subtotal)}
+            <div class="cart-price">
+              ${formatarPreco(subtotal)}
+            </div>
+
+          </div>
+
+
+          <div class="quantity">
+
+            <button
+              onclick="alterarQuantidade(${index},-1)"
+            >
+              −
+            </button>
+
+            <span>
+              ${item.quantidade}
+            </span>
+
+            <button
+              onclick="alterarQuantidade(${index},1)"
+            >
+              +
+            </button>
+
           </div>
 
         </div>
 
+      `;
 
-        <div class="quantity">
-
-          <button
-            onclick="alterarQuantidade(${index},-1)"
-          >
-            −
-          </button>
-
-          <span>
-            ${item.quantidade}
-          </span>
-
-          <button
-            onclick="alterarQuantidade(${index},1)"
-          >
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 
   html+=`
@@ -2555,7 +3165,8 @@ function renderCarrinho(){
   `;
 
 
-  container.innerHTML=html;
+  container.innerHTML=
+    html;
 
 }
 
@@ -2564,14 +3175,23 @@ function renderCarrinho(){
    QUANTIDADE
 ========================= */
 
-function alterarQuantidade(index,quantidade){
+function alterarQuantidade(
+  index,
+  quantidade
+){
 
-  carrinho[index].quantidade += quantidade;
+  carrinho[index].quantidade +=
+    quantidade;
 
 
-  if(carrinho[index].quantidade<=0){
+  if(
+    carrinho[index].quantidade<=0
+  ){
 
-    carrinho.splice(index,1);
+    carrinho.splice(
+      index,
+      1
+    );
 
   }
 
@@ -2599,7 +3219,9 @@ function abrirCheckout(){
 
 
   document
-    .getElementById("checkoutModal")
+    .getElementById(
+      "checkoutModal"
+    )
     .classList.add("show");
 
 }
@@ -2609,18 +3231,25 @@ function abrirCheckout(){
    PAGAMENTO
 ========================= */
 
-function selecionarPagamento(elemento,pagamento){
+function selecionarPagamento(
+  elemento,
+  pagamento
+){
 
   document
     .querySelectorAll(".payment")
     .forEach(item=>{
 
-      item.classList.remove("active");
+      item.classList.remove(
+        "active"
+      );
 
     });
 
 
-  elemento.classList.add("active");
+  elemento.classList.add(
+    "active"
+  );
 
 
   pagamentoSelecionado =
@@ -2630,28 +3259,42 @@ function selecionarPagamento(elemento,pagamento){
 
 
 /* =========================
-   ENVIAR WHATSAPP
+   CALCULAR TOTAL CARRINHO
 ========================= */
 
-function enviarPedido(){
+function calcularTotalCarrinho(){
+
+  return carrinho.reduce(
+    (total,item)=>
+      total+
+      item.preco*
+      item.quantidade,
+    0
+  );
+
+}
+
+
+/* =========================
+   ABRIR CONFIRMAÇÃO
+========================= */
+
+function abrirConfirmacao(){
 
   const nome =
     document
-      .getElementById("customerName")
+      .getElementById(
+        "customerName"
+      )
       .value
       .trim();
 
 
   const mesa =
     document
-      .getElementById("tableNumber")
-      .value
-      .trim();
-
-
-  const observacao =
-    document
-      .getElementById("observation")
+      .getElementById(
+        "tableNumber"
+      )
       .value
       .trim();
 
@@ -2678,72 +3321,319 @@ function enviarPedido(){
   }
 
 
-  let mensagem =
-    "🍇 *NOVO PEDIDO — CANTINHO DO AÇAÍ*%0A%0A";
+  gerarConfirmacao();
 
 
-  mensagem +=
-    "*Cliente:* "+nome+"%0A";
-
-  mensagem +=
-    "*Mesa:* "+mesa+"%0A";
-
-  mensagem +=
-    "*Pagamento:* "+
-    pagamentoSelecionado+
-    "%0A%0A";
+  fecharModal(
+    "checkoutModal"
+  );
 
 
-  mensagem +=
-    "*Pedido:*%0A";
+  document
+    .getElementById(
+      "confirmationModal"
+    )
+    .classList.add("show");
+
+}
 
 
-  let total=0;
+/* =========================
+   GERAR CONFIRMAÇÃO
+========================= */
+
+function gerarConfirmacao(){
+
+  const nome =
+    document
+      .getElementById(
+        "customerName"
+      )
+      .value
+      .trim();
+
+
+  const mesa =
+    document
+      .getElementById(
+        "tableNumber"
+      )
+      .value
+      .trim();
+
+
+  const observacao =
+    document
+      .getElementById(
+        "observation"
+      )
+      .value
+      .trim();
+
+
+  const total =
+    calcularTotalCarrinho();
+
+
+  let html=`
+
+    <div class="confirm-item">
+
+      <div class="confirm-item-top">
+
+        <strong>
+          👤 Cliente
+        </strong>
+
+        <span>
+          ${nome}
+        </span>
+
+      </div>
+
+    </div>
+
+  `;
 
 
   carrinho.forEach(item=>{
 
     const subtotal =
-      item.preco*item.quantidade;
+      item.preco*
+      item.quantidade;
 
 
-    total += subtotal;
+    html+=`
 
+      <div class="confirm-item">
+
+        <div class="confirm-item-top">
+
+          <strong>
+            ${item.quantidade}x
+            ${item.nome}
+          </strong>
+
+          <span class="confirm-item-price">
+            ${formatarPreco(subtotal)}
+          </span>
+
+        </div>
+
+        ${
+          item.detalhes
+          ?
+          `<div class="confirm-details">
+            ${item.detalhes}
+          </div>`
+          :
+          ""
+        }
+
+      </div>
+
+    `;
+
+  });
+
+
+  html+=`
+
+    <div class="confirm-summary">
+
+      <div class="confirm-row">
+
+        <span>
+          🪑 Mesa
+        </span>
+
+        <strong>
+          ${mesa}
+        </strong>
+
+      </div>
+
+
+      <div class="confirm-row">
+
+        <span>
+          💳 Pagamento
+        </span>
+
+        <strong>
+          ${pagamentoSelecionado}
+        </strong>
+
+      </div>
+
+      ${
+        observacao
+        ?
+        `
+          <div class="confirm-row">
+
+            <span>
+              📝 Observação
+            </span>
+
+            <strong>
+              ${observacao}
+            </strong>
+
+          </div>
+        `
+        :
+        ""
+      }
+
+
+      <div class="confirm-total">
+
+        <span>
+          Total
+        </span>
+
+        <strong>
+          ${formatarPreco(total)}
+        </strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "confirmationContent"
+    )
+    .innerHTML=html;
+
+}
+
+
+/* =========================
+   VOLTAR PARA CHECKOUT
+========================= */
+
+function voltarParaCheckout(){
+
+  fecharModal(
+    "confirmationModal"
+  );
+
+
+  document
+    .getElementById(
+      "checkoutModal"
+    )
+    .classList.add("show");
+
+}
+
+
+/* =========================
+   ENVIAR WHATSAPP
+========================= */
+
+function confirmarEEnviarPedido(){
+
+  const nome =
+    document
+      .getElementById(
+        "customerName"
+      )
+      .value
+      .trim();
+
+
+  const mesa =
+    document
+      .getElementById(
+        "tableNumber"
+      )
+      .value
+      .trim();
+
+
+  const observacao =
+    document
+      .getElementById(
+        "observation"
+      )
+      .value
+      .trim();
+
+
+  let mensagem =
+    "🍇 *NOVO PEDIDO — CANTINHO DO AÇAÍ*\n\n";
+
+
+  mensagem +=
+    "*Cliente:* "+
+    nome+
+    "\n";
+
+
+  mensagem +=
+    "*Mesa:* "+
+    mesa+
+    "\n";
+
+
+  mensagem +=
+    "*Pagamento:* "+
+    pagamentoSelecionado+
+    "\n\n";
+
+
+  mensagem +=
+    "*PEDIDO:*\n";
+
+
+  carrinho.forEach(item=>{
 
     mensagem +=
       "• "+
       item.quantidade+
       "x "+
       item.nome+
-      " — "+
-      formatarPreco(item.preco);
+      "\n";
 
 
     if(item.detalhes){
 
       mensagem +=
-        " ("+
+        "   ↳ "+
         item.detalhes+
-        ")";
+        "\n";
 
     }
 
 
     mensagem +=
-      "%0A";
+      "   "+
+      formatarPreco(
+        item.preco*
+        item.quantidade
+      )+
+      "\n";
 
   });
 
 
   mensagem +=
-    "%0A*TOTAL:* "+
-    formatarPreco(total);
+    "\n*TOTAL:* "+
+    formatarPreco(
+      calcularTotalCarrinho()
+    );
 
 
   if(observacao){
 
     mensagem +=
-      "%0A%0A*Observação:* "+
+      "\n\n*Observação:* "+
       observacao;
 
   }
@@ -2754,7 +3644,7 @@ function enviarPedido(){
     WHATSAPP+
     "?text="+
     encodeURIComponent(
-      decodeURIComponent(mensagem)
+      mensagem
     );
 
 
@@ -2764,7 +3654,14 @@ function enviarPedido(){
   );
 
 
-  fecharModal("checkoutModal");
+  fecharModal(
+    "confirmationModal"
+  );
+
+
+  mostrarToast(
+    "Pedido preparado para o WhatsApp! 💜"
+  );
 
 }
 
