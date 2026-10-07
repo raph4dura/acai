@@ -63,15 +63,6 @@ body{
   }
 }
 
-@keyframes girar{
-  from{
-    transform:rotate(0deg);
-  }
-  to{
-    transform:rotate(360deg);
-  }
-}
-
 .aparecer{
   animation:aparecer .5s ease;
 }
@@ -827,6 +818,7 @@ footer{
 
     <div class="logo">
       <div class="logo-icon">🍇</div>
+
       <div>
         <h1>Cantinho do Açaí</h1>
         <small>Portão • Consumo no local</small>
@@ -846,6 +838,7 @@ footer{
 
   <section class="hero">
     <h2>Seu momento gostoso 💜</h2>
+
     <p>
       Açaí, xis, crepes, bebidas e muito mais.
       Faça seu pedido pelo celular e aproveite aqui no Cantinho!
@@ -854,35 +847,53 @@ footer{
 
 
   <div class="busca">
+
     <span>🔎</span>
+
     <input
       type="text"
       id="busca"
       placeholder="O que você está procurando?"
       oninput="buscarProdutos()"
     >
+
   </div>
 
 
   <div class="categorias">
 
-    <button class="categoria ativa" onclick="filtrar('Todos',this)">
+    <button
+      class="categoria ativa"
+      onclick="filtrar('Todos',this)"
+    >
       Todos
     </button>
 
-    <button class="categoria" onclick="filtrar('Açaí',this)">
+    <button
+      class="categoria"
+      onclick="filtrar('Açaí',this)"
+    >
       🍇 Açaí
     </button>
 
-    <button class="categoria" onclick="filtrar('Lanches',this)">
+    <button
+      class="categoria"
+      onclick="filtrar('Lanches',this)"
+    >
       🍔 Lanches
     </button>
 
-    <button class="categoria" onclick="filtrar('Bebidas',this)">
+    <button
+      class="categoria"
+      onclick="filtrar('Bebidas',this)"
+    >
       🥤 Bebidas
     </button>
 
-    <button class="categoria" onclick="filtrar('Complementos',this)">
+    <button
+      class="categoria"
+      onclick="filtrar('Complementos',this)"
+    >
       🍫 Complementos
     </button>
 
@@ -890,11 +901,20 @@ footer{
 
 
   <div class="titulo-secao">
-    <h2 id="tituloCardapio">Cardápio</h2>
+
+    <h2 id="tituloCardapio">
+      Cardápio
+    </h2>
+
     <span id="contadorProdutos"></span>
+
   </div>
 
-  <div class="produtos" id="produtos"></div>
+
+  <div
+    class="produtos"
+    id="produtos"
+  ></div>
 
 </main>
 
@@ -909,16 +929,26 @@ footer{
      MODAL AÇAÍ
 ========================= -->
 
-<div class="modal" id="modalAcai">
+<div
+  class="modal"
+  id="modalAcai"
+>
 
   <div class="modal-conteudo">
 
     <div class="modal-topo">
-      <h2>🍇 Monte seu Açaí</h2>
 
-      <button class="fechar" onclick="fecharModal('modalAcai')">
+      <h2>
+        🍇 Monte seu Açaí
+      </h2>
+
+      <button
+        class="fechar"
+        onclick="fecharModal('modalAcai')"
+      >
         ✕
       </button>
+
     </div>
 
 
@@ -926,19 +956,29 @@ footer{
       Escolha o tamanho
     </div>
 
+
     <div class="tamanho-grid">
 
-      <div class="tamanho selecionado" onclick="selecionarTamanho(this,300,14.90)">
+      <div
+        class="tamanho selecionado"
+        onclick="selecionarTamanho(this,300,14.90)"
+      >
         <strong>300 ml</strong>
         <small>R$ 14,90</small>
       </div>
 
-      <div class="tamanho" onclick="selecionarTamanho(this,500,19.90)">
+      <div
+        class="tamanho"
+        onclick="selecionarTamanho(this,500,19.90)"
+      >
         <strong>500 ml</strong>
         <small>R$ 19,90</small>
       </div>
 
-      <div class="tamanho" onclick="selecionarTamanho(this,700,24.90)">
+      <div
+        class="tamanho"
+        onclick="selecionarTamanho(this,700,24.90)"
+      >
         <strong>700 ml</strong>
         <small>R$ 24,90</small>
       </div>
@@ -950,44 +990,84 @@ footer{
       Escolha seus complementos
     </div>
 
+
     <div class="gratis-info">
       ✨ Os 3 primeiros complementos são grátis.
       A partir do 4º, há cobrança adicional.
     </div>
 
-    <div class="complementos" id="listaComplementos"></div>
+
+    <div
+      class="complementos"
+      id="listaComplementos"
+    ></div>
 
 
     <div class="resumo-montagem">
 
       <div class="resumo-linha">
-        <span>Tamanho</span>
-        <strong id="resumoTamanho">300 ml</strong>
+
+        <span>
+          Tamanho
+        </span>
+
+        <strong id="resumoTamanho">
+          300 ml
+        </strong>
+
       </div>
 
-      <div class="resumo-linha">
-        <span>Complementos</span>
-        <strong id="resumoComplementos">0</strong>
-      </div>
 
       <div class="resumo-linha">
-        <span>Extras</span>
-        <strong id="resumoExtras">R$ 0,00</strong>
+
+        <span>
+          Complementos
+        </span>
+
+        <strong id="resumoComplementos">
+          0
+        </strong>
+
       </div>
+
+
+      <div class="resumo-linha">
+
+        <span>
+          Extras
+        </span>
+
+        <strong id="resumoExtras">
+          R$ 0,00
+        </strong>
+
+      </div>
+
 
       <div class="resumo-total">
-        <span>Total</span>
-        <span id="resumoTotal">R$ 14,90</span>
+
+        <span>
+          Total
+        </span>
+
+        <span id="resumoTotal">
+          R$ 14,90
+        </span>
+
       </div>
 
     </div>
 
 
-    <button class="btn-principal" onclick="adicionarAcai()">
+    <button
+      class="btn-principal"
+      onclick="adicionarAcai()"
+    >
       Adicionar Açaí ao pedido
     </button>
 
   </div>
+
 </div>
 
 
@@ -995,32 +1075,59 @@ footer{
      MODAL CARRINHO
 ========================= -->
 
-<div class="modal" id="modalCarrinho">
+<div
+  class="modal"
+  id="modalCarrinho"
+>
 
   <div class="modal-conteudo">
 
     <div class="modal-topo">
-      <h2>🛒 Seu pedido</h2>
 
-      <button class="fechar" onclick="fecharModal('modalCarrinho')">
+      <h2>
+        🛒 Seu pedido
+      </h2>
+
+      <button
+        class="fechar"
+        onclick="fecharModal('modalCarrinho')"
+      >
         ✕
       </button>
+
     </div>
+
 
     <div id="listaCarrinho"></div>
 
-    <div id="areaCheckout" style="display:none">
+
+    <div
+      id="areaCheckout"
+      style="display:none"
+    >
 
       <div class="resumo-montagem">
+
         <div class="resumo-total">
-          <span>Total</span>
-          <span id="totalCarrinho">R$ 0,00</span>
+
+          <span>
+            Total
+          </span>
+
+          <span id="totalCarrinho">
+            R$ 0,00
+          </span>
+
         </div>
+
       </div>
 
 
       <div class="campo">
-        <label>Número da mesa *</label>
+
+        <label>
+          Número da mesa *
+        </label>
 
         <input
           type="number"
@@ -1028,26 +1135,39 @@ footer{
           placeholder="Ex.: 12"
           min="1"
         >
+
       </div>
 
 
       <div class="campo">
-        <label>Forma de pagamento *</label>
+
+        <label>
+          Forma de pagamento *
+        </label>
+
 
         <div class="pagamentos">
 
-          <div class="pagamento selecionado"
-               onclick="selecionarPagamento(this,'Pix')">
+          <div
+            class="pagamento selecionado"
+            onclick="selecionarPagamento(this,'Pix')"
+          >
             💜 Pix
           </div>
 
-          <div class="pagamento"
-               onclick="selecionarPagamento(this,'Dinheiro')">
+
+          <div
+            class="pagamento"
+            onclick="selecionarPagamento(this,'Dinheiro')"
+          >
             💵 Dinheiro
           </div>
 
-          <div class="pagamento"
-               onclick="selecionarPagamento(this,'Cartão')">
+
+          <div
+            class="pagamento"
+            onclick="selecionarPagamento(this,'Cartão')"
+          >
             💳 Cartão
           </div>
 
@@ -1057,22 +1177,30 @@ footer{
 
 
       <div class="campo">
-        <label>Observação</label>
+
+        <label>
+          Observação
+        </label>
 
         <textarea
           id="observacao"
           placeholder="Ex.: pouco açúcar, sem gelo..."
         ></textarea>
+
       </div>
 
 
-      <button class="btn-principal" onclick="abrirConfirmacao()">
+      <button
+        class="btn-principal"
+        onclick="abrirConfirmacao()"
+      >
         Conferir pedido
       </button>
 
     </div>
 
   </div>
+
 </div>
 
 
@@ -1080,15 +1208,23 @@ footer{
      MODAL CONFIRMAÇÃO
 ========================= -->
 
-<div class="modal" id="modalConfirmacao">
+<div
+  class="modal"
+  id="modalConfirmacao"
+>
 
   <div class="modal-conteudo">
 
     <div class="modal-topo">
 
-      <h2>Confira seu pedido</h2>
+      <h2>
+        Confira seu pedido
+      </h2>
 
-      <button class="fechar" onclick="fecharModal('modalConfirmacao')">
+      <button
+        class="fechar"
+        onclick="fecharModal('modalConfirmacao')"
+      >
         ✕
       </button>
 
@@ -1101,23 +1237,34 @@ footer{
         🧾
       </div>
 
-      <h2>Está tudo certo?</h2>
+
+      <h2>
+        Está tudo certo?
+      </h2>
+
 
       <p>
         Confira os dados abaixo antes de enviar seu pedido.
       </p>
 
 
-      <div class="pedido-resumo" id="pedidoResumo"></div>
+      <div
+        class="pedido-resumo"
+        id="pedidoResumo"
+      ></div>
 
 
-      <button class="btn-principal whatsapp" onclick="enviarWhatsApp()">
+      <button
+        class="btn-principal whatsapp"
+        onclick="enviarWhatsApp()"
+      >
         📲 Enviar pedido pelo WhatsApp
       </button>
 
     </div>
 
   </div>
+
 </div>
 
 
@@ -1126,6 +1273,19 @@ footer{
 /* ==========================================
    CONFIGURAÇÕES
 ========================================== */
+
+/*
+  Número do WhatsApp do estabelecimento.
+
+  Formato:
+  55 + DDD + número
+
+  Sem:
+  +
+  espaços
+  parênteses
+  hífen
+*/
 
 const WHATSAPP = "5551980535187";
 
@@ -1136,8 +1296,6 @@ const WHATSAPP = "5551980535187";
 
 const produtos = [
 
-  /* AÇAÍ */
-
   {
     id:"acai",
     nome:"Açaí",
@@ -1147,9 +1305,6 @@ const produtos = [
     icone:"🍇",
     acai:true
   },
-
-
-  /* LANCHES */
 
   {
     id:"xis-salada",
@@ -1205,9 +1360,6 @@ const produtos = [
     icone:"🍔"
   },
 
-
-  /* CREPES */
-
   {
     id:"crepe-chocolate",
     nome:"Crepe de Chocolate",
@@ -1261,9 +1413,6 @@ const produtos = [
     categoria:"Lanches",
     icone:"🧀"
   },
-
-
-  /* BEBIDAS */
 
   {
     id:"agua",
@@ -1327,9 +1476,6 @@ const produtos = [
     categoria:"Bebidas",
     icone:"🍊"
   },
-
-
-  /* COMPLEMENTOS */
 
   {
     id:"banana",
@@ -1472,10 +1618,12 @@ document.addEventListener("DOMContentLoaded",function(){
 
 function renderProdutos(){
 
-  const container = document.getElementById("produtos");
+  const container =
+    document.getElementById("produtos");
 
   const busca =
-    document.getElementById("busca").value
+    document.getElementById("busca")
+    .value
     .toLowerCase()
     .trim();
 
@@ -1487,8 +1635,13 @@ function renderProdutos(){
       produto.categoria === categoriaAtual;
 
     const buscaOK =
-      produto.nome.toLowerCase().includes(busca) ||
-      produto.descricao.toLowerCase().includes(busca);
+      produto.nome
+        .toLowerCase()
+        .includes(busca) ||
+
+      produto.descricao
+        .toLowerCase()
+        .includes(busca);
 
     return categoriaOK && buscaOK;
 
@@ -1496,42 +1649,66 @@ function renderProdutos(){
 
 
   document.getElementById("contadorProdutos").textContent =
-    lista.length + (lista.length === 1 ? " item" : " itens");
+    lista.length +
+    (lista.length === 1 ? " item" : " itens");
 
 
   if(lista.length === 0){
 
     container.innerHTML = `
+
       <div style="
         grid-column:1/-1;
         text-align:center;
         padding:40px 10px;
         color:#83768d;
       ">
-        <div style="font-size:45px;margin-bottom:10px">🔎</div>
-        <strong>Nenhum item encontrado</strong>
-        <p style="margin-top:5px;font-size:13px">
+
+        <div style="
+          font-size:45px;
+          margin-bottom:10px
+        ">
+          🔎
+        </div>
+
+        <strong>
+          Nenhum item encontrado
+        </strong>
+
+        <p style="
+          margin-top:5px;
+          font-size:13px
+        ">
           Tente pesquisar outro nome.
         </p>
+
       </div>
+
     `;
 
     return;
+
   }
 
 
-  container.innerHTML = lista.map((produto,index) => {
+  container.innerHTML = lista.map((produto,index)=>{
 
     if(produto.acai){
 
       return `
-        <div class="produto acai-card" style="animation-delay:${index * 0.04}s">
+
+        <div
+          class="produto acai-card"
+          style="animation-delay:${index * 0.04}s"
+        >
 
           <div class="produto-icone">
             ${produto.icone}
           </div>
 
-          <h3>${produto.nome}</h3>
+          <h3>
+            ${produto.nome}
+          </h3>
 
           <p>
             ${produto.descricao}
@@ -1546,19 +1723,26 @@ function renderProdutos(){
           </button>
 
         </div>
+
       `;
 
     }
 
 
     return `
-      <div class="produto" style="animation-delay:${index * 0.04}s">
+
+      <div
+        class="produto"
+        style="animation-delay:${index * 0.04}s"
+      >
 
         <div class="produto-icone">
           ${produto.icone}
         </div>
 
-        <h3>${produto.nome}</h3>
+        <h3>
+          ${produto.nome}
+        </h3>
 
         <p>
           ${produto.descricao}
@@ -1568,11 +1752,14 @@ function renderProdutos(){
           R$ ${formatarMoeda(produto.preco)}
         </div>
 
-        <button onclick="adicionarProduto('${produto.id}')">
+        <button
+          onclick="adicionarProduto('${produto.id}')"
+        >
           Adicionar
         </button>
 
       </div>
+
     `;
 
   }).join("");
@@ -1588,21 +1775,26 @@ function filtrar(categoria,botao){
 
   categoriaAtual = categoria;
 
-  document.querySelectorAll(".categoria").forEach(btn=>{
-    btn.classList.remove("ativa");
-  });
+  document
+    .querySelectorAll(".categoria")
+    .forEach(btn=>{
+      btn.classList.remove("ativa");
+    });
 
   botao.classList.add("ativa");
 
-  document.getElementById("tituloCardapio").textContent =
-    categoria === "Todos"
-      ? "Cardápio"
-      : categoria;
+  document.getElementById("tituloCardapio")
+    .textContent =
+      categoria === "Todos"
+        ? "Cardápio"
+        : categoria;
 
   renderProdutos();
 
   window.scrollTo({
-    top:document.querySelector(".categorias").offsetTop - 80,
+    top:
+      document.querySelector(".categorias")
+        .offsetTop - 80,
     behavior:"smooth"
   });
 
@@ -1633,15 +1825,22 @@ function abrirAcai(){
 
   complementosAcai = [];
 
-  document.querySelectorAll(".tamanho").forEach((item,index)=>{
-    item.classList.toggle("selecionado",index === 0);
-  });
+  document
+    .querySelectorAll(".tamanho")
+    .forEach((item,index)=>{
+      item.classList.toggle(
+        "selecionado",
+        index === 0
+      );
+    });
 
   renderComplementos();
 
   atualizarResumoAcai();
 
-  document.getElementById("modalAcai").classList.add("ativo");
+  document
+    .getElementById("modalAcai")
+    .classList.add("ativo");
 
 }
 
@@ -1657,9 +1856,11 @@ function selecionarTamanho(elemento,ml,preco){
     preco:preco
   };
 
-  document.querySelectorAll(".tamanho").forEach(item=>{
-    item.classList.remove("selecionado");
-  });
+  document
+    .querySelectorAll(".tamanho")
+    .forEach(item=>{
+      item.classList.remove("selecionado");
+    });
 
   elemento.classList.add("selecionado");
 
@@ -1675,36 +1876,46 @@ function selecionarTamanho(elemento,ml,preco){
 function renderComplementos(){
 
   const container =
-    document.getElementById("listaComplementos");
+    document.getElementById(
+      "listaComplementos"
+    );
 
 
-  container.innerHTML = complementos.map((item,index)=>{
+  container.innerHTML =
+    complementos.map((item,index)=>{
 
-    const selecionado =
-      complementosAcai.includes(index);
+      const selecionado =
+        complementosAcai.includes(index);
 
-    return `
+      return `
 
-      <div
-        class="complemento ${selecionado ? "selecionado" : ""}"
-        onclick="toggleComplemento(${index})"
-      >
+        <div
+          class="complemento ${
+            selecionado
+              ? "selecionado"
+              : ""
+          }"
+          onclick="toggleComplemento(${index})"
+        >
 
-        <span>
-          ${item.icone} ${item.nome}
-        </span>
+          <span>
+            ${item.icone} ${item.nome}
+          </span>
 
-        <small>
-          ${item.preco === 0
-            ? "Grátis"
-            : "+ R$ " + formatarMoeda(item.preco)}
-        </small>
+          <small>
+            ${
+              item.preco === 0
+                ? "Grátis"
+                : "+ R$ " +
+                  formatarMoeda(item.preco)
+            }
+          </small>
 
-      </div>
+        </div>
 
-    `;
+      `;
 
-  }).join("");
+    }).join("");
 
 }
 
@@ -1721,7 +1932,10 @@ function toggleComplemento(index){
 
   if(posicao >= 0){
 
-    complementosAcai.splice(posicao,1);
+    complementosAcai.splice(
+      posicao,
+      1
+    );
 
   }else{
 
@@ -1750,29 +1964,44 @@ function atualizarResumoAcai(){
   const extras =
     complementosAcai
       .slice(3)
-      .reduce((total,index)=>{
-        return total + complementos[index].preco;
-      },0);
+      .reduce(
+        (total,index)=>{
+          return total +
+            complementos[index].preco;
+        },
+        0
+      );
 
 
   const total =
-    tamanhoAcai.preco + extras;
+    tamanhoAcai.preco +
+    extras;
 
 
-  document.getElementById("resumoTamanho").textContent =
+  document.getElementById(
+    "resumoTamanho"
+  ).textContent =
     tamanhoAcai.ml + " ml";
 
 
-  document.getElementById("resumoComplementos").textContent =
+  document.getElementById(
+    "resumoComplementos"
+  ).textContent =
     quantidade;
 
 
-  document.getElementById("resumoExtras").textContent =
-    "R$ " + formatarMoeda(extras);
+  document.getElementById(
+    "resumoExtras"
+  ).textContent =
+    "R$ " +
+    formatarMoeda(extras);
 
 
-  document.getElementById("resumoTotal").textContent =
-    "R$ " + formatarMoeda(total);
+  document.getElementById(
+    "resumoTotal"
+  ).textContent =
+    "R$ " +
+    formatarMoeda(total);
 
 }
 
@@ -1786,18 +2015,24 @@ function adicionarAcai(){
   const extras =
     complementosAcai
       .slice(3)
-      .reduce((total,index)=>{
-        return total + complementos[index].preco;
-      },0);
+      .reduce(
+        (total,index)=>{
+          return total +
+            complementos[index].preco;
+        },
+        0
+      );
 
 
   const total =
-    tamanhoAcai.preco + extras;
+    tamanhoAcai.preco +
+    extras;
 
 
   const nomesComplementos =
-    complementosAcai.map(index =>
-      complementos[index].nome
+    complementosAcai.map(
+      index =>
+        complementos[index].nome
     );
 
 
@@ -1805,7 +2040,10 @@ function adicionarAcai(){
 
     id:"acai-" + Date.now(),
 
-    nome:"Açaí " + tamanhoAcai.ml + "ml",
+    nome:
+      "Açaí " +
+      tamanhoAcai.ml +
+      "ml",
 
     preco:total,
 
@@ -1813,7 +2051,8 @@ function adicionarAcai(){
 
     detalhes:
       nomesComplementos.length
-        ? "Complementos: " + nomesComplementos.join(", ")
+        ? "Complementos: " +
+          nomesComplementos.join(", ")
         : "Sem complementos"
 
   });
@@ -1822,6 +2061,10 @@ function adicionarAcai(){
   atualizarBadge();
 
   fecharModal("modalAcai");
+
+  mostrarAviso(
+    "Açaí adicionado!"
+  );
 
 }
 
@@ -1833,15 +2076,19 @@ function adicionarAcai(){
 function adicionarProduto(id){
 
   const produto =
-    produtos.find(item => item.id === id);
+    produtos.find(
+      item => item.id === id
+    );
 
 
-  if(!produto) return;
+  if(!produto){
+    return;
+  }
 
 
   const existente =
-    carrinho.find(item =>
-      item.id === produto.id
+    carrinho.find(
+      item => item.id === produto.id
     );
 
 
@@ -1870,7 +2117,9 @@ function adicionarProduto(id){
 
   atualizarBadge();
 
-  mostrarAviso(produto.nome);
+  mostrarAviso(
+    produto.nome
+  );
 
 }
 
@@ -1886,23 +2135,48 @@ function mostrarAviso(nome){
 
 
   aviso.textContent =
-    "✓ " + nome + " adicionado!";
+    "✓ " +
+    nome +
+    " adicionado!";
 
 
-  aviso.style.position = "fixed";
-  aviso.style.bottom = "25px";
-  aviso.style.left = "50%";
-  aviso.style.transform = "translateX(-50%)";
-  aviso.style.background = "#241735";
-  aviso.style.color = "white";
-  aviso.style.padding = "12px 18px";
-  aviso.style.borderRadius = "999px";
-  aviso.style.zIndex = "300";
-  aviso.style.fontSize = "13px";
-  aviso.style.boxShadow = "0 8px 25px rgba(0,0,0,.2)";
+  aviso.style.position =
+    "fixed";
+
+  aviso.style.bottom =
+    "25px";
+
+  aviso.style.left =
+    "50%";
+
+  aviso.style.transform =
+    "translateX(-50%)";
+
+  aviso.style.background =
+    "#241735";
+
+  aviso.style.color =
+    "white";
+
+  aviso.style.padding =
+    "12px 18px";
+
+  aviso.style.borderRadius =
+    "999px";
+
+  aviso.style.zIndex =
+    "300";
+
+  aviso.style.fontSize =
+    "13px";
+
+  aviso.style.boxShadow =
+    "0 8px 25px rgba(0,0,0,.2)";
 
 
-  document.body.appendChild(aviso);
+  document.body.appendChild(
+    aviso
+  );
 
 
   setTimeout(()=>{
@@ -1920,12 +2194,16 @@ function atualizarBadge(){
 
   const quantidade =
     carrinho.reduce(
-      (total,item)=>total + item.quantidade,
+      (total,item)=>
+        total +
+        item.quantidade,
       0
     );
 
 
-  document.getElementById("badge").textContent =
+  document.getElementById(
+    "badge"
+  ).textContent =
     quantidade;
 
 }
@@ -1939,7 +2217,8 @@ function abrirCarrinho(){
 
   renderCarrinho();
 
-  document.getElementById("modalCarrinho")
+  document
+    .getElementById("modalCarrinho")
     .classList.add("ativo");
 
 }
@@ -1948,11 +2227,15 @@ function abrirCarrinho(){
 function renderCarrinho(){
 
   const container =
-    document.getElementById("listaCarrinho");
+    document.getElementById(
+      "listaCarrinho"
+    );
 
 
   const areaCheckout =
-    document.getElementById("areaCheckout");
+    document.getElementById(
+      "areaCheckout"
+    );
 
 
   if(carrinho.length === 0){
@@ -1961,9 +2244,13 @@ function renderCarrinho(){
 
       <div class="carrinho-vazio">
 
-        <div>🛒</div>
+        <div>
+          🛒
+        </div>
 
-        <strong>Seu carrinho está vazio</strong>
+        <strong>
+          Seu carrinho está vazio
+        </strong>
 
         <p style="margin-top:5px">
           Escolha alguma coisa deliciosa! 😋
@@ -1973,7 +2260,8 @@ function renderCarrinho(){
 
     `;
 
-    areaCheckout.style.display = "none";
+    areaCheckout.style.display =
+      "none";
 
     return;
 
@@ -1981,7 +2269,8 @@ function renderCarrinho(){
 
 
   container.innerHTML =
-    carrinho.map((item,index)=>`
+    carrinho.map(
+      (item,index)=>`
 
       <div class="carrinho-item">
 
@@ -2001,7 +2290,13 @@ function renderCarrinho(){
             font-weight:bold;
             font-size:13px;
           ">
-            R$ ${formatarMoeda(item.preco * item.quantidade)}
+
+            R$
+            ${formatarMoeda(
+              item.preco *
+              item.quantidade
+            )}
+
           </div>
 
         </div>
@@ -2009,7 +2304,9 @@ function renderCarrinho(){
 
         <div class="quantidade">
 
-          <button onclick="alterarQuantidade(${index},-1)">
+          <button
+            onclick="alterarQuantidade(${index},-1)"
+          >
             −
           </button>
 
@@ -2017,7 +2314,9 @@ function renderCarrinho(){
             ${item.quantidade}
           </span>
 
-          <button onclick="alterarQuantidade(${index},1)">
+          <button
+            onclick="alterarQuantidade(${index},1)"
+          >
             +
           </button>
 
@@ -2032,11 +2331,15 @@ function renderCarrinho(){
     calcularTotal();
 
 
-  document.getElementById("totalCarrinho").textContent =
-    "R$ " + formatarMoeda(total);
+  document.getElementById(
+    "totalCarrinho"
+  ).textContent =
+    "R$ " +
+    formatarMoeda(total);
 
 
-  areaCheckout.style.display = "block";
+  areaCheckout.style.display =
+    "block";
 
 }
 
@@ -2045,14 +2348,23 @@ function renderCarrinho(){
    QUANTIDADE
 ========================================== */
 
-function alterarQuantidade(index,alteracao){
+function alterarQuantidade(
+  index,
+  alteracao
+){
 
-  carrinho[index].quantidade += alteracao;
+  carrinho[index].quantidade +=
+    alteracao;
 
 
-  if(carrinho[index].quantidade <= 0){
+  if(
+    carrinho[index].quantidade <= 0
+  ){
 
-    carrinho.splice(index,1);
+    carrinho.splice(
+      index,
+      1
+    );
 
   }
 
@@ -2072,7 +2384,9 @@ function calcularTotal(){
 
   return carrinho.reduce(
     (total,item)=>
-      total + item.preco * item.quantidade,
+      total +
+      item.preco *
+      item.quantidade,
     0
   );
 
@@ -2083,18 +2397,27 @@ function calcularTotal(){
    PAGAMENTO
 ========================================== */
 
-function selecionarPagamento(elemento,pagamento){
+function selecionarPagamento(
+  elemento,
+  pagamento
+){
 
-  pagamentoSelecionado = pagamento;
+  pagamentoSelecionado =
+    pagamento;
 
 
-  document.querySelectorAll(".pagamento")
+  document
+    .querySelectorAll(".pagamento")
     .forEach(item=>{
-      item.classList.remove("selecionado");
+      item.classList.remove(
+        "selecionado"
+      );
     });
 
 
-  elemento.classList.add("selecionado");
+  elemento.classList.add(
+    "selecionado"
+  );
 
 }
 
@@ -2107,7 +2430,9 @@ function abrirConfirmacao(){
 
   if(carrinho.length === 0){
 
-    alert("Seu carrinho está vazio.");
+    alert(
+      "Seu carrinho está vazio."
+    );
 
     return;
 
@@ -2115,14 +2440,21 @@ function abrirConfirmacao(){
 
 
   const mesa =
-    document.getElementById("mesa").value.trim();
+    document
+      .getElementById("mesa")
+      .value
+      .trim();
 
 
   if(!mesa){
 
-    alert("Informe o número da mesa.");
+    alert(
+      "Informe o número da mesa."
+    );
 
-    document.getElementById("mesa").focus();
+    document
+      .getElementById("mesa")
+      .focus();
 
     return;
 
@@ -2130,7 +2462,10 @@ function abrirConfirmacao(){
 
 
   const observacao =
-    document.getElementById("observacao").value.trim();
+    document
+      .getElementById("observacao")
+      .value
+      .trim();
 
 
   const total =
@@ -2138,182 +2473,200 @@ function abrirConfirmacao(){
 
 
   const itens =
-    carrinho.map(item=>`
+    carrinho.map(
+      item=>`
 
       <div class="pedido-resumo-item">
 
         <span>
-          ${item.quantidade}x ${item.nome}
+
+          ${item.quantidade}x
+          ${item.nome}
+
           ${
             item.detalhes
-              ? `<br><small style="color:#887b91">${item.detalhes}</small>`
+              ? `
+                <br>
+                <small style="
+                  color:#887b91
+                ">
+                  ${item.detalhes}
+                </small>
+              `
               : ""
           }
+
         </span>
 
         <strong>
-          R$ ${formatarMoeda(item.preco * item.quantidade)}
+          R$
+          ${formatarMoeda(
+            item.preco *
+            item.quantidade
+          )}
         </strong>
 
       </div>
 
-    `).join("");
+    `
+    ).join("");
 
 
-  document.getElementById("pedidoResumo").innerHTML = `
+  document.getElementById(
+    "pedidoResumo"
+  ).innerHTML = `
 
     ${itens}
 
     <div class="pedido-resumo-item">
-      <span>Mesa</span>
-      <strong>${mesa}</strong>
+
+      <span>
+        Mesa
+      </span>
+
+      <strong>
+        ${mesa}
+      </strong>
+
     </div>
 
+
     <div class="pedido-resumo-item">
-      <span>Pagamento</span>
-      <strong>${pagamentoSelecionado}</strong>
+
+      <span>
+        Pagamento
+      </span>
+
+      <strong>
+        ${pagamentoSelecionado}
+      </strong>
+
     </div>
+
 
     ${
       observacao
-      ? `
-        <div class="pedido-resumo-item">
-          <span>Observação</span>
-          <strong>${observacao}</strong>
-        </div>
-      `
-      : ""
+        ? `
+          <div class="pedido-resumo-item">
+
+            <span>
+              Observação
+            </span>
+
+            <strong>
+              ${observacao}
+            </strong>
+
+          </div>
+        `
+        : ""
     }
 
+
     <div class="pedido-resumo-total">
-      <span>Total</span>
-      <span>R$ ${formatarMoeda(total)}</span>
+
+      <span>
+        Total
+      </span>
+
+      <span>
+        R$
+        ${formatarMoeda(total)}
+      </span>
+
     </div>
 
   `;
 
 
-  document.getElementById("modalCarrinho")
+  document
+    .getElementById(
+      "modalCarrinho"
+    )
     .classList.remove("ativo");
 
 
-  document.getElementById("modalConfirmacao")
+  document
+    .getElementById(
+      "modalConfirmacao"
+    )
     .classList.add("ativo");
 
 }
 
 
 /* ==========================================
-   ENVIAR WHATSAPP
-========================================== */
-
-
-
-<script>
-function enviarPedidoWhatsApp() {
-
-    const numero = "5551999999999"; // coloque aqui o número do estabelecimento
-
-    const pedido = `
-🍧 *NOVO PEDIDO — CANTINHO DO AÇAÍ*
-
-📋 *Pedido:*
-Açaí 500ml
-Granola
-Leite condensado
-Banana
-
-💰 *Total:* R$ 25,00
-
-📍 *Entrega/Retirada:*
-Retirada no local
-
-👤 *Nome:* João
-`;
-
-    const mensagem = encodeURIComponent(pedido);
-
-    window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
-}
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* ==========================================
-   ENVIAR PEDIDO PARA O NEON
+   SALVAR PEDIDO NO NEON
 ========================================== */
 
 async function salvarPedidoNoNeon(){
 
   const mesa =
-    document.getElementById("mesa").value.trim();
+    document
+      .getElementById("mesa")
+      .value
+      .trim();
+
 
   const observacao =
-    document.getElementById("observacao").value.trim();
+    document
+      .getElementById("observacao")
+      .value
+      .trim();
+
 
   const total =
     calcularTotal();
 
+
   /*
     Número temporário do pedido.
-    Depois vamos criar uma numeração automática no banco.
+    Depois podemos trocar por uma
+    numeração automática no banco.
   */
 
   const numeroPedido =
     Date.now();
 
-  try {
+
+  try{
 
     /* ==============================
        CRIA O PEDIDO
     ============================== */
 
-    const respostaPedido = await fetch(
-      "/api/pedidos",
-      {
-        method:"POST",
+    const respostaPedido =
+      await fetch(
+        "/api/pedidos",
+        {
+          method:"POST",
 
-        headers:{
-          "Content-Type":"application/json"
-        },
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
 
-        body:JSON.stringify({
+          body:JSON.stringify({
 
-          numero_pedido:numeroPedido,
+            numero_pedido:
+              numeroPedido,
 
-          mesa:Number(mesa),
+            mesa:
+              Number(mesa),
 
-          pagamento:pagamentoSelecionado,
+            pagamento:
+              pagamentoSelecionado,
 
-          observacao:observacao || null,
+            observacao:
+              observacao || null,
 
-          total:total
+            total:
+              total
 
-        })
+          })
 
-      }
-    );
+        }
+      );
 
 
     const dadosPedido =
@@ -2338,33 +2691,43 @@ async function salvarPedidoNoNeon(){
        SALVA CADA ITEM
     ============================== */
 
-    for(const item of carrinho){
+    for(
+      const item of carrinho
+    ){
 
-      const respostaItem = await fetch(
-        "/api/itens",
-        {
-          method:"POST",
+      const respostaItem =
+        await fetch(
+          "/api/itens",
+          {
+            method:"POST",
 
-          headers:{
-            "Content-Type":"application/json"
-          },
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
 
-          body:JSON.stringify({
+            body:JSON.stringify({
 
-            pedido_id:pedido.id,
+              pedido_id:
+                pedido.id,
 
-            produto:item.nome,
+              produto:
+                item.nome,
 
-            quantidade:item.quantidade,
+              quantidade:
+                item.quantidade,
 
-            detalhes:item.detalhes || null,
+              detalhes:
+                item.detalhes ||
+                null,
 
-            preco:item.preco
+              preco:
+                item.preco
 
-          })
+            })
 
-        }
-      );
+          }
+        );
 
 
       const dadosItem =
@@ -2386,16 +2749,18 @@ async function salvarPedidoNoNeon(){
     return pedido;
 
 
-  } catch(erro){
+  }catch(erro){
 
     console.error(
       "Erro ao salvar pedido:",
       erro
     );
 
+
     alert(
       "Não foi possível registrar o pedido. Tente novamente."
     );
+
 
     return null;
 
@@ -2403,36 +2768,62 @@ async function salvarPedidoNoNeon(){
 
 }
 
+
+/* ==========================================
+   ENVIAR WHATSAPP
+========================================== */
+
 async function enviarWhatsApp(){
 
-    const pedidoSalvo =
+  /*
+    Primeiro registra o pedido no Neon.
+  */
+
+  const pedidoSalvo =
     await salvarPedidoNoNeon();
 
+
   if(!pedidoSalvo){
+
     return;
+
   }
 
+
   const mesa =
-    document.getElementById("mesa").value.trim();
+    document
+      .getElementById("mesa")
+      .value
+      .trim();
 
 
   const observacao =
-    document.getElementById("observacao").value.trim();
+    document
+      .getElementById("observacao")
+      .value
+      .trim();
 
 
   const total =
     calcularTotal();
 
 
+  /*
+    Monta a mensagem.
+  */
+
   let mensagem =
     "🍇 *CANTINHO DO AÇAÍ*%0A";
+
 
   mensagem +=
     "📍 Pedido para consumo no local%0A%0A";
 
 
   mensagem +=
-    "🪑 *Mesa:* " + mesa + "%0A";
+    "🪑 *Mesa:* " +
+    mesa +
+    "%0A";
 
 
   mensagem +=
@@ -2453,7 +2844,10 @@ async function enviarWhatsApp(){
       "x " +
       item.nome +
       " — R$ " +
-      formatarMoeda(item.preco * item.quantidade);
+      formatarMoeda(
+        item.preco *
+        item.quantidade
+      );
 
 
     if(item.detalhes){
@@ -2465,7 +2859,8 @@ async function enviarWhatsApp(){
     }
 
 
-    mensagem += "%0A";
+    mensagem +=
+      "%0A";
 
   });
 
@@ -2489,6 +2884,10 @@ async function enviarWhatsApp(){
     "%0A%0AObrigado! 💜";
 
 
+  /*
+    Cria o endereço do WhatsApp.
+  */
+
   const url =
     "https://wa.me/" +
     WHATSAPP +
@@ -2496,10 +2895,19 @@ async function enviarWhatsApp(){
     mensagem;
 
 
-  window.open(url,"_blank");
+  /*
+    Abre o WhatsApp.
+  */
+
+  window.open(
+    url,
+    "_blank"
+  );
 
 
-  fecharModal("modalConfirmacao");
+  fecharModal(
+    "modalConfirmacao"
+  );
 
 }
 
@@ -2521,19 +2929,28 @@ function fecharModal(id){
    FECHAR CLICANDO FORA
 ========================================== */
 
-document.querySelectorAll(".modal").forEach(modal=>{
+document
+  .querySelectorAll(".modal")
+  .forEach(modal=>{
 
-  modal.addEventListener("click",function(event){
+    modal.addEventListener(
+      "click",
+      function(event){
 
-    if(event.target === modal){
+        if(
+          event.target === modal
+        ){
 
-      modal.classList.remove("ativo");
+          modal.classList.remove(
+            "ativo"
+          );
 
-    }
+        }
+
+      }
+    );
 
   });
-
-});
 
 
 /* ==========================================
@@ -2542,7 +2959,9 @@ document.querySelectorAll(".modal").forEach(modal=>{
 
 function formatarMoeda(valor){
 
-  return valor.toFixed(2).replace(".",",");
+  return valor
+    .toFixed(2)
+    .replace(".",",");
 
 }
 
