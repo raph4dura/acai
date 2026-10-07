@@ -2209,7 +2209,33 @@ function abrirConfirmacao(){
 
 
 
+<script>
+function enviarPedidoWhatsApp() {
 
+    const numero = "5551999999999"; // coloque aqui o número do estabelecimento
+
+    const pedido = `
+🍧 *NOVO PEDIDO — CANTINHO DO AÇAÍ*
+
+📋 *Pedido:*
+Açaí 500ml
+Granola
+Leite condensado
+Banana
+
+💰 *Total:* R$ 25,00
+
+📍 *Entrega/Retirada:*
+Retirada no local
+
+👤 *Nome:* João
+`;
+
+    const mensagem = encodeURIComponent(pedido);
+
+    window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+}
+</script>
 
 
 
