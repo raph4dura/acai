@@ -2207,7 +2207,157 @@ function abrirConfirmacao(){
    ENVIAR WHATSAPP
 ========================================== */
 
-function enviarWhatsApp(){
+  /* ==========================================
+   ENVIAR PEDIDO PARA O NEON
+========================================== */
+
+async function salvarPedidoNoNeon(){
+
+  const mesa =
+    document.getElementById("mesa").value.trim();
+
+  const observacao =
+    document.getElementById("observacao").value.trim();
+
+  const total =
+    calcularTotal();
+
+  /*
+    Número temporário do pedido.
+    Depois vamos criar uma numeração automática no banco.
+  */
+
+  const numeroPedido =
+    Date.now();
+
+  try {
+
+    /* ==============================
+       CRIA O PEDIDO
+    ============================== */
+
+    const respostaPedido = await fetch(
+      "/api/pedidos",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+          numero_pedido:numeroPedido,
+
+          mesa:Number(mesa),
+
+          pagamento:pagamentoSelecionado,
+
+          observacao:observacao || null,
+
+          total:total
+
+        })
+
+      }
+    );
+
+
+    const dadosPedido =
+      await respostaPedido.json();
+
+
+    if(!respostaPedido.ok){
+
+      throw new Error(
+        dadosPedido.erro ||
+        "Erro ao criar pedido."
+      );
+
+    }
+
+
+    const pedido =
+      dadosPedido.pedido;
+
+
+    /* ==============================
+       SALVA CADA ITEM
+    ============================== */
+
+    for(const item of carrinho){
+
+      const respostaItem = await fetch(
+        "/api/itens",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":"application/json"
+          },
+
+          body:JSON.stringify({
+
+            pedido_id:pedido.id,
+
+            produto:item.nome,
+
+            quantidade:item.quantidade,
+
+            detalhes:item.detalhes || null,
+
+            preco:item.preco
+
+          })
+
+        }
+      );
+
+
+      const dadosItem =
+        await respostaItem.json();
+
+
+      if(!respostaItem.ok){
+
+        throw new Error(
+          dadosItem.erro ||
+          "Erro ao salvar item do pedido."
+        );
+
+      }
+
+    }
+
+
+    return pedido;
+
+
+  } catch(erro){
+
+    console.error(
+      "Erro ao salvar pedido:",
+      erro
+    );
+
+    alert(
+      "Não foi possível registrar o pedido. Tente novamente."
+    );
+
+    return null;
+
+  }
+
+}
+
+async function enviarWhatsApp(){
+
+    const pedidoSalvo =
+    await salvarPedidoNoNeon();
+
+  if(!pedidoSalvo){
+    return;
+  }
 
   const mesa =
     document.getElementById("mesa").value.trim();
