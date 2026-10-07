@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#5b21b6">
+
+    <title>Funcionários — Cantinho do Açaí</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f3ff;
+            color: #1f2937;
+        }
+
+        header {
+            background: linear-gradient(135deg, #5b21b6, #7c3aed);
+            color: white;
+            padding: 22px 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.15);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            opacity: .9;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .topo h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .atualizar {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+        .pedido {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.08);
+            border-left: 5px solid #7c3aed;
+        }
+
+        .pedido-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .numero {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .mesa {
+            font-size: 15px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .status {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status.novo {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.em_preparo {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.pronto {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .itens {
+            margin-top: 16px;
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+        }
+
+        .item {
+            padding: 8px 0;
+        }
+
+        .item strong {
+            display: block;
+        }
+
+        .detalhes {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 3px;
+        }
+
+        .observacao {
+            margin-top: 12px;
+            background: #f9fafb;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .horario {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn-iniciar {
+            background: #f59e0b;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-pronto {
+            background: #16a34a;
+            color: white;
+            flex: 1;
+        }
+
+        .vazio {
+            text-align: center;
+            background: white;
+            border-radius: 16px;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .erro {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 500px) {
+            main {
+                padding: 14px;
+            }
+
+            .topo {
+                align-items: flex-start;
+            }
+
+            .acoes {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🥤 Cantinho do Açaí</h1>
+    <p>Painel dos funcionários</p>
+</header>
+
+<main>
+
+    <div class="topo">
+        <h2>Pedidos</h2>
+
+        <button class="atualizar" onclick="carregarPedidos()">
+            🔄 Atualizar
+        </button>
+    </div>
+
+    <div id="listaPedidos">
+        Carregando pedidos...
+    </div>
+
+</main>
+
+<script>
+
+const API = '/api';
+
+async function carregarPedidos() {
+
+    const lista = document.getElementById('listaPedidos');
+
+    lista.innerHTML = 'Carregando pedidos...';
+
+    try {
+
+        const resposta = await fetch(`${API}/pedidos`);
+
+        if (!resposta.ok) {
+            throw new Error('Não foi possível carregar os pedidos.');
+        }
+
+        const dados = await resposta.json();
+
+        if (!dados.pedidos || dados.pedidos.length === 0) {
+
+            lista.innerHTML = `
+                <div class="vazio">
+                    <div style="font-size:40px;">🍧</div>
+                    <h3>Nenhum pedido</h3>
+                    <p>Não há pedidos registrados.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        const pedidos = dados.pedidos.filter(pedido =>
+            pedido.status !== 'pronto'
+        );
+
+        if (pedidos.length === 0) {
+
+            lista.innerHTML = `
+                <div class="vazio">
+                    <div style="font-size:40px;">✅</div>
+                    <h3>Tudo em dia!</h3>
+                    <p>Não há pedidos aguardando preparo.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        lista.innerHTML = '';
+
+        for (const pedido of pedidos) {
+
+            const itens = await buscarItens(pedido.id);
+
+            const card = document.createElement('div');
+
+            card.className = 'pedido';
+
+            card.innerHTML = `
+                <div class="pedido-cabecalho">
+
+                    <div>
+                        <div class="numero">
+                            Pedido #${pedido.numero_pedido}
+                        </div>
+
+                        <div class="mesa">
+                            🪑 Mesa ${pedido.mesa}
+                        </div>
+                    </div>
+
+                    <div class="status ${pedido.status}">
+                        ${nomeStatus(pedido.status)}
+                    </div>
+
+                </div>
+
+                <div class="itens">
+
+                    ${
+                        itens.map(item => `
+                            <div class="item">
+
+                                <strong>
+                                    ${item.quantidade}x ${item.produto}
+                                </strong>
+
+                                ${
+                                    item.detalhes
+                                    ? `<div class="detalhes">
+                                        ${item.detalhes}
+                                       </div>`
+                                    : ''
+                                }
+
+                            </div>
+                        `).join('')
+                    }
+
+                </div>
+
+                ${
+                    pedido.observacao
+                    ? `
+                        <div class="observacao">
+                            📝 <strong>Observação:</strong>
+                            ${pedido.observacao}
+                        </div>
+                    `
+                    : ''
+                }
+
+                <div class="horario">
+                    🕐 ${formatarData(pedido.criado_em)}
+                </div>
+
+                <div class="acoes">
+
+                    ${
+                        pedido.status === 'novo'
+                        ? `
+                            <button
+                                class="btn-iniciar"
+                                onclick="alterarStatus(${pedido.id}, 'em_preparo')"
+                            >
+                                ▶️ Iniciar pedido
+                            </button>
+                        `
+                        : ''
+                    }
+
+                    ${
+                        pedido.status === 'em_preparo'
+                        ? `
+                            <button
+                                class="btn-pronto"
+                                onclick="alterarStatus(${pedido.id}, 'pronto')"
+                            >
+                                ✅ Marcar como pronto
+                            </button>
+                        `
+                        : ''
+                    }
+
+                </div>
+            `;
+
+            lista.appendChild(card);
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        lista.innerHTML = `
+            <div class="erro">
+                ❌ Erro ao carregar os pedidos.
+            </div>
+        `;
+    }
+}
+
+
+async function buscarItens(pedidoId) {
+
+    const resposta = await fetch(
+        `${API}/pedido?id=${pedidoId}`
+    );
+
+    const dados = await resposta.json();
+
+    return dados.itens || [];
+}
+
+
+async function alterarStatus(id, status) {
+
+    try {
+
+        const resposta = await fetch(`${API}/status`, {
+
+            method: 'PUT',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                id: id,
+                status: status
+            })
+
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(dados.erro || 'Erro ao alterar status.');
+        }
+
+        await carregarPedidos();
+
+    } catch (erro) {
+
+        alert(erro.message);
+    }
+}
+
+
+function nomeStatus(status) {
+
+    if (status === 'novo') {
+        return 'Novo';
+    }
+
+    if (status === 'em_preparo') {
+        return 'Em preparo';
+    }
+
+    if (status === 'pronto') {
+        return 'Pronto';
+    }
+
+    return status;
+}
+
+
+function formatarData(data) {
+
+    return new Date(data).toLocaleTimeString(
+        'pt-BR',
+        {
+            hour: '2-digit',
+            minute: '2-digit'
+        }
+    );
+}
+
+
+carregarPedidos();
+
+</script>
+
+</body>
+</html>
