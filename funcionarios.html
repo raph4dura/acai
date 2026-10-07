@@ -469,6 +469,9 @@ function formatarData(data) {
 
 carregarPedidos();
 
+// Atualiza os pedidos automaticamente a cada 5 segundos
+setInterval(carregarPedidos, 5000);
+
 </script>
 
 </body>
