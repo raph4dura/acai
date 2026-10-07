@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#5b21b6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>Painel do Dono — Cantinho do Açaí</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f3ff;
+    color:#1f2937;
+    min-height:100vh;
+}
+
+header{
+    background:linear-gradient(135deg,#5b21b6,#7c3aed,#9333ea);
+    color:white;
+    padding:24px 18px;
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+
+.header-content{
+    max-width:1100px;
+    margin:auto;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:bold;
+}
+
+.subtitle{
+    margin-top:6px;
+    opacity:.9;
+    font-size:15px;
+}
+
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:20px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    border:1px solid #ede9fe;
+}
+
+.card-title{
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:8px;
+}
+
+.card-value{
+    font-size:28px;
+    font-weight:bold;
+    color:#5b21b6;
+}
+
+.card-icon{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+/* MENU */
+
+.menu{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.menu button{
+    border:0;
+    padding:11px 16px;
+    border-radius:10px;
+    background:white;
+    color:#5b21b6;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.menu button.active,
+.menu button:hover{
+    background:#5b21b6;
+    color:white;
+}
+
+/* SEÇÕES */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.section-title{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+    color:#3b0764;
+}
+
+/* PEDIDOS */
+
+.top-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:11px 16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:#5b21b6;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#4c1d95;
+}
+
+.btn-secondary{
+    background:#ede9fe;
+    color:#5b21b6;
+}
+
+.filters{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+}
+
+.filters select,
+.filters input{
+    padding:11px;
+    border:1px solid #ddd6fe;
+    border-radius:10px;
+    background:white;
+    outline:none;
+}
+
+.orders{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.order{
+    background:white;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    border-left:5px solid #7c3aed;
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+.order-number{
+    font-size:19px;
+    font-weight:bold;
+    color:#3b0764;
+}
+
+.order-date{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-novo{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.status-preparando{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status-pronto{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-entregue{
+    background:#e5e7eb;
+    color:#374151;
+}
+
+.status-cancelado{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.order-info{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.info-box{
+    background:#f9fafb;
+    padding:10px;
+    border-radius:10px;
+}
+
+.info-label{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.info-value{
+    font-weight:bold;
+    margin-top:3px;
+}
+
+.items{
+    margin-top:15px;
+    border-top:1px solid #eee;
+    padding-top:12px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+    gap:10px;
+}
+
+.item-details{
+    font-size:13px;
+    color:#6b7280;
+    margin-top:2px;
+}
+
+.total{
+    text-align:right;
+    font-size:18px;
+    font-weight:bold;
+    color:#5b21b6;
+    margin-top:10px;
+}
+
+.order-actions{
+    display:flex;
+    gap:8px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.order-actions button{
+    border:0;
+    padding:9px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* RESUMO */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.summary-card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.summary-card h3{
+    margin-bottom:15px;
+    color:#3b0764;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+/* FUNCIONÁRIOS */
+
+.employee-box{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.employee{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid #eee;
+}
+
+.employee:last-child{
+    border-bottom:0;
+}
+
+.employee-name{
+    font-weight:bold;
+}
+
+.employee-role{
+    font-size:13px;
+    color:#6b7280;
+}
+
+/* CONFIGURAÇÕES */
+
+.config-box{
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd6fe;
+    border-radius:10px;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+/* LOADING */
+
+.loading{
+    text-align:center;
+    padding:35px;
+    color:#6b7280;
+}
+
+.empty{
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    text-align:center;
+    color:#6b7280;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+/* RESPONSIVO */
+
+@media(max-width:800px){
+
+    .dashboard{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .order-info{
+        grid-template-columns:1fr;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .container{
+        padding:14px;
+    }
+
+    header{
+        padding:20px 15px;
+    }
+
+    .logo{
+        font-size:23px;
+    }
+
+    .dashboard{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    .card-value{
+        font-size:23px;
+    }
+
+    .menu{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .menu button{
+        width:100%;
+    }
+
+    .order{
+        padding:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">🥤 Cantinho do Açaí</div>
+        <div class="subtitle">Painel administrativo do dono</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- DASHBOARD -->
+
+    <div class="dashboard">
+
+        <div class="card">
+            <div class="card-icon">🧾</div>
+            <div class="card-title">Pedidos hoje</div>
+            <div class="card-value" id="pedidosHoje">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">💰</div>
+            <div class="card-title">Vendas hoje</div>
+            <div class="card-value" id="vendasHoje">R$ 0,00</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🕐</div>
+            <div class="card-title">Pendentes</div>
+            <div class="card-value" id="pedidosPendentes">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Total de pedidos</div>
+            <div class="card-value" id="totalPedidos">0</div>
+        </div>
+
+    </div>
+
+    <!-- MENU -->
+
+    <div class="menu">
+
+        <button class="active" onclick="mostrarSecao('pedidos',this)">
+            🧾 Pedidos
+        </button>
+
+        <button onclick="mostrarSecao('resumo',this)">
+            📊 Resumo
+        </button>
+
+        <button onclick="mostrarSecao('funcionarios',this)">
+            👥 Funcionários
+        </button>
+
+        <button onclick="mostrarSecao('configuracoes',this)">
+            ⚙️ Configurações
+        </button>
+
+    </div>
+
+    <!-- PEDIDOS -->
+
+    <section id="pedidos" class="section active">
+
+        <div class="top-actions">
+
+            <div class="section-title">
+                Pedidos
+            </div>
+
+            <button class="btn btn-primary" onclick="carregarPedidos()">
+                🔄 Atualizar
+            </button>
+
+        </div>
+
+        <div class="filters">
+
+            <select id="filtroStatus" onchange="renderizarPedidos()">
+                <option value="todos">Todos os status</option>
+                <option value="novo">Novos</option>
+                <option value="preparando">Preparando</option>
+                <option value="pronto">Prontos</option>
+                <option value="entregue">Entregues</option>
+                <option value="cancelado">Cancelados</option>
+            </select>
+
+            <input
+                type="date"
+                id="filtroData"
+                onchange="renderizarPedidos()"
+            >
+
+        </div>
+
+        <div id="listaPedidos" class="orders">
+
+            <div class="loading">
+                Carregando pedidos...
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RESUMO -->
+
+    <section id="resumo" class="section">
+
+        <div class="section-title">
+            📊 Resumo
+        </div>
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <h3>Pedidos por status</h3>
+
+                <div class="summary-row">
+                    <span>🆕 Novos</span>
+                    <strong id="resumoNovo">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>👨‍🍳 Preparando</span>
+                    <strong id="resumoPreparando">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>✅ Prontos</span>
+                    <strong id="resumoPronto">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>📦 Entregues</span>
+                    <strong id="resumoEntregue">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>❌ Cancelados</span>
+                    <strong id="resumoCancelado">0</strong>
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <h3>Financeiro</h3>
+
+                <div class="summary-row">
+                    <span>Vendas hoje</span>
+                    <strong id="resumoVendasHoje">R$ 0,00</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Ticket médio</span>
+                    <strong id="ticketMedio">R$ 0,00</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Pedidos hoje</span>
+                    <strong id="resumoPedidosHoje">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Pedidos totais</span>
+                    <strong id="resumoPedidosTotal">0</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FUNCIONÁRIOS -->
+
+    <section id="funcionarios" class="section">
+
+        <div class="section-title">
+            👥 Funcionários
+        </div>
+
+        <div class="employee-box">
+
+            <div class="employee">
+
+                <div>
+                    <div class="employee-name">
+                        Painel dos funcionários
+                    </div>
+
+                    <div class="employee-role">
+                        Controle dos pedidos
+                    </div>
+                </div>
+
+                <a
+                    href="funcionarios.html"
+                    class="btn btn-primary"
+                    style="text-decoration:none;"
+                >
+                    Abrir painel
+                </a>
+
+            </div>
+
+            <div class="employee">
+
+                <div>
+                    <div class="employee-name">
+                        Área administrativa
+                    </div>
+
+                    <div class="employee-role">
+                        Acesso exclusivo do proprietário
+                    </div>
+                </div>
+
+                <span style="color:#16a34a;font-weight:bold;">
+                    ● Ativo
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CONFIGURAÇÕES -->
+
+    <section id="configuracoes" class="section">
+
+        <div class="section-title">
+            ⚙️ Configurações
+        </div>
+
+        <div class="config-box">
+
+            <div class="form-group">
+
+                <label>Nome do estabelecimento</label>
+
+                <input
+                    type="text"
+                    id="nomeEstabelecimento"
+                    value="Cantinho do Açaí"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>WhatsApp</label>
+
+                <input
+                    type="text"
+                    id="whatsapp"
+                    value="5551980535187"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Observação</label>
+
+                <textarea
+                    id="observacaoConfig"
+                    placeholder="Informações internas..."
+                ></textarea>
+
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="salvarConfiguracoes()"
+            >
+                💾 Salvar configurações
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+
+/* =========================================
+   VARIÁVEIS
+========================================= */
+
+let pedidos = [];
+
+
+/* =========================================
+   FORMATAÇÃO
+========================================= */
+
+function moeda(valor){
+
+    return Number(valor || 0).toLocaleString("pt-BR",{
+        style:"currency",
+        currency:"BRL"
+    });
+
+}
+
+
+function formatarData(data){
+
+    if(!data) return "";
+
+    const d = new Date(data);
+
+    if(isNaN(d.getTime())) return data;
+
+    return d.toLocaleString("pt-BR",{
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+
+}
+
+
+function hoje(){
+
+    const d = new Date();
+
+    return d.getFullYear() + "-" +
+        String(d.getMonth()+1).padStart(2,"0") + "-" +
+        String(d.getDate()).padStart(2,"0");
+
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+function mostrarSecao(id,botao){
+
+    document.querySelectorAll(".section")
+        .forEach(s => s.classList.remove("active"));
+
+    document.querySelectorAll(".menu button")
+        .forEach(b => b.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+    botao.classList.add("active");
+
+}
+
+
+/* =========================================
+   CARREGAR PEDIDOS
+========================================= */
+
+async function carregarPedidos(){
+
+    const lista = document.getElementById("listaPedidos");
+
+    lista.innerHTML = `
+        <div class="loading">
+            🔄 Atualizando pedidos...
+        </div>
+    `;
+
+    try{
+
+        const resposta = await fetch("/api/pedidos");
+
+        if(!resposta.ok){
+            throw new Error("Erro ao buscar pedidos");
+        }
+
+        const dados = await resposta.json();
+
+        /*
+         * A API pode devolver diretamente um array
+         * ou um objeto contendo "pedidos".
+         */
+
+        if(Array.isArray(dados)){
+            pedidos = dados;
+        }else if(Array.isArray(dados.pedidos)){
+            pedidos = dados.pedidos;
+        }else{
+            pedidos = [];
+        }
+
+        /*
+         * Mais recentes primeiro
+         */
+
+        pedidos.sort((a,b)=>{
+
+            const da = new Date(a.criado_em || 0);
+            const db = new Date(b.criado_em || 0);
+
+            return db-da;
+
+        });
+
+        atualizarDashboard();
+        renderizarPedidos();
+        atualizarResumo();
+
+    }catch(erro){
+
+        console.error(erro);
+
+        lista.innerHTML = `
+            <div class="empty">
+                <div style="font-size:35px;">⚠️</div>
+
+                <h3>Não foi possível carregar os pedidos</h3>
+
+                <p style="margin-top:8px;">
+                    Verifique se a API de pedidos está funcionando.
+                </p>
+
+                <button
+                    class="btn btn-primary"
+                    style="margin-top:15px;"
+                    onclick="carregarPedidos()"
+                >
+                    🔄 Tentar novamente
+                </button>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   RENDERIZAR PEDIDOS
+========================================= */
+
+function renderizarPedidos(){
+
+    const lista = document.getElementById("listaPedidos");
+
+    const filtroStatus =
+        document.getElementById("filtroStatus").value;
+
+    const filtroData =
+        document.getElementById("filtroData").value;
+
+    let filtrados = [...pedidos];
+
+    if(filtroStatus !== "todos"){
+
+        filtrados = filtrados.filter(p =>
+            (p.status || "novo") === filtroStatus
+        );
+
+    }
+
+    if(filtroData){
+
+        filtrados = filtrados.filter(p => {
+
+            if(!p.criado_em) return false;
+
+            return new Date(p.criado_em)
+                .toISOString()
+                .slice(0,10) === filtroData;
+
+        });
+
+    }
+
+    if(!filtrados.length){
+
+        lista.innerHTML = `
+            <div class="empty">
+                <div style="font-size:35px;">🧾</div>
+                <h3>Nenhum pedido encontrado</h3>
+                <p style="margin-top:7px;">
+                    Não há pedidos correspondentes aos filtros.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    lista.innerHTML = filtrados.map(p => {
+
+        const status = p.status || "novo";
+
+        return `
+
+        <div class="order">
+
+            <div class="order-header">
+
+                <div>
+                    <div class="order-number">
+                        Pedido #${escapeHTML(
+                            p.numero_pedido ?? p.id ?? "?"
+                        )}
+                    </div>
+
+                    <div class="order-date">
+                        ${formatarData(p.criado_em)}
+                    </div>
+                </div>
+
+                <span class="status status-${status}">
+                    ${nomeStatus(status)}
+                </span>
+
+            </div>
+
+            <div class="order-info">
+
+                <div class="info-box">
+                    <div class="info-label">Mesa</div>
+                    <div class="info-value">
+                        ${escapeHTML(p.mesa || "Não informada")}
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Pagamento</div>
+                    <div class="info-value">
+                        ${escapeHTML(p.pagamento || "Não informado")}
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">ID</div>
+                    <div class="info-value">
+                        ${escapeHTML(p.id ?? "-")}
+                    </div>
+                </div>
+
+            </div>
+
+            ${
+                p.observacao
+                ?
+                `<div style="
+                    margin-top:12px;
+                    background:#faf5ff;
+                    padding:10px;
+                    border-radius:10px;
+                    font-size:14px;
+                ">
+                    <strong>Observação:</strong>
+                    ${escapeHTML(p.observacao)}
+                </div>`
+                :
+                ""
+            }
+
+            <div class="items">
+
+                <strong>Itens do pedido</strong>
+
+                <div id="itens-${p.id}">
+                    <div class="loading" style="padding:15px;">
+                        Carregando itens...
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="total">
+                ${moeda(p.total)}
+            </div>
+
+            <div class="order-actions">
+
+                ${
+                    status === "novo"
+                    ?
+                    `<button
+                        style="background:#fef3c7;color:#92400e"
+                        onclick="alterarStatus(${p.id},'preparando')"
+                    >
+                        👨‍🍳 Preparar
+                    </button>`
+                    :
+                    ""
+                }
+
+                ${
+                    status === "preparando"
+                    ?
+                    `<button
+                        style="background:#dcfce7;color:#166534"
+                        onclick="alterarStatus(${p.id},'pronto')"
+                    >
+                        ✅ Marcar pronto
+                    </button>`
+                    :
+                    ""
+                }
+
+                ${
+                    status === "pronto"
+                    ?
+                    `<button
+                        style="background:#e5e7eb;color:#374151"
+                        onclick="alterarStatus(${p.id},'entregue')"
+                    >
+                        📦 Entregue
+                    </button>`
+                    :
+                    ""
+                }
+
+                ${
+                    status !== "entregue" && status !== "cancelado"
+                    ?
+                    `<button
+                        style="background:#fee2e2;color:#991b1b"
+                        onclick="alterarStatus(${p.id},'cancelado')"
+                    >
+                        ❌ Cancelar
+                    </button>`
+                    :
+                    ""
+                }
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+    /*
+     * Carrega os itens de cada pedido
+     */
+
+    filtrados.forEach(p => carregarItens(p.id));
+
+}
+
+
+/* =========================================
+   CARREGAR ITENS
+========================================= */
+
+async function carregarItens(pedidoId){
+
+    const elemento =
+        document.getElementById(`itens-${pedidoId}`);
+
+    if(!elemento) return;
+
+    try{
+
+        const resposta =
+            await fetch(`/api/itens?pedido_id=${encodeURIComponent(pedidoId)}`);
+
+        if(!resposta.ok){
+            throw new Error("Erro");
+        }
+
+        const dados = await resposta.json();
+
+        let itens = [];
+
+        if(Array.isArray(dados)){
+            itens = dados;
+        }else if(Array.isArray(dados.itens)){
+            itens = dados.itens;
+        }
+
+        if(!itens.length){
+
+            elemento.innerHTML = `
+                <div style="
+                    color:#9ca3af;
+                    padding-top:8px;
+                ">
+                    Nenhum item encontrado.
+                </div>
+            `;
+
+            return;
+
+        }
+
+        elemento.innerHTML = itens.map(item => {
+
+            return `
+                <div class="item">
+
+                    <div>
+
+                        <strong>
+                            ${item.quantidade || 1}x
+                            ${escapeHTML(item.produto || "Produto")}
+                        </strong>
+
+                        ${
+                            item.detalhes
+                            ?
+                            `<div class="item-details">
+                                ${escapeHTML(item.detalhes)}
+                            </div>`
+                            :
+                            ""
+                        }
+
+                    </div>
+
+                    <strong>
+                        ${moeda(
+                            Number(item.preco || 0) *
+                            Number(item.quantidade || 1)
+                        )}
+                    </strong>
+
+                </div>
+            `;
+
+        }).join("");
+
+    }catch(erro){
+
+        console.error(erro);
+
+        elemento.innerHTML = `
+            <div style="color:#dc2626;padding-top:8px;">
+                Não foi possível carregar os itens.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   ALTERAR STATUS
+========================================= */
+
+async function alterarStatus(id,status){
+
+    try{
+
+        /*
+         * Tenta atualizar usando PATCH.
+         * A API deve receber:
+         * { id, status }
+         */
+
+        const resposta = await fetch("/api/pedidos",{
+
+            method:"PATCH",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                id:id,
+                status:status
+            })
+
+        });
+
+        if(!resposta.ok){
+
+            throw new Error(
+                "Não foi possível alterar o status."
+            );
+
+        }
+
+        const pedido = pedidos.find(
+            p => String(p.id) === String(id)
+        );
+
+        if(pedido){
+            pedido.status = status;
+        }
+
+        atualizarDashboard();
+        renderizarPedidos();
+        atualizarResumo();
+
+    }catch(erro){
+
+        console.error(erro);
+
+        alert(
+            "Não foi possível atualizar o pedido.\n\n" +
+            "Verifique a API /api/pedidos."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function atualizarDashboard(){
+
+    const dataHoje = hoje();
+
+    const pedidosHoje = pedidos.filter(p => {
+
+        if(!p.criado_em) return false;
+
+        return new Date(p.criado_em)
+            .toISOString()
+            .slice(0,10) === dataHoje;
+
+    });
+
+    const vendasHoje = pedidosHoje
+        .filter(p => p.status !== "cancelado")
+        .reduce(
+            (total,p) =>
+                total + Number(p.total || 0),
+            0
+        );
+
+    const pendentes = pedidos.filter(p =>
+        ["novo","preparando","pronto"]
+            .includes(p.status || "novo")
+    ).length;
+
+    document.getElementById("pedidosHoje")
+        .textContent = pedidosHoje.length;
+
+    document.getElementById("vendasHoje")
+        .textContent = moeda(vendasHoje);
+
+    document.getElementById("pedidosPendentes")
+        .textContent = pendentes;
+
+    document.getElementById("totalPedidos")
+        .textContent = pedidos.length;
+
+}
+
+
+/* =========================================
+   RESUMO
+========================================= */
+
+function atualizarResumo(){
+
+    const status = {
+        novo:0,
+        preparando:0,
+        pronto:0,
+        entregue:0,
+        cancelado:0
+    };
+
+    pedidos.forEach(p => {
+
+        const s = p.status || "novo";
+
+        if(status[s] !== undefined){
+            status[s]++;
+        }
+
+    });
+
+    document.getElementById("resumoNovo")
+        .textContent = status.novo;
+
+    document.getElementById("resumoPreparando")
+        .textContent = status.preparando;
+
+    document.getElementById("resumoPronto")
+        .textContent = status.pronto;
+
+    document.getElementById("resumoEntregue")
+        .textContent = status.entregue;
+
+    document.getElementById("resumoCancelado")
+        .textContent = status.cancelado;
+
+    const dataHoje = hoje();
+
+    const hojePedidos = pedidos.filter(p => {
+
+        if(!p.criado_em) return false;
+
+        return new Date(p.criado_em)
+            .toISOString()
+            .slice(0,10) === dataHoje;
+
+    });
+
+    const validos = hojePedidos.filter(
+        p => p.status !== "cancelado"
+    );
+
+    const vendas = validos.reduce(
+        (total,p) =>
+            total + Number(p.total || 0),
+        0
+    );
+
+    const ticket =
+        validos.length
+        ? vendas / validos.length
+        : 0;
+
+    document.getElementById("resumoVendasHoje")
+        .textContent = moeda(vendas);
+
+    document.getElementById("ticketMedio")
+        .textContent = moeda(ticket);
+
+    document.getElementById("resumoPedidosHoje")
+        .textContent = hojePedidos.length;
+
+    document.getElementById("resumoPedidosTotal")
+        .textContent = pedidos.length;
+
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function nomeStatus(status){
+
+    const nomes = {
+
+        novo:"🆕 Novo",
+
+        preparando:"👨‍🍳 Preparando",
+
+        pronto:"✅ Pronto",
+
+        entregue:"📦 Entregue",
+
+        cancelado:"❌ Cancelado"
+
+    };
+
+    return nomes[status] || status;
+
+}
+
+
+/* =========================================
+   SEGURANÇA
+========================================= */
+
+function escapeHTML(valor){
+
+    return String(valor ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   CONFIGURAÇÕES
+========================================= */
+
+function salvarConfiguracoes(){
+
+    const dados = {
+
+        nome:
+            document.getElementById(
+                "nomeEstabelecimento"
+            ).value,
+
+        whatsapp:
+            document.getElementById(
+                "whatsapp"
+            ).value,
+
+        observacao:
+            document.getElementById(
+                "observacaoConfig"
+            ).value
+
+    };
+
+    localStorage.setItem(
+        "cantinhoAcaIConfiguracoes",
+        JSON.stringify(dados)
+    );
+
+    alert("Configurações salvas neste dispositivo!");
+
+}
+
+
+function carregarConfiguracoes(){
+
+    try{
+
+        const dados =
+            JSON.parse(
+                localStorage.getItem(
+                    "cantinhoAcaIConfiguracoes"
+                )
+            );
+
+        if(!dados) return;
+
+        if(dados.nome)
+            document.getElementById(
+                "nomeEstabelecimento"
+            ).value = dados.nome;
+
+        if(dados.whatsapp)
+            document.getElementById(
+                "whatsapp"
+            ).value = dados.whatsapp;
+
+        if(dados.observacao)
+            document.getElementById(
+                "observacaoConfig"
+            ).value = dados.observacao;
+
+    }catch(e){
+
+        console.error(e);
+
+    }
+
+}
+
+
+/* =========================================
+   INICIALIZAÇÃO
+========================================= */
+
+carregarConfiguracoes();
+
+carregarPedidos();
+
+
+/*
+ * Atualiza automaticamente a cada 20 segundos.
+ */
+
+setInterval(
+    carregarPedidos,
+    20000
+);
+
+</script>
+
+</body>
+</html>
