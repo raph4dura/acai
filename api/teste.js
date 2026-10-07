@@ -17,7 +17,8 @@ export default async function handler(req, res) {
 
     res.status(500).json({
       conectado: false,
-      mensagem: "Erro ao conectar com o Neon."
+      mensagem: "Erro ao conectar com o Neon.",
+      erro: erro.message
     });
   }
 }
