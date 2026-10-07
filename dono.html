@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#5b21b6"><title>Cantinho do Açaí — Painel do Dono</title><style>
+
 *{
     margin:0;
     padding:0;
@@ -14,6 +13,117 @@ body{
     color:#1f2937;
 }
 
+/* =========================
+   TELA DE LOGIN
+========================= */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:linear-gradient(135deg,#4c1d95,#7c3aed);
+}
+
+.login-box{
+    width:100%;
+    max-width:390px;
+    background:white;
+    border-radius:22px;
+    padding:32px 25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    text-align:center;
+}
+
+.login-icon{
+    font-size:55px;
+    margin-bottom:10px;
+}
+
+.login-box h1{
+    color:#5b21b6;
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.login-box p{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.password-area{
+    position:relative;
+    margin-bottom:14px;
+}
+
+.password-area input{
+    width:100%;
+    padding:14px 48px 14px 14px;
+    border:2px solid #ddd6fe;
+    border-radius:12px;
+    font-size:17px;
+    outline:none;
+    text-align:center;
+    letter-spacing:4px;
+}
+
+.password-area input:focus{
+    border-color:#7c3aed;
+}
+
+.show-password{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    font-size:20px;
+    color:#6b7280;
+    padding:5px;
+}
+
+.login-button{
+    width:100%;
+    background:linear-gradient(135deg,#5b21b6,#7c3aed);
+    color:white;
+    padding:14px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+}
+
+.login-button:active{
+    transform:scale(.98);
+}
+
+.login-error{
+    display:none;
+    margin-top:13px;
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:10px;
+    border-radius:9px;
+    font-size:13px;
+}
+
+.login-footer{
+    margin-top:20px;
+    color:#9ca3af;
+    font-size:12px;
+}
+
+/* =========================
+   PAINEL
+========================= */
+
+#painel{
+    display:none;
+}
+
 header{
     background:linear-gradient(135deg,#5b21b6,#7c3aed);
     color:white;
@@ -24,6 +134,10 @@ header{
 .header-content{
     max-width:1100px;
     margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
 }
 
 header h1{
@@ -34,6 +148,16 @@ header h1{
 header p{
     opacity:.9;
     font-size:14px;
+}
+
+.logout{
+    background:rgba(255,255,255,.18);
+    color:white;
+    border:1px solid rgba(255,255,255,.3);
+    padding:9px 13px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .container{
@@ -74,9 +198,17 @@ header p{
 }
 
 @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}
-    70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}
-    100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+    0%{
+        box-shadow:0 0 0 0 rgba(34,197,94,.5)
+    }
+
+    70%{
+        box-shadow:0 0 0 8px rgba(34,197,94,0)
+    }
+
+    100%{
+        box-shadow:0 0 0 0 rgba(34,197,94,0)
+    }
 }
 
 button{
@@ -195,6 +327,7 @@ button{
         transform:scale(.97);
         opacity:.4;
     }
+
     100%{
         transform:scale(1);
         opacity:1;
@@ -370,12 +503,15 @@ button{
 /* RESPONSIVO */
 
 @media(max-width:850px){
+
     .dashboard{
         grid-template-columns:repeat(2,1fr);
     }
+
 }
 
 @media(max-width:550px){
+
     .container{
         padding:12px;
     }
@@ -400,166 +536,468 @@ button{
     header h1{
         font-size:21px;
     }
+
+    .header-content{
+        align-items:flex-start;
+    }
+
+    .logout{
+        font-size:12px;
+        padding:8px 10px;
+    }
+
 }
-</style></head><body><header>
-    <div class="header-content">
-        <h1>🍧 Cantinho do Açaí</h1>
-        <p>Painel do dono</p>
-    </div>
-</header><div class="container"><div class="status-bar">
-    <div class="status">
-        <span class="status-dot"></span>
-        Atualização automática ativada
+
+</style></head><body><!-- =========================
+     TELA DE SENHA
+========================= --><div id="loginScreen"><div class="login-box">
+
+    <div class="login-icon">
+        🔐
     </div>
 
-    <button class="refresh" onclick="carregarPedidos()">
-        ↻ Atualizar agora
-    </button>
-</div>
+    <h1>Área do Dono</h1>
 
-<!-- DASHBOARD -->
+    <p>
+        Digite a senha para acessar o painel.
+    </p>
 
-<div class="dashboard">
-
-    <div class="card">
-        <div class="card-title">Pedidos hoje</div>
-        <div class="card-value" id="pedidosHoje">0</div>
-        <div class="card-sub">Pedidos realizados</div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Vendas hoje</div>
-        <div class="card-value" id="vendasHoje">R$ 0,00</div>
-        <div class="card-sub">Faturamento do dia</div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Pendentes</div>
-        <div class="card-value" id="pendentes">0</div>
-        <div class="card-sub">Ainda em atendimento</div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Ticket médio</div>
-        <div class="card-value" id="ticketMedio">R$ 0,00</div>
-        <div class="card-sub">Média por pedido</div>
-    </div>
-
-</div>
-
-<!-- ABAS -->
-
-<div class="tabs">
-
-    <button
-        class="tab active"
-        id="tabPedidos"
-        onclick="mostrarAba('pedidos')">
-        📋 Pedidos
-    </button>
-
-    <button
-        class="tab"
-        id="tabResumo"
-        onclick="mostrarAba('resumo')">
-        📊 Resumo
-    </button>
-
-</div>
-
-<!-- ABA PEDIDOS -->
-
-<section id="abaPedidos">
-
-    <div class="filters">
-
-        <select id="filtroStatus" onchange="renderizarPedidos()">
-            <option value="todos">Todos os status</option>
-            <option value="novo">Novos</option>
-            <option value="em_preparo">Em preparo</option>
-            <option value="pronto">Prontos</option>
-        </select>
+    <div class="password-area">
 
         <input
-            type="date"
-            id="filtroData"
-            onchange="renderizarPedidos()">
+            type="password"
+            id="senha"
+            placeholder="Digite a senha"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="off"
+            onkeydown="if(event.key==='Enter') entrar()">
 
         <button
-            class="refresh"
-            onclick="limparFiltros()">
-            Limpar filtros
+            type="button"
+            class="show-password"
+            onclick="mostrarSenha()"
+            id="botaoSenha">
+            👁️
         </button>
 
     </div>
 
-    <div id="orders" class="orders"></div>
+    <button
+        class="login-button"
+        onclick="entrar()">
+        Entrar no painel
+    </button>
 
-</section>
+    <div
+        class="login-error"
+        id="erroSenha">
+        ❌ Senha incorreta. Tente novamente.
+    </div>
 
-<!-- ABA RESUMO -->
+    <div class="login-footer">
+        Cantinho do Açaí — Portão
+    </div>
 
-<section id="abaResumo" style="display:none">
+</div>
 
-    <div class="summary-grid">
+</div><!-- =========================
+     PAINEL DO DONO
+========================= --><div id="painel"><header><div class="header-content">
 
-        <div class="summary-box">
+    <div>
 
-            <h3>📅 Hoje</h3>
+        <h1>
+            🍧 Cantinho do Açaí
+        </h1>
 
-            <div class="summary-row">
-                <span>Pedidos</span>
-                <strong id="resPedidosHoje">0</strong>
-            </div>
+        <p>
+            Painel do dono
+        </p>
 
-            <div class="summary-row">
-                <span>Faturamento</span>
-                <strong id="resVendasHoje">R$ 0,00</strong>
-            </div>
+    </div>
 
-            <div class="summary-row">
-                <span>Ticket médio</span>
-                <strong id="resTicketHoje">R$ 0,00</strong>
-            </div>
+    <button
+        class="logout"
+        onclick="sair()">
+        🔒 Sair
+    </button>
 
-            <div class="summary-row">
-                <span>Pedidos pendentes</span>
-                <strong id="resPendentes">0</strong>
-            </div>
+</div>
+
+</header><div class="container"><div class="status-bar"><div class="status">
+
+    <span class="status-dot"></span>
+
+    Atualização automática ativada
+
+</div>
+
+<button
+    class="refresh"
+    onclick="carregarPedidos()">
+
+    ↻ Atualizar agora
+
+</button>
+
+</div><!-- DASHBOARD --><div class="dashboard"><div class="card">
+
+    <div class="card-title">
+        Pedidos hoje
+    </div>
+
+    <div
+        class="card-value"
+        id="pedidosHoje">
+        0
+    </div>
+
+    <div class="card-sub">
+        Pedidos realizados
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-title">
+        Vendas hoje
+    </div>
+
+    <div
+        class="card-value"
+        id="vendasHoje">
+        R$ 0,00
+    </div>
+
+    <div class="card-sub">
+        Faturamento do dia
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-title">
+        Pendentes
+    </div>
+
+    <div
+        class="card-value"
+        id="pendentes">
+        0
+    </div>
+
+    <div class="card-sub">
+        Ainda em atendimento
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div class="card-title">
+        Ticket médio
+    </div>
+
+    <div
+        class="card-value"
+        id="ticketMedio">
+        R$ 0,00
+    </div>
+
+    <div class="card-sub">
+        Média por pedido
+    </div>
+
+</div>
+
+</div><!-- ABAS --><div class="tabs"><button
+    class="tab active"
+    id="tabPedidos"
+    onclick="mostrarAba('pedidos')">
+
+    📋 Pedidos
+
+</button>
+
+
+<button
+    class="tab"
+    id="tabResumo"
+    onclick="mostrarAba('resumo')">
+
+    📊 Resumo
+
+</button>
+
+</div><!-- ABA PEDIDOS --><section id="abaPedidos"><div class="filters">
+
+    <select
+        id="filtroStatus"
+        onchange="renderizarPedidos()">
+
+        <option value="todos">
+            Todos os status
+        </option>
+
+        <option value="novo">
+            Novos
+        </option>
+
+        <option value="em_preparo">
+            Em preparo
+        </option>
+
+        <option value="pronto">
+            Prontos
+        </option>
+
+    </select>
+
+
+    <input
+        type="date"
+        id="filtroData"
+        onchange="renderizarPedidos">
+
+
+    <button
+        class="refresh"
+        onclick="limparFiltros()">
+
+        Limpar filtros
+
+    </button>
+
+</div>
+
+
+<div
+    id="orders"
+    class="orders">
+</div>
+
+</section><!-- ABA RESUMO --><section
+    id="abaResumo"
+    style="display:none"><div class="summary-grid">
+
+
+    <div class="summary-box">
+
+        <h3>
+            📅 Hoje
+        </h3>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pedidos
+            </span>
+
+            <strong
+                id="resPedidosHoje">
+                0
+            </strong>
 
         </div>
 
-        <div class="summary-box">
 
-            <h3>📈 Geral</h3>
+        <div class="summary-row">
 
-            <div class="summary-row">
-                <span>Total de pedidos</span>
-                <strong id="resTotalPedidos">0</strong>
-            </div>
+            <span>
+                Faturamento
+            </span>
 
-            <div class="summary-row">
-                <span>Total vendido</span>
-                <strong id="resTotalVendas">R$ 0,00</strong>
-            </div>
+            <strong
+                id="resVendasHoje">
+                R$ 0,00
+            </strong>
 
-            <div class="summary-row">
-                <span>Ticket médio geral</span>
-                <strong id="resTicketGeral">R$ 0,00</strong>
-            </div>
+        </div>
 
-            <div class="summary-row">
-                <span>Pedidos concluídos</span>
-                <strong id="resConcluidos">0</strong>
-            </div>
+
+        <div class="summary-row">
+
+            <span>
+                Ticket médio
+            </span>
+
+            <strong
+                id="resTicketHoje">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pedidos pendentes
+            </span>
+
+            <strong
+                id="resPendentes">
+                0
+            </strong>
 
         </div>
 
     </div>
 
-</section>
 
-</div><script>
+    <div class="summary-box">
+
+        <h3>
+            📈 Geral
+        </h3>
+
+
+        <div class="summary-row">
+
+            <span>
+                Total de pedidos
+            </span>
+
+            <strong
+                id="resTotalPedidos">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Total vendido
+            </span>
+
+            <strong
+                id="resTotalVendas">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Ticket médio geral
+            </span>
+
+            <strong
+                id="resTicketGeral">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pedidos concluídos
+            </span>
+
+            <strong
+                id="resConcluidos">
+                0
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section></div></div><script>
+
+/* =========================
+   SENHA
+========================= */
+
+const SENHA_DONO = "080509";
+
+let autenticado = false;
+
+function entrar(){
+
+    const campo = document.getElementById("senha");
+    const erro = document.getElementById("erroSenha");
+
+    const senhaDigitada = campo.value;
+
+    if(senhaDigitada === SENHA_DONO){
+
+        autenticado = true;
+
+        erro.style.display = "none";
+
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("painel").style.display = "block";
+
+        carregarPedidos();
+
+    }else{
+
+        erro.style.display = "block";
+
+        campo.value = "";
+
+        campo.focus();
+
+    }
+
+}
+
+function mostrarSenha(){
+
+    const campo = document.getElementById("senha");
+    const botao = document.getElementById("botaoSenha");
+
+    if(campo.type === "password"){
+
+        campo.type = "text";
+        botao.textContent = "🙈";
+
+    }else{
+
+        campo.type = "password";
+        botao.textContent = "👁️";
+
+    }
+
+}
+
+function sair(){
+
+    autenticado = false;
+
+    document.getElementById("painel").style.display = "none";
+    document.getElementById("loginScreen").style.display = "flex";
+
+    document.getElementById("senha").value = "";
+
+    document.getElementById("senha").type = "password";
+
+    document.getElementById("botaoSenha").textContent = "👁️";
+
+    document.getElementById("senha").focus();
+
+}
+
+
+/* =========================
+   SISTEMA
+========================= */
 
 let pedidos = [];
 let idsConhecidos = new Set();
@@ -574,6 +1012,7 @@ function dinheiro(valor){
 
 }
 
+
 function escapar(texto){
 
     return String(texto ?? "")
@@ -584,6 +1023,7 @@ function escapar(texto){
         .replace(/'/g,"&#039;");
 
 }
+
 
 function dataLocal(date){
 
@@ -597,11 +1037,13 @@ function dataLocal(date){
 
 }
 
+
 function hoje(){
 
     return dataLocal(new Date());
 
 }
+
 
 function formatarData(date){
 
@@ -617,15 +1059,19 @@ function formatarData(date){
 
 }
 
+
 function nomeStatus(status){
 
     if(status === "novo") return "Novo";
+
     if(status === "em_preparo") return "Em preparo";
+
     if(status === "pronto") return "Pronto";
 
     return status || "Novo";
 
 }
+
 
 async function carregarItens(pedidoId){
 
@@ -649,7 +1095,10 @@ async function carregarItens(pedidoId){
 
     }catch(e){
 
-        console.error("Erro ao carregar itens:",e);
+        console.error(
+            "Erro ao carregar itens:",
+            e
+        );
 
         return [];
 
@@ -657,7 +1106,14 @@ async function carregarItens(pedidoId){
 
 }
 
+
 async function carregarPedidos(){
+
+    /* Não carrega nada se não estiver logado */
+
+    if(!autenticado){
+        return;
+    }
 
     try{
 
@@ -669,7 +1125,12 @@ async function carregarPedidos(){
         );
 
         if(!resposta.ok){
-            throw new Error("Erro HTTP " + resposta.status);
+
+            throw new Error(
+                "Erro HTTP " +
+                resposta.status
+            );
+
         }
 
         const dados = await resposta.json();
@@ -679,11 +1140,16 @@ async function carregarPedidos(){
             : (dados.pedidos || []);
 
         pedidos.sort((a,b)=>{
-            return new Date(b.criado_em) - new Date(a.criado_em);
+
+            return new Date(b.criado_em)
+                - new Date(a.criado_em);
+
         });
 
         atualizarDashboard();
+
         renderizarPedidos();
+
         atualizarResumo();
 
         primeiraCarga = false;
@@ -693,17 +1159,27 @@ async function carregarPedidos(){
         console.error(erro);
 
         document.getElementById("orders").innerHTML = `
+
             <div class="empty">
-                <h3>Não foi possível carregar os pedidos</h3>
+
+                <h3>
+                    Não foi possível carregar os pedidos
+                </h3>
+
                 <p style="margin-top:8px">
+
                     Verifique a conexão com o banco de dados.
+
                 </p>
+
             </div>
+
         `;
 
     }
 
 }
+
 
 function atualizarDashboard(){
 
@@ -714,7 +1190,8 @@ function atualizarDashboard(){
     );
 
     const vendasHoje = pedidosHoje.reduce(
-        (total,p) => total + Number(p.total || 0),
+        (total,p) =>
+        total + Number(p.total || 0),
         0
     );
 
@@ -723,7 +1200,8 @@ function atualizarDashboard(){
     ).length;
 
     const totalGeral = pedidos.reduce(
-        (total,p) => total + Number(p.total || 0),
+        (total,p) =>
+        total + Number(p.total || 0),
         0
     );
 
@@ -732,29 +1210,47 @@ function atualizarDashboard(){
         ? totalGeral / pedidos.length
         : 0;
 
-    document.getElementById("pedidosHoje").textContent =
+    document.getElementById(
+        "pedidosHoje"
+    ).textContent =
         pedidosHoje.length;
 
-    document.getElementById("vendasHoje").textContent =
+    document.getElementById(
+        "vendasHoje"
+    ).textContent =
         dinheiro(vendasHoje);
 
-    document.getElementById("pendentes").textContent =
+    document.getElementById(
+        "pendentes"
+    ).textContent =
         pendentes;
 
-    document.getElementById("ticketMedio").textContent =
+    document.getElementById(
+        "ticketMedio"
+    ).textContent =
         dinheiro(ticket);
 
 }
 
+
 async function renderizarPedidos(){
 
-    const container = document.getElementById("orders");
+    if(!autenticado){
+        return;
+    }
+
+    const container =
+        document.getElementById("orders");
 
     const filtroStatus =
-        document.getElementById("filtroStatus").value;
+        document.getElementById(
+            "filtroStatus"
+        ).value;
 
     const filtroData =
-        document.getElementById("filtroData").value;
+        document.getElementById(
+            "filtroData"
+        ).value;
 
     let lista = pedidos.filter(p=>{
 
@@ -776,39 +1272,61 @@ async function renderizarPedidos(){
 
     });
 
+
     if(lista.length === 0){
 
         container.innerHTML = `
+
             <div class="empty">
-                <h3>Nenhum pedido encontrado</h3>
+
+                <h3>
+                    Nenhum pedido encontrado
+                </h3>
+
                 <p style="margin-top:8px">
+
                     Não há pedidos com os filtros selecionados.
+
                 </p>
+
             </div>
+
         `;
 
         return;
 
     }
 
+
     container.innerHTML = "";
+
 
     for(const pedido of lista){
 
-        const card = document.createElement("div");
+        const card =
+            document.createElement("div");
 
         card.className = "order";
 
+
         if(
             !primeiraCarga &&
-            !idsConhecidos.has(String(pedido.id))
+            !idsConhecidos.has(
+                String(pedido.id)
+            )
         ){
+
             card.classList.add("new");
+
         }
 
-        const itens = await carregarItens(pedido.id);
+
+        const itens =
+            await carregarItens(pedido.id);
+
 
         let itensHTML = "";
+
 
         if(itens.length){
 
@@ -817,16 +1335,29 @@ async function renderizarPedidos(){
                 <div class="item">
 
                     <strong>
-                        ${Number(item.quantidade || 1)}x
-                        ${escapar(item.produto)}
+
+                        ${Number(
+                            item.quantidade || 1
+                        )}x
+
+                        ${escapar(
+                            item.produto
+                        )}
+
                     </strong>
 
                     ${
                         item.detalhes
                         ? `
+
                             <div class="details">
-                                ${escapar(item.detalhes)}
+
+                                ${escapar(
+                                    item.detalhes
+                                )}
+
                             </div>
+
                         `
                         : ""
                     }
@@ -838,46 +1369,78 @@ async function renderizarPedidos(){
         }else{
 
             itensHTML = `
+
                 <div class="details">
+
                     Itens não encontrados.
+
                 </div>
+
             `;
 
         }
 
+
         let botao = "";
+
 
         if(pedido.status === "novo"){
 
             botao = `
+
                 <button
                     class="action preparo"
-                    onclick="alterarStatus(${pedido.id},'em_preparo')">
+                    onclick="alterarStatus(
+                        ${pedido.id},
+                        'em_preparo'
+                    )">
+
                     👨‍🍳 Colocar em preparo
+
                 </button>
+
             `;
 
-        }else if(pedido.status === "em_preparo"){
+        }else if(
+            pedido.status === "em_preparo"
+        ){
 
             botao = `
+
                 <button
                     class="action pronto"
-                    onclick="alterarStatus(${pedido.id},'pronto')">
+                    onclick="alterarStatus(
+                        ${pedido.id},
+                        'pronto'
+                    )">
+
                     ✅ Marcar como pronto
+
                 </button>
+
             `;
 
-        }else if(pedido.status === "pronto"){
+        }else if(
+            pedido.status === "pronto"
+        ){
 
             botao = `
+
                 <button
                     class="action voltar"
-                    onclick="alterarStatus(${pedido.id},'em_preparo')">
+                    onclick="alterarStatus(
+                        ${pedido.id},
+                        'em_preparo'
+                    )">
+
                     ↩ Voltar para preparo
+
                 </button>
+
             `;
 
         }
+
 
         card.innerHTML = `
 
@@ -886,101 +1449,180 @@ async function renderizarPedidos(){
                 <div>
 
                     <div class="order-number">
-                        Pedido #${escapar(pedido.numero_pedido)}
+
+                        Pedido #
+                        ${escapar(
+                            pedido.numero_pedido
+                        )}
+
                     </div>
 
+
                     <div class="order-info">
-                        Mesa: <strong>
-                            ${escapar(pedido.mesa || "-")}
+
+                        Mesa:
+
+                        <strong>
+
+                            ${escapar(
+                                pedido.mesa || "-"
+                            )}
+
                         </strong>
+
                     </div>
 
+
                     <div class="order-info">
-                        ${formatarData(pedido.criado_em)}
+
+                        ${formatarData(
+                            pedido.criado_em
+                        )}
+
                     </div>
 
                 </div>
 
-                <span class="badge ${escapar(pedido.status || "novo")}">
-                    ${nomeStatus(pedido.status)}
+
+                <span
+                    class="badge ${
+                        escapar(
+                            pedido.status || "novo"
+                        )
+                    }">
+
+                    ${nomeStatus(
+                        pedido.status
+                    )}
+
                 </span>
 
             </div>
 
+
             <div class="items">
+
                 ${itensHTML}
+
             </div>
+
 
             ${
                 pedido.observacao
                 ? `
+
                     <div class="observation">
-                        <strong>Observação:</strong><br>
-                        ${escapar(pedido.observacao)}
+
+                        <strong>
+                            Observação:
+                        </strong>
+
+                        <br>
+
+                        ${escapar(
+                            pedido.observacao
+                        )}
+
                     </div>
+
                 `
                 : ""
             }
+
 
             <div class="order-bottom">
 
                 <div>
 
                     <div class="total">
-                        ${dinheiro(pedido.total)}
+
+                        ${dinheiro(
+                            pedido.total
+                        )}
+
                     </div>
 
+
                     <div class="payment">
+
                         Pagamento:
+
                         <strong>
-                            ${escapar(pedido.pagamento || "-")}
+
+                            ${escapar(
+                                pedido.pagamento || "-"
+                            )}
+
                         </strong>
+
                     </div>
 
                 </div>
 
             </div>
 
+
             <div class="actions">
+
                 ${botao}
+
             </div>
 
         `;
+
 
         container.appendChild(card);
 
     }
 
+
     pedidos.forEach(p=>{
-        idsConhecidos.add(String(p.id));
+
+        idsConhecidos.add(
+            String(p.id)
+        );
+
     });
 
 }
 
+
 async function alterarStatus(id,status){
+
+    if(!autenticado){
+        return;
+    }
 
     try{
 
-        const resposta = await fetch(
-            "/api/pedidos",
-            {
-                method:"PATCH",
+        const resposta =
+            await fetch(
+                "/api/pedidos",
+                {
+                    method:"PATCH",
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                body:JSON.stringify({
-                    id:id,
-                    status:status
-                })
+                    body:JSON.stringify({
+                        id:id,
+                        status:status
+                    })
 
-            }
-        );
+                }
+            );
+
 
         if(!resposta.ok){
-            throw new Error("Erro ao alterar status");
+
+            throw new Error(
+                "Erro ao alterar status"
+            );
+
         }
+
 
         await carregarPedidos();
 
@@ -996,118 +1638,212 @@ async function alterarStatus(id,status){
 
 }
 
+
 function limparFiltros(){
 
-    document.getElementById("filtroStatus").value = "todos";
-    document.getElementById("filtroData").value = "";
+    document.getElementById(
+        "filtroStatus"
+    ).value = "todos";
+
+    document.getElementById(
+        "filtroData"
+    ).value = "";
 
     renderizarPedidos();
 
 }
 
+
 function atualizarResumo(){
 
     const dataHoje = hoje();
 
-    const pedidosHoje = pedidos.filter(p =>
-        dataLocal(p.criado_em) === dataHoje
-    );
+    const pedidosHoje =
+        pedidos.filter(p =>
+            dataLocal(p.criado_em)
+            === dataHoje
+        );
 
-    const vendasHoje = pedidosHoje.reduce(
-        (total,p)=>total + Number(p.total || 0),
-        0
-    );
 
-    const totalVendas = pedidos.reduce(
-        (total,p)=>total + Number(p.total || 0),
-        0
-    );
+    const vendasHoje =
+        pedidosHoje.reduce(
+            (total,p)=>
+            total + Number(p.total || 0),
+            0
+        );
+
+
+    const totalVendas =
+        pedidos.reduce(
+            (total,p)=>
+            total + Number(p.total || 0),
+            0
+        );
+
 
     const ticketHoje =
         pedidosHoje.length
         ? vendasHoje / pedidosHoje.length
         : 0;
 
+
     const ticketGeral =
         pedidos.length
         ? totalVendas / pedidos.length
         : 0;
 
-    const pendentes = pedidos.filter(
-        p=>p.status !== "pronto"
-    ).length;
 
-    const concluidos = pedidos.filter(
-        p=>p.status === "pronto"
-    ).length;
+    const pendentes =
+        pedidos.filter(
+            p=>p.status !== "pronto"
+        ).length;
 
-    document.getElementById("resPedidosHoje").textContent =
+
+    const concluidos =
+        pedidos.filter(
+            p=>p.status === "pronto"
+        ).length;
+
+
+    document.getElementById(
+        "resPedidosHoje"
+    ).textContent =
         pedidosHoje.length;
 
-    document.getElementById("resVendasHoje").textContent =
+
+    document.getElementById(
+        "resVendasHoje"
+    ).textContent =
         dinheiro(vendasHoje);
 
-    document.getElementById("resTicketHoje").textContent =
+
+    document.getElementById(
+        "resTicketHoje"
+    ).textContent =
         dinheiro(ticketHoje);
 
-    document.getElementById("resPendentes").textContent =
+
+    document.getElementById(
+        "resPendentes"
+    ).textContent =
         pendentes;
 
-    document.getElementById("resTotalPedidos").textContent =
+
+    document.getElementById(
+        "resTotalPedidos"
+    ).textContent =
         pedidos.length;
 
-    document.getElementById("resTotalVendas").textContent =
+
+    document.getElementById(
+        "resTotalVendas"
+    ).textContent =
         dinheiro(totalVendas);
 
-    document.getElementById("resTicketGeral").textContent =
+
+    document.getElementById(
+        "resTicketGeral"
+    ).textContent =
         dinheiro(ticketGeral);
 
-    document.getElementById("resConcluidos").textContent =
+
+    document.getElementById(
+        "resConcluidos"
+    ).textContent =
         concluidos;
 
 }
 
+
 function mostrarAba(aba){
 
     const pedidosAba =
-        document.getElementById("abaPedidos");
+        document.getElementById(
+            "abaPedidos"
+        );
 
     const resumoAba =
-        document.getElementById("abaResumo");
+        document.getElementById(
+            "abaResumo"
+        );
 
     const tabPedidos =
-        document.getElementById("tabPedidos");
+        document.getElementById(
+            "tabPedidos"
+        );
 
     const tabResumo =
-        document.getElementById("tabResumo");
+        document.getElementById(
+            "tabResumo"
+        );
+
 
     if(aba === "pedidos"){
 
-        pedidosAba.style.display = "block";
-        resumoAba.style.display = "none";
+        pedidosAba.style.display =
+            "block";
 
-        tabPedidos.classList.add("active");
-        tabResumo.classList.remove("active");
+        resumoAba.style.display =
+            "none";
+
+        tabPedidos.classList.add(
+            "active"
+        );
+
+        tabResumo.classList.remove(
+            "active"
+        );
 
     }else{
 
-        pedidosAba.style.display = "none";
-        resumoAba.style.display = "block";
+        pedidosAba.style.display =
+            "none";
 
-        tabPedidos.classList.remove("active");
-        tabResumo.classList.add("active");
+        resumoAba.style.display =
+            "block";
+
+        tabPedidos.classList.remove(
+            "active"
+        );
+
+        tabResumo.classList.add(
+            "active"
+        );
 
     }
 
 }
 
-/* PRIMEIRA CARGA */
 
-carregarPedidos();
+/* =========================
+   ATUALIZAÇÃO AUTOMÁTICA
+========================= */
 
-/* ATUALIZAÇÃO AUTOMÁTICA A CADA 2 SEGUNDOS */
+setInterval(()=>{
 
-setInterval(carregarPedidos,2000);
+    if(autenticado){
+
+        carregarPedidos();
+
+    }
+
+},2000);
+
+
+/* =========================
+   FOCO AUTOMÁTICO NA SENHA
+========================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        document.getElementById(
+            "senha"
+        ).focus();
+
+    }
+);
 
 </script></body>
 </html>
