@@ -1,8 +1,15 @@
+
 {
-  "name": "cantinho-acai",
+  "name": "cantinho-do-acai",
   "version": "1.0.0",
-  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev"
+  },
   "dependencies": {
-    "postgres": "^3.4.7"
+    "@neondatabase/serverless": "^1.0.2"
+  },
+  "devDependencies": {
+    "vercel": "^48.0.0"
   }
 }
