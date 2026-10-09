@@ -1,22 +1,62 @@
-import postgres from 'postgres';
 
-const sql = postgres(process.env.DATABASE_URL);
+import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+
     return res.status(405).json({
-      erro: 'Método não permitido'
+      sucesso: false,
+      erro: 'Método não permitido.'
     });
   }
 
   try {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL não está configurada.');
+    }
+
+    const sql = neon(process.env.DATABASE_URL);
+
     const {
       pedido_id,
       produto,
       quantidade,
       detalhes,
       preco
-    } = req.body;
+    } = req.body || {};
+
+    const idPedido = Number(pedido_id);
+    const qtd = Number(quantidade);
+    const valor = Number(preco);
+
+    if (!Number.isInteger(idPedido) || idPedido < 1) {
+      return res.status(400).json({
+        sucesso: false,
+        erro: 'ID do pedido inválido.'
+      });
+    }
+
+    if (typeof produto !== 'string' || !produto.trim()) {
+      return res.status(400).json({
+        sucesso: false,
+        erro: 'Informe o nome do produto.'
+      });
+    }
+
+    if (!Number.isInteger(qtd) || qtd < 1) {
+      return res.status(400).json({
+        sucesso: false,
+        erro: 'A quantidade deve ser um inteiro positivo.'
+      });
+    }
+
+    if (!Number.isFinite(valor) || valor < 0) {
+      return res.status(400).json({
+        sucesso: false,
+        erro: 'Preço inválido.'
+      });
+    }
 
     const resultado = await sql`
       INSERT INTO pedido_itens (
@@ -27,26 +67,25 @@ export default async function handler(req, res) {
         preco
       )
       VALUES (
-        ${pedido_id},
-        ${produto},
-        ${quantidade},
+        ${idPedido},
+        ${produto.trim()},
+        ${qtd},
         ${detalhes || null},
-        ${preco}
+        ${valor}
       )
       RETURNING *;
     `;
 
-    res.status(201).json({
+    return res.status(201).json({
       sucesso: true,
       item: resultado[0]
     });
-
   } catch (erro) {
-    console.error(erro);
+    console.error('Erro em itens.js:', erro.message);
 
-    res.status(500).json({
+    return res.status(500).json({
       sucesso: false,
-      erro: erro.message
+      erro: 'Não foi possível cadastrar o item.'
     });
   }
 }
