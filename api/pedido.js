@@ -4,7 +4,6 @@ import { neon } from '@neondatabase/serverless';
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-
     return res.status(405).json({
       sucesso: false,
       erro: 'Método não permitido.'
@@ -17,12 +16,23 @@ export default async function handler(req, res) {
     }
 
     const sql = neon(process.env.DATABASE_URL);
-    const id = Number(req.query.id);
+
+    // Lê o ID tanto pela query quanto pela URL.
+    const url = new URL(
+      req.url,
+      `https://${req.headers.host || 'localhost'}`
+    );
+
+    const idRecebido = req.query?.id ?? url.searchParams.get('id');
+    const id = Number(
+      Array.isArray(idRecebido) ? idRecebido[0] : idRecebido
+    );
 
     if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         sucesso: false,
-        erro: 'ID do pedido inválido.'
+        erro: 'ID do pedido inválido.',
+        dica: 'Informe o ID na URL, por exemplo: /api/pedido?id=1'
       });
     }
 
@@ -52,7 +62,7 @@ export default async function handler(req, res) {
       itens
     });
   } catch (erro) {
-    console.error('Erro em pedido.js:', erro.message);
+    console.error('Erro em pedido.js:', erro);
 
     return res.status(500).json({
       sucesso: false,
