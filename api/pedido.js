@@ -1,22 +1,28 @@
-import postgres from 'postgres';
 
-const sql = postgres(process.env.DATABASE_URL);
+import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+
+    return res.status(405).json({
+      sucesso: false,
+      erro: 'Método não permitido.'
+    });
+  }
 
   try {
-
-    if (req.method !== 'GET') {
-      return res.status(405).json({
-        erro: 'Método não permitido'
-      });
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL não está configurada.');
     }
 
-    const { id } = req.query;
+    const sql = neon(process.env.DATABASE_URL);
+    const id = Number(req.query.id);
 
-    if (!id) {
+    if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
-        erro: 'ID do pedido não informado'
+        sucesso: false,
+        erro: 'ID do pedido inválido.'
       });
     }
 
@@ -28,7 +34,8 @@ export default async function handler(req, res) {
 
     if (pedidos.length === 0) {
       return res.status(404).json({
-        erro: 'Pedido não encontrado'
+        sucesso: false,
+        erro: 'Pedido não encontrado.'
       });
     }
 
@@ -44,14 +51,12 @@ export default async function handler(req, res) {
       pedido: pedidos[0],
       itens
     });
-
   } catch (erro) {
-
-    console.error(erro);
+    console.error('Erro em pedido.js:', erro.message);
 
     return res.status(500).json({
       sucesso: false,
-      erro: erro.message
+      erro: 'Não foi possível consultar o pedido.'
     });
   }
 }
