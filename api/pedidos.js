@@ -1,18 +1,19 @@
-import postgres from 'postgres';
 
-const sql = postgres(process.env.DATABASE_URL);
+import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
-
   try {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL não está configurada.');
+    }
 
-    // LISTAR PEDIDOS
+    const sql = neon(process.env.DATABASE_URL);
+
     if (req.method === 'GET') {
-
       const pedidos = await sql`
         SELECT *
         FROM pedidos
-        ORDER BY criado_em DESC
+        ORDER BY criado_em DESC NULLS LAST, id DESC
       `;
 
       return res.status(200).json({
@@ -21,31 +22,48 @@ export default async function handler(req, res) {
       });
     }
 
-    // CRIAR PEDIDO
     if (req.method === 'POST') {
-
       const {
         numero_pedido,
         mesa,
         pagamento,
         observacao,
         total
-      } = req.body;
+      } = req.body || {};
+
+      const numero = Number(numero_pedido);
+      const numeroMesa = Number(mesa);
+      const valorTotal = Number(total);
+
+      if (
+        !Number.isInteger(numero) || numero < 1 ||
+        !Number.isInteger(numeroMesa) || numeroMesa < 1 ||
+        !Number.isFinite(valorTotal) || valorTotal < 0
+      ) {
+        return res.status(400).json({
+          sucesso: false,
+          erro: 'Número do pedido, mesa ou total inválido.'
+        });
+      }
 
       const resultado = await sql`
         INSERT INTO pedidos (
           numero_pedido,
           mesa,
+          status,
           pagamento,
           observacao,
-          total
+          total,
+          criado_em
         )
         VALUES (
-          ${numero_pedido},
-          ${mesa},
-          ${pagamento},
+          ${numero},
+          ${numeroMesa},
+          'novo',
+          ${pagamento || null},
           ${observacao || null},
-          ${total}
+          ${valorTotal},
+          CURRENT_TIMESTAMP
         )
         RETURNING *;
       `;
@@ -56,17 +74,18 @@ export default async function handler(req, res) {
       });
     }
 
+    res.setHeader('Allow', 'GET, POST');
+
     return res.status(405).json({
-      erro: 'Método não permitido'
+      sucesso: false,
+      erro: 'Método não permitido.'
     });
-
   } catch (erro) {
-
-    console.error(erro);
+    console.error('Erro em pedidos.js:', erro.message);
 
     return res.status(500).json({
       sucesso: false,
-      erro: erro.message
+      erro: 'Não foi possível processar os pedidos.'
     });
   }
 }
