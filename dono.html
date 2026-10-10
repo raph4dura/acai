@@ -20,7 +20,12 @@ body {
     color: #1f2937;
 }
 
-/* TELA DE LOGIN */
+button {
+    border: none;
+    cursor: pointer;
+}
+
+/* LOGIN */
 #loginScreen {
     min-height: 100vh;
     display: flex;
@@ -96,12 +101,6 @@ body {
     border-radius: 12px;
     font-size: 16px;
     font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-
-.login-button:active {
-    transform: scale(.98);
 }
 
 .login-error {
@@ -158,7 +157,6 @@ header p {
     padding: 9px 13px;
     border-radius: 9px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .container {
@@ -194,11 +192,6 @@ header p {
     height: 10px;
     background: #22c55e;
     border-radius: 50%;
-}
-
-button {
-    border: none;
-    cursor: pointer;
 }
 
 /* DASHBOARD */
@@ -270,11 +263,14 @@ button {
 }
 
 .filters select,
-.filters input {
+.filters input,
+.summary-box select,
+.summary-box input {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 9px;
     background: white;
+    max-width: 100%;
 }
 
 .refresh {
@@ -283,6 +279,10 @@ button {
     padding: 10px 15px;
     border-radius: 9px;
     font-weight: bold;
+}
+
+.refresh:disabled {
+    cursor: wait;
 }
 
 /* PEDIDOS */
@@ -304,14 +304,8 @@ button {
 }
 
 @keyframes newOrder {
-    0% {
-        transform: scale(.97);
-        opacity: .4;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    0% { transform: scale(.97); opacity: .4; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .order-top {
@@ -339,6 +333,7 @@ button {
     border-radius: 20px;
     font-size: 12px;
     font-weight: bold;
+    height: fit-content;
 }
 
 .badge.novo {
@@ -379,7 +374,7 @@ button {
     font-size: 13px;
     color: #666;
     margin-top: 3px;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .order-bottom {
@@ -399,6 +394,7 @@ button {
 .payment {
     font-size: 13px;
     color: #555;
+    margin-top: 4px;
 }
 
 .observation {
@@ -424,26 +420,14 @@ button {
     font-weight: bold;
 }
 
-.preparo {
-    background: #2563eb;
-}
+.preparo { background: #2563eb; }
+.pronto { background: #16a34a; }
+.voltar { background: #6b7280; }
 
-.pronto {
-    background: #16a34a;
-}
-
-.voltar {
-    background: #6b7280;
-}
-
-.excluir {
-    background: #dc2626;
-}
-
-/* RESUMO */
+/* RESUMO E CONTROLE */
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
 }
 
@@ -452,6 +436,7 @@ button {
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 3px 12px rgba(0,0,0,.07);
+    min-width: 0;
 }
 
 .summary-box h3 {
@@ -459,12 +444,31 @@ button {
     margin-bottom: 15px;
 }
 
+.summary-box label {
+    display: block;
+    font-size: 13px;
+    margin: 12px 0 6px;
+    color: #555;
+}
+
+.summary-box select,
+.summary-box input {
+    width: 100%;
+}
+
 .summary-row {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
     font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.summary-row strong {
+    text-align: right;
 }
 
 .summary-row:last-child {
@@ -479,7 +483,6 @@ button {
     color: #777;
 }
 
-/* RESPONSIVO */
 @media(max-width:850px) {
     .dashboard {
         grid-template-columns: repeat(2, 1fr);
@@ -492,7 +495,7 @@ button {
     }
 
     .dashboard {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 9px;
     }
 
@@ -502,6 +505,7 @@ button {
 
     .card-value {
         font-size: 22px;
+        overflow-wrap: anywhere;
     }
 
     .summary-grid {
@@ -520,17 +524,25 @@ button {
         font-size: 12px;
         padding: 8px 10px;
     }
+
+    .filters select,
+    .filters input {
+        width: 100%;
+    }
+
+    .tab {
+        padding: 10px 13px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- TELA DE LOGIN -->
+<!-- LOGIN -->
 <div id="loginScreen">
     <div class="login-box">
         <div class="login-icon">🔐</div>
-
         <h1>Área do Dono</h1>
         <p>Digite a senha para acessar o painel.</p>
 
@@ -542,13 +554,14 @@ button {
                 inputmode="numeric"
                 maxlength="6"
                 autocomplete="off"
-                onkeydown="if(event.key==='Enter') entrar()">
+                onkeydown="if(event.key === 'Enter') entrar()">
 
             <button
                 type="button"
                 class="show-password"
                 onclick="mostrarSenha()"
-                id="botaoSenha">
+                id="botaoSenha"
+                aria-label="Mostrar ou ocultar senha">
                 👁️
             </button>
         </div>
@@ -567,7 +580,7 @@ button {
     </div>
 </div>
 
-<!-- PAINEL DO DONO -->
+<!-- PAINEL -->
 <div id="painel">
 
 <header>
@@ -577,9 +590,7 @@ button {
             <p>Painel do dono</p>
         </div>
 
-        <button class="logout" onclick="sair()">
-            🔒 Sair
-        </button>
+        <button class="logout" onclick="sair()">🔒 Sair</button>
     </div>
 </header>
 
@@ -598,7 +609,6 @@ button {
 
     <!-- DASHBOARD -->
     <div class="dashboard">
-
         <div class="card">
             <div class="card-title">Pedidos hoje</div>
             <div class="card-value" id="pedidosHoje">0</div>
@@ -622,39 +632,29 @@ button {
             <div class="card-value" id="ticketMedio">R$ 0,00</div>
             <div class="card-sub">Média por pedido</div>
         </div>
-
     </div>
 
     <!-- ABAS -->
-  
-<div class="tabs">
-    <button
-        class="tab active"
-        id="tabPedidos"
-        onclick="mostrarAba('pedidos')">
-        📋 Pedidos
-    </button>
+    <div class="tabs">
+        <button class="tab active" id="tabPedidos"
+            onclick="mostrarAba('pedidos')">
+            📋 Pedidos
+        </button>
 
-    <button
-        class="tab"
-        id="tabResumo"
-        onclick="mostrarAba('resumo')">
-        📊 Resumo
-    </button>
+        <button class="tab" id="tabResumo"
+            onclick="mostrarAba('resumo')">
+            📊 Resumo
+        </button>
 
-    <button
-        class="tab"
-        id="tabControle"
-        onclick="mostrarAba('controle')">
-        📦 Controle
-    </button>
-</div>
+        <button class="tab" id="tabControle"
+            onclick="mostrarAba('controle')">
+            📦 Controle
+        </button>
+    </div>
 
     <!-- ABA PEDIDOS -->
     <section id="abaPedidos">
-
         <div class="filters">
-
             <select id="filtroStatus" onchange="renderizarPedidos()">
                 <option value="todos">Todos os status</option>
                 <option value="novo">Novos</option>
@@ -662,15 +662,12 @@ button {
                 <option value="pronto">Prontos</option>
             </select>
 
-            <input
-                type="date"
-                id="filtroData"
+            <input type="date" id="filtroData"
                 onchange="renderizarPedidos()">
 
             <button class="refresh" onclick="limparFiltros()">
                 Limpar filtros
             </button>
-
         </div>
 
         <div id="orders" class="orders"></div>
@@ -678,9 +675,7 @@ button {
 
     <!-- ABA RESUMO -->
     <section id="abaResumo" style="display:none">
-
         <div class="summary-grid">
-
             <div class="summary-box">
                 <h3>📅 Hoje</h3>
 
@@ -728,111 +723,122 @@ button {
                     <strong id="resConcluidos">0</strong>
                 </div>
             </div>
-
         </div>
     </section>
 
+    <!-- ABA CONTROLE -->
+    <section id="abaControle" style="display:none">
 
-<!-- ABA CONTROLE -->
-<section id="abaControle" style="display:none">
+        <div class="summary-grid">
+            <div class="summary-box">
+                <h3>📅 Período das vendas</h3>
 
-    <div class="summary-grid">
+                <label for="controlePeriodo">Consultar período:</label>
+                <select id="controlePeriodo"
+                    onchange="alterarPeriodoControle()">
+                    <option value="hoje">Hoje</option>
+                    <option value="semana">Esta semana</option>
+                    <option value="mes">Este mês</option>
+                    <option value="personalizado">Período personalizado</option>
+                </select>
 
-        <div class="summary-box">
-            <h3>📅 Período das vendas</h3>
+                <div id="controleDatas"
+                    style="display:none; margin-top:15px;">
 
-            <label for="controlePeriodo">Consultar período:</label>
+                    <label for="controleDataInicio">Data inicial:</label>
+                    <input type="date" id="controleDataInicio"
+                        onchange="gerarControle()">
 
-            <select id="controlePeriodo" onchange="alterarPeriodoControle()">
-                <option value="hoje">Hoje</option>
-                <option value="semana">Esta semana</option>
-                <option value="mes">Este mês</option>
-                <option value="personalizado">Período personalizado</option>
-            </select>
+                    <label for="controleDataFim">Data final:</label>
+                    <input type="date" id="controleDataFim"
+                        onchange="gerarControle()">
+                </div>
 
-            <div id="controleDatas" style="display:none; margin-top:15px;">
-                <label for="controleDataInicio">Data inicial:</label>
-                <input type="date" id="controleDataInicio">
-
-                <label for="controleDataFim">Data final:</label>
-                <input type="date" id="controleDataFim">
+                <button class="refresh"
+                    style="margin-top:15px; width:100%;"
+                    onclick="gerarControle()">
+                    Consultar vendas
+                </button>
             </div>
 
-            <button
-                class="refresh"
-                style="margin-top:15px;"
-                onclick="gerarControle()">
-                Consultar vendas
-            </button>
-        </div>
+            <div class="summary-box">
+                <h3>💰 Resultado do período</h3>
 
-        <div class="summary-box">
-            <h3>💰 Resultado do período</h3>
+                <div class="summary-row">
+                    <span>Pedidos</span>
+                    <strong id="controlePedidos">0</strong>
+                </div>
 
-            <div class="summary-row">
-                <span>Pedidos</span>
-                <strong id="controlePedidos">0</strong>
-            </div>
+                <div class="summary-row">
+                    <span>Faturamento</span>
+                    <strong id="controleFaturamento">R$ 0,00</strong>
+                </div>
 
-            <div class="summary-row">
-                <span>Faturamento</span>
-                <strong id="controleFaturamento">R$ 0,00</strong>
-            </div>
+                <div class="summary-row">
+                    <span>Itens vendidos</span>
+                    <strong id="controleItens">0</strong>
+                </div>
 
-            <div class="summary-row">
-                <span>Itens vendidos</span>
-                <strong id="controleItens">0</strong>
-            </div>
-
-            <div class="summary-row">
-                <span>Mililitros de açaí</span>
-                <strong id="controleMl">0 ml</strong>
+                <div class="summary-row">
+                    <span>Mililitros de açaí</span>
+                    <strong id="controleMl">0 ml</strong>
+                </div>
             </div>
         </div>
 
-    </div>
-
-    <div class="summary-box" style="margin-top:16px;">
-        <h3>🍇 Açaí vendido por tamanho</h3>
-        <div id="controleAcai">
-            Consulte um período para ver os resultados.
+        <div class="summary-box" style="margin-top:16px;">
+            <h3>🍇 Açaí vendido por tamanho</h3>
+            <div id="controleAcai">
+                Consulte um período para ver os resultados.
+            </div>
         </div>
-    </div>
 
-    <div class="summary-box" style="margin-top:16px;">
-        <h3>🍔 Produtos vendidos</h3>
-        <div id="controleProdutos">
-            Consulte um período para ver os resultados.
+        <div class="summary-box" style="margin-top:16px;">
+            <h3>🍔 Produtos vendidos</h3>
+            <div id="controleProdutos">
+                Consulte um período para ver os resultados.
+            </div>
         </div>
-    </div>
 
-    <div class="summary-box" style="margin-top:16px;">
-        <h3>🥄 Complementos utilizados</h3>
-        <div id="controleComplementos">
-            Consulte um período para ver os resultados.
+        <div class="summary-box" style="margin-top:16px;">
+            <h3>🥄 Complementos utilizados</h3>
+            <div id="controleComplementos">
+                Consulte um período para ver os resultados.
+            </div>
         </div>
-    </div>
+    </section>
 
-</section>
-
-    
 </div>
 </div>
 
 <script>
-/* SENHA */
-const SENHA_DONO = "080509";
-let autenticado = false;
+"use strict";
 
-/* LOGIN */
+/* ==========================================
+   CONFIGURAÇÕES
+========================================== */
+
+const SENHA_DONO = "080509";
+
+let autenticado = false;
+let pedidos = [];
+let idsConhecidos = new Set();
+let primeiraCarga = true;
+let carregandoPedidos = false;
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
 function entrar() {
     const campo = document.getElementById("senha");
     const erro = document.getElementById("erroSenha");
 
     if (campo.value === SENHA_DONO) {
         autenticado = true;
-
         erro.style.display = "none";
+
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("painel").style.display = "block";
 
@@ -862,17 +868,18 @@ function sair() {
 
     document.getElementById("painel").style.display = "none";
     document.getElementById("loginScreen").style.display = "flex";
+
     document.getElementById("senha").value = "";
     document.getElementById("senha").type = "password";
     document.getElementById("botaoSenha").textContent = "👁️";
+
     document.getElementById("senha").focus();
 }
 
-/* SISTEMA */
-let pedidos = [];
-let idsConhecidos = new Set();
-let primeiraCarga = true;
-let carregandoPedidos = false;
+
+/* ==========================================
+   FUNÇÕES AUXILIARES
+========================================== */
 
 function dinheiro(valor) {
     return Number(valor || 0).toLocaleString("pt-BR", {
@@ -890,8 +897,13 @@ function escapar(texto) {
         .replace(/'/g, "&#039;");
 }
 
-function dataLocal(date) {
-    const d = new Date(date);
+function dataLocal(data) {
+    const d = new Date(data);
+
+    if (Number.isNaN(d.getTime())) {
+        return "";
+    }
+
     const ano = d.getFullYear();
     const mes = String(d.getMonth() + 1).padStart(2, "0");
     const dia = String(d.getDate()).padStart(2, "0");
@@ -903,10 +915,16 @@ function hoje() {
     return dataLocal(new Date());
 }
 
-function formatarData(date) {
-    if (!date) return "";
+function formatarData(data) {
+    if (!data) return "";
 
-    return new Date(date).toLocaleString("pt-BR", {
+    const d = new Date(data);
+
+    if (Number.isNaN(d.getTime())) {
+        return "";
+    }
+
+    return d.toLocaleString("pt-BR", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -923,7 +941,11 @@ function nomeStatus(status) {
     return status || "Novo";
 }
 
-/* CARREGAR ITENS DO PEDIDO */
+
+/* ==========================================
+   CARREGAR ITENS DO PEDIDO
+========================================== */
+
 async function carregarItens(pedidoId) {
     try {
         const resposta = await fetch(
@@ -933,21 +955,28 @@ async function carregarItens(pedidoId) {
             { cache: "no-store" }
         );
 
-        if (!resposta.ok) return [];
+        if (!resposta.ok) {
+            throw new Error("Erro HTTP " + resposta.status);
+        }
 
         const dados = await resposta.json();
 
-        return Array.isArray(dados)
-            ? dados
-            : (dados.itens || []);
+        if (Array.isArray(dados)) {
+            return dados;
+        }
 
-    } catch (e) {
-        console.error("Erro ao carregar itens:", e);
+        return Array.isArray(dados.itens) ? dados.itens : [];
+
+    } catch (erro) {
+        console.error("Erro ao carregar itens:", erro);
         return [];
     }
 }
 
-/* ATUALIZAR PEDIDOS SOMENTE QUANDO SOLICITADO */
+
+/* ==========================================
+   CARREGAR PEDIDOS
+========================================== */
 
 async function carregarPedidos() {
     if (!autenticado || carregandoPedidos) return;
@@ -982,64 +1011,33 @@ async function carregarPedidos() {
 
         pedidos = Array.isArray(dados)
             ? dados
-            : (dados.pedidos || []);
+            : (Array.isArray(dados.pedidos) ? dados.pedidos : []);
 
         pedidos.sort((a, b) => {
             return new Date(b.criado_em) - new Date(a.criado_em);
         });
 
-        // Carrega os itens de cada pedido para usar no Controle.
+        // Busca os itens dos pedidos para exibição e relatórios.
         pedidos = await Promise.all(
-            pedidos.map(async (pedido) => {
-                try {
-                    const respostaItens = await fetch(
-                        "/api/itens?pedido_id=" +
-                        encodeURIComponent(pedido.id) +
-                        "&t=" + Date.now(),
-                        { cache: "no-store" }
-                    );
+            pedidos.map(async pedido => {
+                const itens = await carregarItens(pedido.id);
 
-                    if (!respostaItens.ok) {
-                        throw new Error("Erro ao carregar itens");
-                    }
-
-                    const dadosItens = await respostaItens.json();
-
-                    const itens = Array.isArray(dadosItens)
-                        ? dadosItens
-                        : (dadosItens.itens || []);
-
-                    return {
-                        ...pedido,
-                        itens
-                    };
-                } catch (erro) {
-                    console.error(
-                        "Erro ao carregar itens do pedido " + pedido.id,
-                        erro
-                    );
-
-                    return {
-                        ...pedido,
-                        itens: []
-                    };
-                }
+                return {
+                    ...pedido,
+                    itens
+                };
             })
         );
 
         atualizarDashboard();
         await renderizarPedidos();
         atualizarResumo();
-
-        // Atualiza o Controle se a função já estiver implementada.
-        if (typeof gerarControle === "function") {
-            gerarControle();
-        }
+        gerarControle();
 
         primeiraCarga = false;
 
     } catch (erro) {
-        console.error(erro);
+        console.error("Erro ao carregar pedidos:", erro);
 
         document.getElementById("orders").innerHTML = `
             <div class="empty">
@@ -1062,29 +1060,32 @@ async function carregarPedidos() {
 }
 
 
-/* INDICADORES */
+/* ==========================================
+   DASHBOARD
+========================================== */
+
 function atualizarDashboard() {
     const dataHoje = hoje();
 
     const pedidosHoje = pedidos.filter(
-        p => dataLocal(p.criado_em) === dataHoje
+        pedido => dataLocal(pedido.criado_em) === dataHoje
     );
 
     const vendasHoje = pedidosHoje.reduce(
-        (total, p) => total + Number(p.total || 0),
+        (total, pedido) => total + Number(pedido.total || 0),
         0
     );
 
     const pendentes = pedidos.filter(
-        p => p.status !== "pronto"
+        pedido => pedido.status !== "pronto"
     ).length;
 
     const totalGeral = pedidos.reduce(
-        (total, p) => total + Number(p.total || 0),
+        (total, pedido) => total + Number(pedido.total || 0),
         0
     );
 
-    const ticket = pedidos.length
+    const ticketMedio = pedidos.length
         ? totalGeral / pedidos.length
         : 0;
 
@@ -1098,10 +1099,14 @@ function atualizarDashboard() {
         pendentes;
 
     document.getElementById("ticketMedio").textContent =
-        dinheiro(ticket);
+        dinheiro(ticketMedio);
 }
 
-/* RENDERIZAR PEDIDOS E FILTROS */
+
+/* ==========================================
+   RENDERIZAR PEDIDOS
+========================================== */
+
 async function renderizarPedidos() {
     if (!autenticado) return;
 
@@ -1109,12 +1114,18 @@ async function renderizarPedidos() {
     const filtroStatus = document.getElementById("filtroStatus").value;
     const filtroData = document.getElementById("filtroData").value;
 
-    const lista = pedidos.filter(p => {
-        if (filtroStatus !== "todos" && p.status !== filtroStatus) {
+    const lista = pedidos.filter(pedido => {
+        if (
+            filtroStatus !== "todos" &&
+            pedido.status !== filtroStatus
+        ) {
             return false;
         }
 
-        if (filtroData && dataLocal(p.criado_em) !== filtroData) {
+        if (
+            filtroData &&
+            dataLocal(pedido.criado_em) !== filtroData
+        ) {
             return false;
         }
 
@@ -1146,12 +1157,14 @@ async function renderizarPedidos() {
             card.classList.add("new");
         }
 
-        const itens = await carregarItens(pedido.id);
+        const itens = Array.isArray(pedido.itens)
+            ? pedido.itens
+            : [];
 
         let itensHTML = "";
 
-        if (itens.length) {
-            itensHTML = itens.map(item => 
+        if (itens.length > 0) {
+            itensHTML = itens.map(item => `
                 <div class="item">
                     <strong>
                         ${Number(item.quantidade || 1)}x
@@ -1177,24 +1190,21 @@ async function renderizarPedidos() {
 
         if (pedido.status === "novo") {
             botao = `
-                <button
-                    class="action preparo"
+                <button class="action preparo"
                     onclick="alterarStatus(${Number(pedido.id)}, 'em_preparo')">
                     👨‍🍳 Colocar em preparo
                 </button>
             `;
         } else if (pedido.status === "em_preparo") {
             botao = `
-                <button
-                    class="action pronto"
+                <button class="action pronto"
                     onclick="alterarStatus(${Number(pedido.id)}, 'pronto')">
                     ✅ Marcar como pronto
                 </button>
             `;
         } else if (pedido.status === "pronto") {
             botao = `
-                <button
-                    class="action voltar"
+                <button class="action voltar"
                     onclick="alterarStatus(${Number(pedido.id)}, 'em_preparo')">
                     ↩ Voltar para preparo
                 </button>
@@ -1219,7 +1229,7 @@ async function renderizarPedidos() {
                 </div>
 
                 <span class="badge ${escapar(pedido.status || "novo")}">
-                    ${nomeStatus(pedido.status)}
+                    ${escapar(nomeStatus(pedido.status))}
                 </span>
             </div>
 
@@ -1251,39 +1261,57 @@ async function renderizarPedidos() {
         container.appendChild(card);
     }
 
-    pedidos.forEach(p => idsConhecidos.add(String(p.id)));
+    pedidos.forEach(pedido => {
+        idsConhecidos.add(String(pedido.id));
+    });
 }
 
-/* ALTERAR STATUS */
+
+/* ==========================================
+   ALTERAR STATUS
+========================================== */
+
 async function alterarStatus(id, status) {
     if (!autenticado) return;
 
     try {
-        const resposta = await fetch("/api/pedidos", {
-            method: "PATCH",
+        // Utiliza o endpoint de status do painel.
+        const resposta = await fetch("/api/status", {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id: id,
-                status: status
+                id,
+                status
             })
         });
 
         if (!resposta.ok) {
-            throw new Error("Erro ao alterar status");
+            const mensagem = await resposta.text();
+
+            throw new Error(
+                "HTTP " + resposta.status + ": " + mensagem
+            );
         }
 
         await carregarPedidos();
 
     } catch (erro) {
-        console.error(erro);
+        console.error("Erro ao alterar status:", erro);
 
-        alert("Não foi possível alterar o status do pedido.");
+        alert(
+            "Não foi possível alterar o status. " +
+            "Confira se a API /api/status aceita o pedido enviado."
+        );
     }
 }
 
-/* LIMPAR FILTROS */
+
+/* ==========================================
+   FILTROS DE PEDIDOS
+========================================== */
+
 function limparFiltros() {
     document.getElementById("filtroStatus").value = "todos";
     document.getElementById("filtroData").value = "";
@@ -1291,21 +1319,25 @@ function limparFiltros() {
     renderizarPedidos();
 }
 
-/* RESUMO */
+
+/* ==========================================
+   RESUMO
+========================================== */
+
 function atualizarResumo() {
     const dataHoje = hoje();
 
     const pedidosHoje = pedidos.filter(
-        p => dataLocal(p.criado_em) === dataHoje
+        pedido => dataLocal(pedido.criado_em) === dataHoje
     );
 
     const vendasHoje = pedidosHoje.reduce(
-        (total, p) => total + Number(p.total || 0),
+        (total, pedido) => total + Number(pedido.total || 0),
         0
     );
 
     const totalVendas = pedidos.reduce(
-        (total, p) => total + Number(p.total || 0),
+        (total, pedido) => total + Number(pedido.total || 0),
         0
     );
 
@@ -1318,11 +1350,11 @@ function atualizarResumo() {
         : 0;
 
     const pendentes = pedidos.filter(
-        p => p.status !== "pronto"
+        pedido => pedido.status !== "pronto"
     ).length;
 
     const concluidos = pedidos.filter(
-        p => p.status === "pronto"
+        pedido => pedido.status === "pronto"
     ).length;
 
     document.getElementById("resPedidosHoje").textContent =
@@ -1350,9 +1382,11 @@ function atualizarResumo() {
         concluidos;
 }
 
-/* ALTERNAR ABAS */
-```javascript
-/* ALTERNAR ABAS */
+
+/* ==========================================
+   ALTERNAR ABAS
+========================================== */
+
 function mostrarAba(aba) {
     const abas = {
         pedidos: {
@@ -1369,33 +1403,252 @@ function mostrarAba(aba) {
         }
     };
 
-    // Esconde todas as abas e remove o destaque dos botões.
-    Object.values(abas).forEach(abaItem => {
-        abaItem.conteudo.style.display = "none";
-        abaItem.botao.classList.remove("active");
+    if (!abas[aba]) return;
+
+    Object.values(abas).forEach(item => {
+        item.conteudo.style.display = "none";
+        item.botao.classList.remove("active");
     });
 
-    // Mostra a aba selecionada.
-    if (abas[aba]) {
-        abas[aba].conteudo.style.display = "block";
-        abas[aba].botao.classList.add("active");
-    }
+    abas[aba].conteudo.style.display = "block";
+    abas[aba].botao.classList.add("active");
 
-    // Atualiza os dados do Controle ao abri-lo.
-    if (aba === "controle" && typeof gerarControle === "function") {
+    if (aba === "controle") {
         gerarControle();
     }
 }
 
-/*
-   ATUALIZAÇÃO AUTOMÁTICA REMOVIDA.
-   Os pedidos são carregados:
-   1. Ao entrar no painel.
-   2. Ao clicar em "Atualizar agora".
-   3. Depois de alterar o status de um pedido.
-*/
 
-/* FOCO AUTOMÁTICO NA SENHA */
+/* ==========================================
+   PERÍODO DO CONTROLE
+========================================== */
+
+function alterarPeriodoControle() {
+    const periodo = document.getElementById("controlePeriodo").value;
+
+    document.getElementById("controleDatas").style.display =
+        periodo === "personalizado" ? "block" : "none";
+
+    gerarControle();
+}
+
+function obterPeriodoControle() {
+    const periodo = document.getElementById("controlePeriodo").value;
+
+    const dataHoje = hoje();
+    let inicio = dataHoje;
+    let fim = dataHoje;
+
+    if (periodo === "semana") {
+        const data = new Date();
+        const diaSemana = data.getDay();
+
+        // A semana começa na segunda-feira.
+        const diferenca = diaSemana === 0 ? -6 : 1 - diaSemana;
+
+        data.setDate(data.getDate() + diferenca);
+
+        inicio = dataLocal(data);
+        fim = dataHoje;
+
+    } else if (periodo === "mes") {
+        const data = new Date();
+        data.setDate(1);
+
+        inicio = dataLocal(data);
+        fim = dataHoje;
+
+    } else if (periodo === "personalizado") {
+        inicio = document.getElementById("controleDataInicio").value;
+        fim = document.getElementById("controleDataFim").value;
+    }
+
+    return { inicio, fim };
+}
+
+
+/* ==========================================
+   RELATÓRIOS DO CONTROLE
+========================================== */
+
+function gerarControle() {
+    const elPedidos = document.getElementById("controlePedidos");
+
+    if (!elPedidos) return;
+
+    const { inicio, fim } = obterPeriodoControle();
+
+    if (!inicio || !fim) {
+        elPedidos.textContent = "Selecione as datas";
+
+        document.getElementById("controleFaturamento").textContent = "—";
+        document.getElementById("controleItens").textContent = "—";
+        document.getElementById("controleMl").textContent = "—";
+
+        document.getElementById("controleAcai").textContent =
+            "Informe a data inicial e a data final.";
+
+        document.getElementById("controleProdutos").textContent =
+            "Informe a data inicial e a data final.";
+
+        document.getElementById("controleComplementos").textContent =
+            "Informe a data inicial e a data final.";
+
+        return;
+    }
+
+    if (inicio > fim) {
+        elPedidos.textContent = "Período inválido";
+
+        document.getElementById("controleFaturamento").textContent = "—";
+        document.getElementById("controleItens").textContent = "—";
+        document.getElementById("controleMl").textContent = "—";
+
+        document.getElementById("controleAcai").textContent =
+            "A data inicial deve ser anterior ou igual à data final.";
+
+        document.getElementById("controleProdutos").textContent = "—";
+        document.getElementById("controleComplementos").textContent = "—";
+
+        return;
+    }
+
+    const pedidosPeriodo = pedidos.filter(pedido => {
+        const dataPedido = dataLocal(pedido.criado_em);
+
+        return dataPedido >= inicio && dataPedido <= fim;
+    });
+
+    const faturamento = pedidosPeriodo.reduce(
+        (total, pedido) => total + Number(pedido.total || 0),
+        0
+    );
+
+    let quantidadeItens = 0;
+    let totalMl = 0;
+
+    const tamanhosAcai = {};
+    const produtosVendidos = {};
+    const complementosVendidos = {};
+
+    pedidosPeriodo.forEach(pedido => {
+        const itens = Array.isArray(pedido.itens)
+            ? pedido.itens
+            : [];
+
+        itens.forEach(item => {
+            const quantidade = Math.max(
+                0,
+                Number(item.quantidade || 1)
+            );
+
+            const nomeProduto = String(
+                item.produto || "Produto sem nome"
+            ).trim();
+
+            const nomeNormalizado =
+                nomeProduto.toLocaleLowerCase("pt-BR");
+
+            quantidadeItens += quantidade;
+
+            produtosVendidos[nomeProduto] =
+                (produtosVendidos[nomeProduto] || 0) + quantidade;
+
+            // Reconhece nomes como "Açaí 300 ml".
+            if (nomeNormalizado.includes("aça")) {
+                const tamanho = nomeProduto.match(/(\d+)\s*ml/i);
+
+                if (tamanho) {
+                    const ml = Number(tamanho[1]);
+
+                    tamanhosAcai[ml] =
+                        (tamanhosAcai[ml] || 0) + quantidade;
+
+                    totalMl += ml * quantidade;
+                }
+            }
+
+            // Conta os complementos registrados em detalhes.
+            if (item.detalhes) {
+                String(item.detalhes)
+                    .split(/[,;]+/)
+                    .map(texto => texto.trim())
+                    .filter(Boolean)
+                    .forEach(complemento => {
+                        complementosVendidos[complemento] =
+                            (complementosVendidos[complemento] || 0) +
+                            quantidade;
+                    });
+            }
+        });
+    });
+
+    elPedidos.textContent = pedidosPeriodo.length;
+
+    document.getElementById("controleFaturamento").textContent =
+        dinheiro(faturamento);
+
+    document.getElementById("controleItens").textContent =
+        quantidadeItens;
+
+    document.getElementById("controleMl").textContent =
+        totalMl.toLocaleString("pt-BR") + " ml";
+
+    // Açaí por tamanho.
+    const tamanhos = Object.keys(tamanhosAcai)
+        .map(Number)
+        .sort((a, b) => a - b);
+
+    document.getElementById("controleAcai").innerHTML =
+        tamanhos.length
+        ? tamanhos.map(tamanho => `
+            <div class="summary-row">
+                <span>Açaí ${tamanho} ml</span>
+                <strong>${tamanhosAcai[tamanho]} unidade(s)</strong>
+            </div>
+        `).join("")
+        : `<p class="details">
+               Nenhum açaí identificado neste período.
+           </p>`;
+
+    // Produtos vendidos.
+    const produtosOrdenados = Object.entries(produtosVendidos)
+        .sort((a, b) => b[1] - a[1]);
+
+    document.getElementById("controleProdutos").innerHTML =
+        produtosOrdenados.length
+        ? produtosOrdenados.map(([nome, quantidade]) => `
+            <div class="summary-row">
+                <span>${escapar(nome)}</span>
+                <strong>${quantidade} un.</strong>
+            </div>
+        `).join("")
+        : `<p class="details">
+               Nenhum item encontrado neste período.
+           </p>`;
+
+    // Complementos utilizados.
+    const complementosOrdenados = Object.entries(complementosVendidos)
+        .sort((a, b) => b[1] - a[1]);
+
+    document.getElementById("controleComplementos").innerHTML =
+        complementosOrdenados.length
+        ? complementosOrdenados.map(([nome, quantidade]) => `
+            <div class="summary-row">
+                <span>${escapar(nome)}</span>
+                <strong>${quantidade} utilização(ões)</strong>
+            </div>
+        `).join("")
+        : `<p class="details">
+               Nenhum complemento encontrado nos detalhes dos itens.
+           </p>`;
+}
+
+
+/* ==========================================
+   FOCO INICIAL NO LOGIN
+========================================== */
+
 window.addEventListener("load", () => {
     document.getElementById("senha").focus();
 });
