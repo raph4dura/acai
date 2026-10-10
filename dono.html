@@ -626,22 +626,30 @@ button {
     </div>
 
     <!-- ABAS -->
-    <div class="tabs">
-        <button
-            class="tab active"
-            id="tabPedidos"
-            onclick="mostrarAba('pedidos')">
-            📋 Pedidos
-        </button>
+  ```html
+<div class="tabs">
+    <button
+        class="tab active"
+        id="tabPedidos"
+        onclick="mostrarAba('pedidos')">
+        📋 Pedidos
+    </button>
 
-        <button
-            class="tab"
-            id="tabResumo"
-            onclick="mostrarAba('resumo')">
-            📊 Resumo
-        </button>
-    </div>
+    <button
+        class="tab"
+        id="tabResumo"
+        onclick="mostrarAba('resumo')">
+        📊 Resumo
+    </button>
 
+    <button
+        class="tab"
+        id="tabControle"
+        onclick="mostrarAba('controle')">
+        📦 Controle
+    </button>
+</div>
+```
     <!-- ABA PEDIDOS -->
     <section id="abaPedidos">
 
@@ -724,6 +732,90 @@ button {
         </div>
     </section>
 
+```html
+<!-- ABA CONTROLE -->
+<section id="abaControle" style="display:none">
+
+    <div class="summary-grid">
+
+        <div class="summary-box">
+            <h3>📅 Período das vendas</h3>
+
+            <label for="controlePeriodo">Consultar período:</label>
+
+            <select id="controlePeriodo" onchange="alterarPeriodoControle()">
+                <option value="hoje">Hoje</option>
+                <option value="semana">Esta semana</option>
+                <option value="mes">Este mês</option>
+                <option value="personalizado">Período personalizado</option>
+            </select>
+
+            <div id="controleDatas" style="display:none; margin-top:15px;">
+                <label for="controleDataInicio">Data inicial:</label>
+                <input type="date" id="controleDataInicio">
+
+                <label for="controleDataFim">Data final:</label>
+                <input type="date" id="controleDataFim">
+            </div>
+
+            <button
+                class="refresh"
+                style="margin-top:15px;"
+                onclick="gerarControle()">
+                Consultar vendas
+            </button>
+        </div>
+
+        <div class="summary-box">
+            <h3>💰 Resultado do período</h3>
+
+            <div class="summary-row">
+                <span>Pedidos</span>
+                <strong id="controlePedidos">0</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Faturamento</span>
+                <strong id="controleFaturamento">R$ 0,00</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Itens vendidos</span>
+                <strong id="controleItens">0</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Mililitros de açaí</span>
+                <strong id="controleMl">0 ml</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="summary-box" style="margin-top:16px;">
+        <h3>🍇 Açaí vendido por tamanho</h3>
+        <div id="controleAcai">
+            Consulte um período para ver os resultados.
+        </div>
+    </div>
+
+    <div class="summary-box" style="margin-top:16px;">
+        <h3>🍔 Produtos vendidos</h3>
+        <div id="controleProdutos">
+            Consulte um período para ver os resultados.
+        </div>
+    </div>
+
+    <div class="summary-box" style="margin-top:16px;">
+        <h3>🥄 Complementos utilizados</h3>
+        <div id="controleComplementos">
+            Consulte um período para ver os resultados.
+        </div>
+    </div>
+
+</section>
+
+    
 </div>
 </div>
 
