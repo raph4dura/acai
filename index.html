@@ -1,1768 +1,1360 @@
-<!DOCTYPE html><html lang="pt-BR">
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#5b21b6"><title>Cantinho do Açaí — Portão</title><style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+<meta name="theme-color" content="#5b21b6">
+
+<title>Cantinho do Açaí — Portão</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f7f4fb;
-    color:#241735;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f4fb;
+    color: #241735;
 }
 
-header{
-    background:linear-gradient(135deg,#5b21b6,#7c3aed,#9333ea);
-    color:white;
-    padding:18px 16px;
-    position:sticky;
-    top:0;
-    z-index:20;
-    box-shadow:0 4px 18px #0002;
+header {
+    background: linear-gradient(135deg, #5b21b6, #7c3aed, #9333ea);
+    color: white;
+    padding: 18px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 4px 18px #0002;
 }
 
-.header{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.header {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.logo{
-    display:flex;
-    gap:10px;
-    align-items:center;
+.logo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.logo-icon{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:white;
-    color:#6d28d9;
-    display:grid;
-    place-items:center;
-    font-size:24px;
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: white;
+    color: #6d28d9;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
 }
 
-.logo h1{
-    font-size:20px;
+.logo h1 {
+    font-size: 20px;
 }
 
-.logo small{
-    opacity:.85;
+.logo small {
+    opacity: .85;
 }
 
-.cart{
-    border:0;
-    background:white;
-    color:#5b21b6;
-    width:48px;
-    height:48px;
-    border-radius:15px;
-    font-size:22px;
-    position:relative;
-    cursor:pointer;
+.cart {
+    border: 0;
+    background: white;
+    color: #5b21b6;
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    font-size: 22px;
+    position: relative;
+    cursor: pointer;
 }
 
-.badge{
-    position:absolute;
-    right:-4px;
-    top:-5px;
-    min-width:21px;
-    height:21px;
-    border-radius:50%;
-    background:#ef4444;
-    color:white;
-    font-size:12px;
-    display:grid;
-    place-items:center;
-    font-weight:bold;
+.badge {
+    position: absolute;
+    right: -4px;
+    top: -5px;
+    min-width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: white;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: bold;
 }
 
-main{
-    max-width:1100px;
-    margin:auto;
-    padding:22px 16px 70px;
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 22px 16px 70px;
 }
 
-.hero{
-    background:linear-gradient(135deg,#ede9fe,#f5f3ff);
-    border-radius:24px;
-    padding:25px 20px;
-    margin-bottom:20px;
+.hero {
+    background: linear-gradient(135deg, #ede9fe, #f5f3ff);
+    border-radius: 24px;
+    padding: 25px 20px;
+    margin-bottom: 20px;
 }
 
-.hero h2{
-    font-size:28px;
-    color:#4c1d95;
-    margin-bottom:7px;
+.hero h2 {
+    font-size: 28px;
+    color: #4c1d95;
+    margin-bottom: 7px;
 }
 
-.hero p{
-    color:#6b5b7c;
-    line-height:1.5;
+.hero p {
+    color: #6b5b7c;
+    line-height: 1.5;
 }
 
-.search{
-    margin-bottom:16px;
+.search {
+    margin-bottom: 16px;
 }
 
-.search input{
-    width:100%;
-    padding:15px 17px;
-    border:2px solid #e5dff0;
-    border-radius:16px;
-    font-size:15px;
-    outline:0;
+.search input {
+    width: 100%;
+    padding: 15px 17px;
+    border: 2px solid #e5dff0;
+    border-radius: 16px;
+    font-size: 15px;
+    outline: 0;
 }
 
-.search input:focus{
-    border-color:#8b5cf6;
+.search input:focus {
+    border-color: #8b5cf6;
 }
 
-.cats{
-    display:flex;
-    gap:9px;
-    overflow:auto;
-    padding-bottom:7px;
-    margin-bottom:20px;
+.cats {
+    display: flex;
+    gap: 9px;
+    overflow: auto;
+    padding-bottom: 7px;
+    margin-bottom: 20px;
 }
 
-.cat{
-    border:0;
-    background:white;
-    color:#5b5264;
-    padding:11px 17px;
-    border-radius:999px;
-    cursor:pointer;
-    font-weight:bold;
-    white-space:nowrap;
-    box-shadow:0 2px 8px #0001;
+.cat {
+    border: 0;
+    background: white;
+    color: #5b5264;
+    padding: 11px 17px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px #0001;
 }
 
-.cat.active{
-    background:#6d28d9;
-    color:white;
+.cat.active {
+    background: #6d28d9;
+    color: white;
 }
 
-.title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:20px 0 14px;
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 14px;
 }
 
-.title h2{
-    font-size:21px;
-    color:#32184f;
+.title h2 {
+    font-size: 21px;
+    color: #32184f;
 }
 
-.title span{
-    font-size:13px;
-    color:#8a7b95;
+.title span {
+    font-size: 13px;
+    color: #8a7b95;
 }
 
-.products{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:13px;
+.products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
 }
 
-.product{
-    background:white;
-    border-radius:20px;
-    padding:15px;
-    box-shadow:0 4px 16px #27113c12;
-    display:flex;
-    flex-direction:column;
-    min-height:205px;
+.product {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 16px #27113c12;
+    display: flex;
+    flex-direction: column;
+    min-height: 205px;
 }
 
-.product.featured{
-    grid-column:span 2;
-    background:linear-gradient(135deg,#fff,#f5efff);
-    border:1px solid #e9ddff;
+.product.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #fff, #f5efff);
+    border: 1px solid #e9ddff;
 }
 
-.icon{
-    height:90px;
-    border-radius:16px;
-    background:linear-gradient(135deg,#f3e8ff,#ede9fe);
-    display:grid;
-    place-items:center;
-    font-size:50px;
-    margin-bottom:12px;
+.icon {
+    height: 90px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+    display: grid;
+    place-items: center;
+    font-size: 50px;
+    margin-bottom: 12px;
 }
 
-.featured .icon{
-    height:110px;
-    font-size:65px;
+.featured .icon {
+    height: 110px;
+    font-size: 65px;
 }
 
-.product h3{
-    font-size:16px;
-    color:#32184f;
-    margin-bottom:5px;
+.product h3 {
+    font-size: 16px;
+    color: #32184f;
+    margin-bottom: 5px;
 }
 
-.product p{
-    font-size:13px;
-    color:#81748d;
-    line-height:1.35;
-    margin-bottom:9px;
-    flex:1;
+.product p {
+    font-size: 13px;
+    color: #81748d;
+    line-height: 1.35;
+    margin-bottom: 9px;
+    flex: 1;
 }
 
-.price{
-    font-size:17px;
-    font-weight:bold;
-    color:#6d28d9;
-    margin-bottom:10px;
+.price {
+    font-size: 17px;
+    font-weight: bold;
+    color: #6d28d9;
+    margin-bottom: 10px;
 }
 
 .product button,
-.primary{
-    width:100%;
-    border:0;
-    background:#6d28d9;
-    color:white;
-    padding:12px;
-    border-radius:13px;
-    font-weight:bold;
-    cursor:pointer;
+.primary {
+    width: 100%;
+    border: 0;
+    background: #6d28d9;
+    color: white;
+    padding: 12px;
+    border-radius: 13px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .product button:hover,
-.primary:hover{
-    background:#5b21b6;
+.primary:hover {
+    background: #5b21b6;
 }
 
-footer{
-    text-align:center;
-    padding:25px;
-    color:#887c91;
-    font-size:12px;
+.primary:disabled {
+    opacity: .65;
+    cursor: wait;
 }
 
-.modal{
-    position:fixed;
-    inset:0;
-    background:#140a1eaa;
-    backdrop-filter:blur(5px);
-    z-index:100;
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #887c91;
+    font-size: 12px;
 }
 
-.modal.active{
-    display:flex;
+.modal {
+    position: fixed;
+    inset: 0;
+    background: #140a1eaa;
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
 }
 
-.box{
-    background:white;
-    width:100%;
-    max-width:600px;
-    max-height:92vh;
-    overflow:auto;
-    border-radius:28px 28px 0 0;
-    padding:22px;
+.modal.active {
+    display: flex;
 }
 
-.modal-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
+.box {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    max-height: 92vh;
+    overflow: auto;
+    border-radius: 28px 28px 0 0;
+    padding: 22px;
 }
 
-.modal-top h2{
-    color:#32184f;
-    font-size:21px;
+.modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
 }
 
-.close{
-    border:0;
-    background:#f1edf5;
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:18px;
+.modal-top h2 {
+    color: #32184f;
+    font-size: 21px;
 }
 
-.section-title{
-    margin:18px 0 8px;
-    color:#4b3b58;
-    font-size:15px;
-    font-weight:bold;
+.close {
+    border: 0;
+    background: #f1edf5;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.section-title {
+    margin: 18px 0 8px;
+    color: #4b3b58;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .sizes,
-.payments{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
+.payments {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
 }
 
 .size,
-.payment{
-    border:2px solid #e5def0;
-    background:white;
-    border-radius:14px;
-    padding:12px 5px;
-    text-align:center;
-    cursor:pointer;
+.payment {
+    border: 2px solid #e5def0;
+    background: white;
+    border-radius: 14px;
+    padding: 12px 5px;
+    text-align: center;
+    cursor: pointer;
 }
 
-.size strong{
-    display:block;
-    color:#4c1d95;
+.size strong {
+    display: block;
+    color: #4c1d95;
 }
 
-.size small{
-    color:#777;
+.size small {
+    color: #777;
 }
 
-.selected{
-    border-color:#7c3aed;
-    background:#f3e8ff;
+.selected {
+    border-color: #7c3aed;
+    background: #f3e8ff;
 }
 
-.extras{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
+.extras {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
 }
 
-.extra{
-    border:2px solid #eee8f5;
-    background:white;
-    border-radius:13px;
-    padding:11px;
-    display:flex;
-    justify-content:space-between;
-    cursor:pointer;
-    font-size:13px;
+.extra {
+    border: 2px solid #eee8f5;
+    background: white;
+    border-radius: 13px;
+    padding: 11px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 13px;
+    gap: 6px;
 }
 
-.field{
-    margin-top:13px;
+.field {
+    margin-top: 13px;
 }
 
-.field label{
-    display:block;
-    font-size:13px;
-    font-weight:bold;
-    color:#51445c;
-    margin-bottom:6px;
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #51445c;
+    margin-bottom: 6px;
 }
 
 .field input,
 .field textarea,
-.field select{
-    width:100%;
-    padding:13px;
-    border:2px solid #e6dfed;
-    border-radius:13px;
-    outline:0;
-    font:inherit;
+.field select {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid #e6dfed;
+    border-radius: 13px;
+    outline: 0;
+    font: inherit;
 }
 
-.field textarea{
-    min-height:75px;
-    resize:vertical;
+.field textarea {
+    min-height: 75px;
+    resize: vertical;
 }
 
-.cart-item{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    padding:14px 0;
-    border-bottom:1px solid #eee8f3;
+.cart-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee8f3;
 }
 
-.cart-info{
-    flex:1;
+.cart-info {
+    flex: 1;
+    min-width: 0;
 }
 
-.cart-info strong{
-    display:block;
-    font-size:14px;
+.cart-info strong {
+    display: block;
+    font-size: 14px;
 }
 
-.cart-info small{
-    display:block;
-    color:#887b91;
-    font-size:12px;
-    margin-top:3px;
+.cart-info small {
+    display: block;
+    color: #887b91;
+    font-size: 12px;
+    margin-top: 3px;
 }
 
-.qty{
-    display:flex;
-    align-items:center;
-    gap:7px;
+.qty {
+    display: flex;
+    align-items: center;
+    gap: 7px;
 }
 
-.qty button{
-    border:0;
-    background:#eee8f7;
-    color:#5b21b6;
-    width:28px;
-    height:28px;
-    border-radius:9px;
-    font-weight:bold;
-    cursor:pointer;
+.qty button {
+    border: 0;
+    background: #eee8f7;
+    color: #5b21b6;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.total{
-    display:flex;
-    justify-content:space-between;
-    font-size:19px;
-    font-weight:bold;
-    color:#6d28d9;
-    padding-top:12px;
-    margin-top:8px;
-    border-top:1px solid #ddd4e7;
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 19px;
+    font-weight: bold;
+    color: #6d28d9;
+    padding-top: 12px;
+    margin-top: 8px;
+    border-top: 1px solid #ddd4e7;
 }
 
-.notice{
-    padding:14px;
-    border-radius:14px;
-    background:#f3e8ff;
-    color:#4c1d95;
-    margin-top:14px;
-    font-size:14px;
-    line-height:1.45;
+.notice {
+    padding: 14px;
+    border-radius: 14px;
+    background: #f3e8ff;
+    color: #4c1d95;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.45;
 }
 
-.success{
-    text-align:center;
-    padding:15px;
+.success {
+    text-align: center;
+    padding: 15px;
 }
 
-.success .big{
-    font-size:55px;
-    margin:10px;
+.success .big {
+    font-size: 55px;
+    margin: 10px;
 }
 
-.success h2{
-    color:#4c1d95;
-    margin-bottom:8px;
+.success h2 {
+    color: #4c1d95;
+    margin-bottom: 8px;
 }
 
-.muted{
-    color:#75687f;
-    line-height:1.5;
+.muted {
+    color: #75687f;
+    line-height: 1.5;
 }
 
-@media(min-width:700px){
-
-    .products{
-        grid-template-columns:repeat(3,1fr);
+@media (min-width: 700px) {
+    .products {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .featured{
-        grid-column:span 3!important;
+    .featured {
+        grid-column: span 3 !important;
     }
 
-    .modal{
-        align-items:center;
-        padding:20px;
+    .modal {
+        align-items: center;
+        padding: 20px;
     }
 
-    .box{
-        border-radius:25px;
-        max-height:90vh;
-    }
-}
-
-@media(max-width:380px){
-
-    .products{
-        grid-template-columns:1fr;
-    }
-
-    .featured{
-        grid-column:span 1!important;
-    }
-
-    .extras{
-        grid-template-columns:1fr;
+    .box {
+        border-radius: 25px;
+        max-height: 90vh;
     }
 }
-</style></head><body><header><div class="header"><div class="logo"><div class="logo-icon">
-🍇
-</div><div><h1>Cantinho do Açaí</h1><small>
-Portão • Consumo no local
-</small></div></div><button class="cart" onclick="openCart()">🛒
 
-<span class="badge" id="badge">
-0
-</span></button></div></header><main><section class="hero"><h2>
-Seu momento gostoso 💜
-</h2><p>
-Açaí, xis, crepes, bebidas e muito mais.
-Faça seu pedido pelo celular e aproveite aqui no Cantinho!
-</p></section><div class="search"><input
-id="search"
-placeholder="🔎 O que você está procurando?"
-oninput="renderProducts()"
+@media (max-width: 380px) {
+    .products {
+        grid-template-columns: 1fr;
+    }
 
-«»
+    .featured {
+        grid-column: span 1 !important;
+    }
 
-</div><div
-class="cats"
-id="cats">
-</div><div class="title"><h2 id="sectionTitle">
-Cardápio
-</h2><span id="count">
-</span></div><div
-class="products"
-id="products">
-</div></main><footer>Cantinho do Açaí • Portão 💜
+    .extras {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
 
-<br>Consumo no local
+<body>
 
-</footer><!-- MODAL AÇAÍ --><div
-class="modal"
-id="productModal"><div class="box"><div class="modal-top"><h2>
-🍇 Monte seu Açaí
-</h2><button
-class="close"
-onclick="closeModal('productModal')">
-✕
-</button>
+<header>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">🍇</div>
+            <div>
+                <h1>Cantinho do Açaí</h1>
+                <small>Portão • Consumo no local</small>
+            </div>
+        </div>
 
-</div><div class="section-title">
-Escolha o tamanho
-</div><div
-class="sizes"
-id="sizes">
-</div><div class="section-title">
-Complementos
-</div><div class="notice">✨ Os 3 primeiros complementos são grátis.
-A partir do 4º, há cobrança adicional.
+        <button class="cart" onclick="openCart()" aria-label="Abrir carrinho">
+            🛒
+            <span class="badge" id="badge">0</span>
+        </button>
+    </div>
+</header>
 
-</div><div
-class="extras"
-id="extras"
-style="margin-top:10px">
-</div><div class="total"><span>
-Total
-</span><strong id="acaiTotal">
-R$ 0,00
-</strong></div><button
-class="primary"
-style="margin-top:15px"
-onclick="addAcai()">
+<main>
+    <section class="hero">
+        <h2>Seu momento gostoso 💜</h2>
+        <p>
+            Açaí, xis, crepes, bebidas e muito mais.
+            Faça seu pedido pelo celular e aproveite aqui no Cantinho!
+        </p>
+    </section>
 
-Adicionar ao carrinho
+    <div class="search">
+        <input
+            id="search"
+            placeholder="🔎 O que você está procurando?"
+            oninput="renderProducts()"
+        >
+    </div>
 
-</button></div></div><!-- CARRINHO --><div
-class="modal"
-id="cartModal"><div class="box"><div class="modal-top"><h2>
-🛒 Seu pedido
-</h2><button
-class="close"
-onclick="closeModal('cartModal')">
-✕
-</button>
+    <div class="cats" id="cats"></div>
 
-</div><div id="cartList">
-</div><div class="total"><span>
-Total
-</span><strong id="cartTotal">
-R$ 0,00
-</strong></div><div id="checkout"><div class="section-title">
-Dados do pedido
-</div><div class="field"><label>
-Mesa
-</label><input
-id="mesa"
-type="number"
-min="1"
-placeholder="Número da mesa"
+    <div class="title">
+        <h2 id="sectionTitle">Cardápio</h2>
+        <span id="count"></span>
+    </div>
 
-«»
+    <div class="products" id="products"></div>
+</main>
 
-</div><div class="field"><label>
-Forma de pagamento
-</label><div class="payments"><div
-class="payment selected"
-onclick="selectPayment(this,'Pix')">💜 Pix
+<footer>
+    Cantinho do Açaí • Portão 💜
+    <br>
+    Consumo no local
+</footer>
 
-</div><div
-class="payment"
-onclick="selectPayment(this,'Dinheiro')">💵 Dinheiro
+<!-- MODAL AÇAÍ -->
+<div class="modal" id="productModal">
+    <div class="box">
+        <div class="modal-top">
+            <h2>🍇 Monte seu Açaí</h2>
+            <button class="close" onclick="closeModal('productModal')">✕</button>
+        </div>
 
-</div><div
-class="payment"
-onclick="selectPayment(this,'Cartão')">💳 Cartão
+        <div class="section-title">Escolha o tamanho</div>
+        <div class="sizes" id="sizes"></div>
 
-</div></div></div><div class="field"><label>
-Observação
-</label><textarea
-id="obs"
-placeholder="Alguma observação?">
-</textarea></div><button
-class="primary"
-id="finishBtn"
-style="margin-top:15px"
-onclick="finishOrder()">
+        <div class="section-title">Complementos</div>
 
-✅ Finalizar pedido
+        <div class="notice">
+            ✨ Os 3 primeiros complementos são grátis.
+            A partir do 4º, há cobrança adicional.
+        </div>
 
-</button><div class="notice">Seu pedido será enviado diretamente para o painel dos funcionários e do dono.
+        <div class="extras" id="extras" style="margin-top:10px"></div>
 
-<strong>
-Não será enviado pelo WhatsApp.
-</strong></div></div></div></div><!-- SUCESSO --><div
-class="modal"
-id="successModal"><div class="box"><div class="success"><div class="big">
-✅
-</div><h2>
-Pedido recebido!
-</h2><p class="muted">Seu pedido foi registrado e já está disponível para os funcionários.
+        <div class="total">
+            <span>Total</span>
+            <strong id="acaiTotal">R$ 0,00</strong>
+        </div>
 
-</p><div
-class="notice"
-id="successText">
-</div><button
-class="primary"
-style="margin-top:15px"
-onclick="location.reload()">
+        <button class="primary" style="margin-top:15px" onclick="addAcai()">
+            Adicionar ao carrinho
+        </button>
+    </div>
+</div>
 
-Fazer outro pedido
+<!-- CARRINHO -->
+<div class="modal" id="cartModal">
+    <div class="box">
+        <div class="modal-top">
+            <h2>🛒 Seu pedido</h2>
+            <button class="close" onclick="closeModal('cartModal')">✕</button>
+        </div>
 
-</button></div></div></div><script>
+        <div id="cartList"></div>
 
+        <div class="total">
+            <span>Total</span>
+            <strong id="cartTotal">R$ 0,00</strong>
+        </div>
+
+        <div id="checkout">
+            <div class="section-title">Dados do pedido</div>
+
+            <div class="field">
+                <label for="mesa">Mesa</label>
+                <input
+                    id="mesa"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="Número da mesa"
+                >
+            </div>
+
+            <div class="field">
+                <label>Forma de pagamento</label>
+
+                <div class="payments">
+                    <div class="payment selected" onclick="selectPayment(this,'Pix')">
+                        💜 Pix
+                    </div>
+
+                    <div class="payment" onclick="selectPayment(this,'Dinheiro')">
+                        💵 Dinheiro
+                    </div>
+
+                    <div class="payment" onclick="selectPayment(this,'Cartão')">
+                        💳 Cartão
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="obs">Observação</label>
+                <textarea id="obs" placeholder="Alguma observação?"></textarea>
+            </div>
+
+            <button
+                class="primary"
+                id="finishBtn"
+                style="margin-top:15px"
+                onclick="finishOrder()"
+            >
+                ✅ Finalizar pedido
+            </button>
+
+            <div class="notice">
+                Seu pedido será enviado diretamente para o painel dos funcionários e do dono.
+                <strong>Não será enviado pelo WhatsApp.</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SUCESSO -->
+<div class="modal" id="successModal">
+    <div class="box">
+        <div class="success">
+            <div class="big">✅</div>
+            <h2>Pedido recebido!</h2>
+
+            <p class="muted">
+                Seu pedido foi registrado e já está disponível para os funcionários.
+            </p>
+
+            <div class="notice" id="successText"></div>
+
+            <button
+                class="primary"
+                style="margin-top:15px"
+                onclick="location.reload()"
+            >
+                Fazer outro pedido
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
 /* =========================
    PRODUTOS
 ========================= */
 
 const products = [
-
-{
-id:"acai",
-name:"Açaí",
-desc:"Monte do seu jeito com tamanho e complementos.",
-price:14.90,
-cat:"Açaí",
-icon:"🍇",
-acai:true
-},
-
-{
-id:"xis-salada",
-name:"Xis Salada",
-desc:"Pão, hambúrguer, queijo, presunto, alface, tomate e maionese.",
-price:18.90,
-cat:"Lanches",
-icon:"🍔"
-},
-
-{
-id:"xis-bacon",
-name:"Xis Bacon",
-desc:"Pão, hambúrguer, queijo, bacon, alface, tomate e maionese.",
-price:21.90,
-cat:"Lanches",
-icon:"🥓"
-},
-
-{
-id:"xis-calabresa",
-name:"Xis Calabresa",
-desc:"Pão, calabresa, queijo, alface, tomate e maionese.",
-price:20.90,
-cat:"Lanches",
-icon:"🌭"
-},
-
-{
-id:"xis-frango",
-name:"Xis Frango",
-desc:"Pão, frango, queijo, alface, tomate e maionese.",
-price:20.90,
-cat:"Lanches",
-icon:"🍗"
-},
-
-{
-id:"xis-coracao",
-name:"Xis Coração",
-desc:"Pão, coração, queijo, alface, tomate e maionese.",
-price:22.90,
-cat:"Lanches",
-icon:"❤️"
-},
-
-{
-id:"xis-tudo",
-name:"Xis Tudo",
-desc:"Aquele Xis caprichado com vários ingredientes.",
-price:25.90,
-cat:"Lanches",
-icon:"🍔"
-},
-
-{
-id:"crepe-chocolate",
-name:"Crepe de Chocolate",
-desc:"Crepe recheado com chocolate.",
-price:12.90,
-cat:"Lanches",
-icon:"🥞"
-},
-
-{
-id:"crepe-morango",
-name:"Crepe de Morango",
-desc:"Crepe recheado com morango.",
-price:13.90,
-cat:"Lanches",
-icon:"🍓"
-},
-
-{
-id:"crepe-banana",
-name:"Crepe de Banana",
-desc:"Crepe recheado com banana.",
-price:12.90,
-cat:"Lanches",
-icon:"🍌"
-},
-
-{
-id:"crepe-choc-morango",
-name:"Crepe Chocolate com Morango",
-desc:"Chocolate e morango em um crepe delicioso.",
-price:15.90,
-cat:"Lanches",
-icon:"🍫"
-},
-
-{
-id:"agua",
-name:"Água",
-desc:"Água mineral.",
-price:4.00,
-cat:"Bebidas",
-icon:"💧"
-},
-
-{
-id:"refri-lata",
-name:"Refrigerante Lata",
-desc:"Lata gelada.",
-price:6.00,
-cat:"Bebidas",
-icon:"🥤"
-},
-
-{
-id:"suco",
-name:"Suco",
-desc:"Suco gelado.",
-price:7.00,
-cat:"Bebidas",
-icon:"🧃"
-}
-
+    {
+        id: "acai",
+        name: "Açaí",
+        desc: "Monte do seu jeito com tamanho e complementos.",
+        price: 14.90,
+        cat: "Açaí",
+        icon: "🍇",
+        acai: true
+    },
+    {
+        id: "xis-salada",
+        name: "Xis Salada",
+        desc: "Pão, hambúrguer, queijo, presunto, alface, tomate e maionese.",
+        price: 18.90,
+        cat: "Lanches",
+        icon: "🍔"
+    },
+    {
+        id: "xis-bacon",
+        name: "Xis Bacon",
+        desc: "Pão, hambúrguer, queijo, bacon, alface, tomate e maionese.",
+        price: 21.90,
+        cat: "Lanches",
+        icon: "🥓"
+    },
+    {
+        id: "xis-calabresa",
+        name: "Xis Calabresa",
+        desc: "Pão, calabresa, queijo, alface, tomate e maionese.",
+        price: 20.90,
+        cat: "Lanches",
+        icon: "🌭"
+    },
+    {
+        id: "xis-frango",
+        name: "Xis Frango",
+        desc: "Pão, frango, queijo, alface, tomate e maionese.",
+        price: 20.90,
+        cat: "Lanches",
+        icon: "🍗"
+    },
+    {
+        id: "xis-coracao",
+        name: "Xis Coração",
+        desc: "Pão, coração, queijo, alface, tomate e maionese.",
+        price: 22.90,
+        cat: "Lanches",
+        icon: "❤️"
+    },
+    {
+        id: "xis-tudo",
+        name: "Xis Tudo",
+        desc: "Aquele Xis caprichado com vários ingredientes.",
+        price: 25.90,
+        cat: "Lanches",
+        icon: "🍔"
+    },
+    {
+        id: "crepe-chocolate",
+        name: "Crepe de Chocolate",
+        desc: "Crepe recheado com chocolate.",
+        price: 12.90,
+        cat: "Lanches",
+        icon: "🥞"
+    },
+    {
+        id: "crepe-morango",
+        name: "Crepe de Morango",
+        desc: "Crepe recheado com morango.",
+        price: 13.90,
+        cat: "Lanches",
+        icon: "🍓"
+    },
+    {
+        id: "crepe-banana",
+        name: "Crepe de Banana",
+        desc: "Crepe recheado com banana.",
+        price: 12.90,
+        cat: "Lanches",
+        icon: "🍌"
+    },
+    {
+        id: "crepe-choc-morango",
+        name: "Crepe Chocolate com Morango",
+        desc: "Chocolate e morango em um crepe delicioso.",
+        price: 15.90,
+        cat: "Lanches",
+        icon: "🍫"
+    },
+    {
+        id: "agua",
+        name: "Água",
+        desc: "Água mineral.",
+        price: 4.00,
+        cat: "Bebidas",
+        icon: "💧"
+    },
+    {
+        id: "refri-lata",
+        name: "Refrigerante Lata",
+        desc: "Lata gelada.",
+        price: 6.00,
+        cat: "Bebidas",
+        icon: "🥤"
+    },
+    {
+        id: "suco",
+        name: "Suco",
+        desc: "Suco gelado.",
+        price: 7.00,
+        cat: "Bebidas",
+        icon: "🧃"
+    }
 ];
-
 
 /* =========================
    COMPLEMENTOS
 ========================= */
 
 const extras = [
-
-["Banana",1.50,"🍌"],
-["Morango",2.00,"🍓"],
-["Leite em pó",2.00,"🥛"],
-["Granola",2.00,"🌾"],
-["Paçoca",2.00,"🥜"],
-["Leite condensado",2.50,"🍯"],
-["Confete",2.00,"🍬"],
-["Chocolate",2.00,"🍫"]
-
+    ["Banana", 1.50, "🍌"],
+    ["Morango", 2.00, "🍓"],
+    ["Leite em pó", 2.00, "🥛"],
+    ["Granola", 2.00, "🌾"],
+    ["Paçoca", 2.00, "🥜"],
+    ["Leite condensado", 2.50, "🍯"],
+    ["Confete", 2.00, "🍬"],
+    ["Chocolate", 2.00, "🍫"]
 ];
-
 
 /* =========================
    TAMANHOS
 ========================= */
 
 const sizes = [
-
-[300,14.90],
-[500,19.90],
-[700,24.90]
-
+    [300, 14.90],
+    [500, 19.90],
+    [700, 24.90]
 ];
 
-
 let category = "Todos";
-
 let cart = [];
-
 let payment = "Pix";
-
 let selectedSize = sizes[0];
-
 let selectedExtras = [];
 
-
 /* =========================
-   FUNÇÕES
+   FUNÇÕES AUXILIARES
 ========================= */
 
 const money = value =>
-
-Number(value || 0).toLocaleString(
-"pt-BR",
-{
-style:"currency",
-currency:"BRL"
-}
-);
-
+    Number(value || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 
 const esc = value =>
-
-String(value ?? "")
-.replace(/[&<>"']/g,m => ({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[m]));
-
+    String(value ?? "").replace(/[&<>"']/g, m => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    }[m]));
 
 /* =========================
    INICIALIZAÇÃO
 ========================= */
 
-function init(){
+function init() {
+    document.getElementById("cats").innerHTML = [
+        "Todos",
+        "Açaí",
+        "Lanches",
+        "Bebidas",
+        "Complementos"
+    ].map((c, i) => `
+        <button
+            class="cat ${i === 0 ? "active" : ""}"
+            onclick="setCategory('${c}',this)">
+            ${
+                c === "Todos" ? "Todos" :
+                c === "Açaí" ? "🍇 Açaí" :
+                c === "Lanches" ? "🍔 Lanches" :
+                c === "Bebidas" ? "🥤 Bebidas" :
+                "🍫 Complementos"
+            }
+        </button>
+    `).join("");
 
-document.getElementById("cats").innerHTML = [
-
-"Todos",
-"Açaí",
-"Lanches",
-"Bebidas",
-"Complementos"
-
-].map((c,i)=>`
-
-<button
-class="cat ${i===0?"active":""}"
-onclick="setCategory('${c}',this)">
-
-${
-c==="Todos" ? "Todos" :
-c==="Açaí" ? "🍇 Açaí" :
-c==="Lanches" ? "🍔 Lanches" :
-c==="Bebidas" ? "🥤 Bebidas" :
-"🍫 Complementos"
+    renderProducts();
+    renderSizes();
+    renderExtras();
+    updateBadge();
 }
-
-</button>
-
-`).join("");
-
-
-renderProducts();
-
-renderSizes();
-
-renderExtras();
-
-updateBadge();
-
-}
-
 
 /* =========================
-   CATEGORIA
+   CATEGORIAS
 ========================= */
 
-function setCategory(c,button){
+function setCategory(c, button) {
+    category = c;
 
-category=c;
+    document.querySelectorAll(".cat").forEach(x =>
+        x.classList.remove("active")
+    );
 
-document
-.querySelectorAll(".cat")
-.forEach(x=>x.classList.remove("active"));
+    button.classList.add("active");
 
-button.classList.add("active");
+    document.getElementById("sectionTitle").textContent =
+        c === "Todos" ? "Cardápio" : c;
 
-document.getElementById("sectionTitle").textContent =
-c==="Todos" ? "Cardápio" : c;
-
-renderProducts();
-
+    renderProducts();
 }
-
 
 /* =========================
    PRODUTOS
 ========================= */
 
-function renderProducts(){
+function renderProducts() {
+    const q = document.getElementById("search").value.toLowerCase().trim();
 
-const q =
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
+    const list = products.filter(p =>
+        (
+            category === "Todos" ||
+            p.cat === category ||
+            (category === "Complementos" && p.acai)
+        ) &&
+        (
+            p.name.toLowerCase().includes(q) ||
+            p.desc.toLowerCase().includes(q)
+        )
+    );
 
+    document.getElementById("count").textContent =
+        list.length + (list.length === 1 ? " item" : " itens");
 
-const list = products.filter(p =>
+    document.getElementById("products").innerHTML =
+        list.map(p => `
+            <div class="product ${p.acai ? "featured" : ""}">
+                <div class="icon">${p.icon}</div>
+                <h3>${esc(p.name)}</h3>
+                <p>${esc(p.desc)}</p>
 
-(category==="Todos" || p.cat===category)
+                <div class="price">
+                    ${p.acai ? "A partir de " : ""}
+                    ${money(p.price)}
+                </div>
 
-&&
-
-(
-p.name.toLowerCase().includes(q)
-||
-p.desc.toLowerCase().includes(q)
-)
-
-);
-
-
-document.getElementById("count").textContent =
-
-list.length +
-(list.length===1 ? " item" : " itens");
-
-
-document.getElementById("products").innerHTML =
-
-list.map(p=>`
-
-<div class="product ${p.acai?"featured":""}">
-
-<div class="icon">
-${p.icon}
-</div>
-
-<h3>
-${p.name}
-</h3>
-
-<p>
-${p.desc}
-</p>
-
-<div class="price">
-
-${p.acai ? "A partir de " : ""}
-${money(p.price)}
-
-</div>
-
-
-<button
-onclick="${
-p.acai
-?
-"openAcai()"
-:
-"addProduct('"+p.id+"')"
-}">
-
-${p.acai
-?
-"🍇 Montar meu açaí"
-:
-"Adicionar"}
-
-</button>
-
-</div>
-
-`).join("")
-
-||
-
-`
-
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:40px;
-color:#83768d;
-">
-
-🔎
-
-<br><br>
-
-Nenhum item encontrado.
-
-</div>
-
-`;
-
+                <button onclick="${
+                    p.acai
+                        ? "openAcai()"
+                        : "addProduct('" + p.id + "')"
+                }">
+                    ${p.acai ? "🍇 Montar meu açaí" : "Adicionar"}
+                </button>
+            </div>
+        `).join("") || `
+            <div style="grid-column:1/-1;text-align:center;padding:40px;color:#83768d">
+                🔎<br><br>Nenhum item encontrado.
+            </div>
+        `;
 }
-
 
 /* =========================
-   PRODUTO NORMAL
+   ADICIONAR PRODUTO NORMAL
 ========================= */
 
-function addProduct(id){
+function addProduct(id) {
+    const product = products.find(x => x.id === id);
 
-const product =
-products.find(x=>x.id===id);
+    if (!product) {
+        alert("Produto não encontrado.");
+        return;
+    }
 
+    const found = cart.find(x => x.key === id);
 
-const found =
-cart.find(x=>x.key===id);
+    if (found) {
+        found.qty++;
+    } else {
+        cart.push({
+            key: id,
+            name: product.name,
+            price: product.price,
+            qty: 1,
+            details: ""
+        });
+    }
 
-
-if(found){
-
-found.qty++;
-
-}else{
-
-cart.push({
-
-key:id,
-
-name:product.name,
-
-price:product.price,
-
-qty:1,
-
-details:""
-
-});
-
+    updateBadge();
+    toast("Adicionado ao carrinho!");
 }
-
-
-updateBadge();
-
-toast("Adicionado ao carrinho!");
-
-}
-
 
 /* =========================
-   TAMANHOS
+   TAMANHOS DO AÇAÍ
 ========================= */
 
-function renderSizes(){
-
-document.getElementById("sizes").innerHTML =
-
-sizes.map((s,i)=>`
-
-<div
-class="size ${i===0?"selected":""}"
-onclick="chooseSize(${i},this)">
-
-<strong>
-${s[0]} ml
-</strong>
-
-<small>
-${money(s[1])}
-</small>
-
-</div>
-
-`).join("");
-
+function renderSizes() {
+    document.getElementById("sizes").innerHTML =
+        sizes.map((s, i) => `
+            <div
+                class="size ${i === 0 ? "selected" : ""}"
+                onclick="chooseSize(${i},this)">
+                <strong>${s[0]} ml</strong>
+                <small>${money(s[1])}</small>
+            </div>
+        `).join("");
 }
 
+function chooseSize(i, element) {
+    selectedSize = sizes[i];
 
-function chooseSize(i,element){
+    document.querySelectorAll(".size").forEach(x =>
+        x.classList.remove("selected")
+    );
 
-selectedSize=sizes[i];
-
-document
-.querySelectorAll(".size")
-.forEach(x=>x.classList.remove("selected"));
-
-element.classList.add("selected");
-
-updateAcaiTotal();
-
+    element.classList.add("selected");
+    updateAcaiTotal();
 }
-
 
 /* =========================
-   COMPLEMENTOS
+   COMPLEMENTOS DO AÇAÍ
 ========================= */
 
-function renderExtras(){
-
-document.getElementById("extras").innerHTML =
-
-extras.map((e,i)=>`
-
-<div
-class="extra"
-onclick="toggleExtra(${i},this)">
-
-<span>
-${e[2]} ${e[0]}
-</span>
-
-<small>
-+${money(e[1])}
-</small>
-
-</div>
-
-`).join("");
-
+function renderExtras() {
+    document.getElementById("extras").innerHTML =
+        extras.map((e, i) => `
+            <div
+                class="extra ${selectedExtras.includes(i) ? "selected" : ""}"
+                onclick="toggleExtra(${i},this)">
+                <span>${e[2]} ${esc(e[0])}</span>
+                <small>+${money(e[1])}</small>
+            </div>
+        `).join("");
 }
 
+function toggleExtra(i, element) {
+    if (selectedExtras.includes(i)) {
+        selectedExtras = selectedExtras.filter(x => x !== i);
+    } else {
+        selectedExtras.push(i);
+    }
 
-function toggleExtra(i,element){
-
-if(selectedExtras.includes(i)){
-
-selectedExtras =
-selectedExtras.filter(x=>x!==i);
-
-}else{
-
-selectedExtras.push(i);
-
+    element.classList.toggle("selected");
+    updateAcaiTotal();
 }
 
-element.classList.toggle("selected");
+function updateAcaiTotal() {
+    const paid = selectedExtras
+        .slice(3)
+        .reduce((sum, i) => sum + extras[i][1], 0);
 
-updateAcaiTotal();
-
+    document.getElementById("acaiTotal").textContent =
+        money(selectedSize[1] + paid);
 }
-
-
-function updateAcaiTotal(){
-
-const paid =
-selectedExtras
-.slice(3)
-.reduce(
-(sum,i)=>sum+extras[i][1],
-0
-);
-
-document.getElementById("acaiTotal").textContent =
-money(selectedSize[1]+paid);
-
-}
-
 
 /* =========================
    AÇAÍ
 ========================= */
 
-function addAcai(){
+function addAcai() {
+    const paid = selectedExtras
+        .slice(3)
+        .reduce((sum, i) => sum + extras[i][1], 0);
 
-const paid =
-selectedExtras
-.slice(3)
-.reduce(
-(sum,i)=>sum+extras[i][1],
-0
-);
+    const names = selectedExtras.map(i => extras[i][0]);
 
+    cart.push({
+        key: "acai-" + Date.now(),
+        name: `Açaí ${selectedSize[0]} ml`,
+        price: selectedSize[1] + paid,
+        qty: 1,
+        details: names.length ? names.join(", ") : "Sem complementos"
+    });
 
-const names =
-selectedExtras.map(i=>extras[i][0]);
+    selectedExtras = [];
+    renderExtras();
 
-
-cart.push({
-
-key:"acai-"+Date.now(),
-
-name:`Açaí ${selectedSize[0]} ml`,
-
-price:selectedSize[1]+paid,
-
-qty:1,
-
-details:
-names.length
-?
-names.join(", ")
-:
-"Sem complementos"
-
-});
-
-
-selectedExtras=[];
-
-renderExtras();
-
-document
-.querySelectorAll(".extra")
-.forEach(x=>x.classList.remove("selected"));
-
-closeModal("productModal");
-
-updateBadge();
-
-toast("Açaí adicionado!");
-
+    closeModal("productModal");
+    updateBadge();
+    toast("Açaí adicionado!");
 }
 
+function openAcai() {
+    selectedSize = sizes[0];
+    selectedExtras = [];
 
-/* =========================
-   ABRIR AÇAÍ
-========================= */
+    renderExtras();
 
-function openAcai(){
+    document.querySelectorAll(".size").forEach((x, i) =>
+        x.classList.toggle("selected", i === 0)
+    );
 
-selectedSize=sizes[0];
-
-selectedExtras=[];
-
-renderExtras();
-
-document
-.querySelectorAll(".size")
-.forEach((x,i)=>
-x.classList.toggle("selected",i===0)
-);
-
-updateAcaiTotal();
-
-openModal("productModal");
-
+    updateAcaiTotal();
+    openModal("productModal");
 }
-
 
 /* =========================
    CARRINHO
 ========================= */
 
-function openCart(){
-
-renderCart();
-
-openModal("cartModal");
-
+function openCart() {
+    renderCart();
+    openModal("cartModal");
 }
 
+function renderCart() {
+    const element = document.getElementById("cartList");
 
-function renderCart(){
+    if (!cart.length) {
+        element.innerHTML = `
+            <div style="text-align:center;padding:35px;color:#83768d">
+                🛒<br><br>Seu carrinho está vazio.
+            </div>
+        `;
 
-const element =
-document.getElementById("cartList");
+        document.getElementById("checkout").style.display = "none";
+        document.getElementById("cartTotal").textContent = money(0);
+        return;
+    }
 
+    document.getElementById("checkout").style.display = "block";
 
-if(!cart.length){
+    element.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+            <div class="cart-info">
+                <strong>${esc(item.name)}</strong>
+                <small>${esc(item.details)}</small>
 
-element.innerHTML = `
+                <b style="display:block;margin-top:5px;color:#6d28d9">
+                    ${money(item.price * item.qty)}
+                </b>
+            </div>
 
-<div
-style="
-text-align:center;
-padding:35px;
-color:#83768d;
-">
+            <div class="qty">
+                <button onclick="changeQty(${index},-1)">−</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${index},1)">+</button>
+            </div>
+        </div>
+    `).join("");
 
-🛒
-
-<br><br>
-
-Seu carrinho está vazio.
-
-</div>
-
-`;
-
-document
-.getElementById("checkout")
-.style.display="none";
-
-return;
-
+    document.getElementById("cartTotal").textContent = money(total());
 }
 
+function changeQty(index, amount) {
+    if (!cart[index]) return;
 
-document
-.getElementById("checkout")
-.style.display="block";
+    cart[index].qty += amount;
 
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
 
-element.innerHTML =
-
-cart.map((item,index)=>`
-
-<div class="cart-item">
-
-<div class="cart-info">
-
-<strong>
-${esc(item.name)}
-</strong>
-
-<small>
-${esc(item.details)}
-</small>
-
-<b
-style="
-display:block;
-margin-top:5px;
-color:#6d28d9
-">
-
-${money(item.price*item.qty)}
-
-</b>
-
-</div>
-
-
-<div class="qty">
-
-<button
-onclick="changeQty(${index},-1)">
-−
-</button>
-
-<span>
-${item.qty}
-</span>
-
-<button
-onclick="changeQty(${index},1)">
-+
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-
-document.getElementById("cartTotal").textContent =
-money(total());
-
+    updateBadge();
+    renderCart();
 }
 
-
-function changeQty(index,amount){
-
-cart[index].qty += amount;
-
-
-if(cart[index].qty<=0){
-
-cart.splice(index,1);
-
+function total() {
+    return cart.reduce(
+        (sum, item) => sum + item.price * item.qty,
+        0
+    );
 }
 
-
-updateBadge();
-
-renderCart();
-
+function updateBadge() {
+    document.getElementById("badge").textContent =
+        cart.reduce((sum, item) => sum + item.qty, 0);
 }
-
-
-function total(){
-
-return cart.reduce(
-(sum,item)=>
-sum + item.price*item.qty,
-0
-);
-
-}
-
-
-function updateBadge(){
-
-document.getElementById("badge").textContent =
-
-cart.reduce(
-(sum,item)=>sum+item.qty,
-0
-);
-
-}
-
 
 /* =========================
    PAGAMENTO
 ========================= */
 
-function selectPayment(element,value){
+function selectPayment(element, value) {
+    payment = value;
 
-payment=value;
+    document.querySelectorAll(".payment").forEach(x =>
+        x.classList.remove("selected")
+    );
 
-document
-.querySelectorAll(".payment")
-.forEach(x=>x.classList.remove("selected"));
-
-element.classList.add("selected");
-
+    element.classList.add("selected");
 }
-
 
 /* =========================
    MODAIS
 ========================= */
 
-function openModal(id){
-
-document
-.getElementById(id)
-.classList.add("active");
-
+function openModal(id) {
+    document.getElementById(id).classList.add("active");
 }
 
-
-function closeModal(id){
-
-document
-.getElementById(id)
-.classList.remove("active");
-
+function closeModal(id) {
+    document.getElementById(id).classList.remove("active");
 }
-
 
 /* =========================
-   TOAST
+   AVISO TEMPORÁRIO
 ========================= */
 
-function toast(message){
+function toast(message) {
+    const element = document.createElement("div");
+    element.textContent = message;
 
-const element =
-document.createElement("div");
+    Object.assign(element.style, {
+        position: "fixed",
+        bottom: "20px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        background: "#32184f",
+        color: "#fff",
+        padding: "13px 18px",
+        borderRadius: "12px",
+        zIndex: 300,
+        fontWeight: "bold"
+    });
 
-element.textContent=message;
-
-Object.assign(
-element.style,
-{
-position:"fixed",
-bottom:"20px",
-left:"50%",
-transform:"translateX(-50%)",
-background:"#32184f",
-color:"#fff",
-padding:"13px 18px",
-borderRadius:"12px",
-zIndex:300,
-fontWeight:"bold"
-}
-);
-
-document.body.appendChild(element);
-
-setTimeout(
-()=>element.remove(),
-1600
-);
-
+    document.body.appendChild(element);
+    setTimeout(() => element.remove(), 1600);
 }
 
-
-/* ==================================================
+/* =========================
    FINALIZAR PEDIDO
-================================================== */
-
-async function finishOrder(){
-
-if(!cart.length){
-
-alert("Seu carrinho está vazio.");
-
-return;
-
-}
-
-
-const mesa =
-Number(
-document.getElementById("mesa").value
-);
-
-
-if(!mesa){
-
-alert(
-"Informe o número da mesa."
-);
-
-return;
-
-}
-
-
-const button =
-document.getElementById("finishBtn");
-
-
-button.disabled=true;
-
-button.textContent =
-"⏳ Registrando pedido...";
-
-
-try{
-
-/*
-==========================================
-1. CRIA O PEDIDO
-==========================================
-*/
-
-const numero =
-Date.now();
-
-
-const pedidoBody = {
-
-numero_pedido:numero,
-
-mesa:mesa,
-
-pagamento:payment,
-
-observacao:
-document
-.getElementById("obs")
-.value
-.trim()
-||null,
-
-total:
-Number(
-total().toFixed(2)
-)
-
-};
-
-
-const response =
-
-const response = await fetch(
-  "/api/pedidos",
-  {
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify(pedidoBody)
-  }
-);
-
-const data = await response.json()
-  .catch(() => ({}));
-
-if (!response.ok) {
-  throw new Error(
-    data.erro ||
-    "Não foi possível registrar o pedido."
-  );
-}
-
-const pedido = data.pedido || data;
-/*
-==========================================
-2. SALVA CADA ITEM
-==========================================
-*/
-
-for(const item of cart){
-
-const itemResponse =
-
-await fetch(
-"/api/itens",
-{
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:
-JSON.stringify({
-
-pedido_id:
-pedido.id,
-
-produto:
-item.name,
-
-quantidade:
-item.qty,
-
-detalhes:
-item.details || null,
-
-preco:
-item.price
-
-})
-
-}
-);
-
-
-const itemData =
-await itemResponse.json()
-.catch(()=>({}));
-
-
-if(!itemResponse.ok){
-
-throw new Error(
-
-itemData.erro ||
-
-"Pedido criado, mas houve erro ao salvar um dos itens."
-
-);
-
-}
-
-}
-
-
-/*
-==========================================
-3. SUCESSO
-==========================================
-*/
-
-document.getElementById("successText").innerHTML =
-
-`
-
-Pedido
-
-<strong>
-#${esc(numero)}
-</strong>
-
-<br>
-
-Mesa
-
-<strong>
-${esc(mesa)}
-</strong>
-
-<br>
-
-Total
-
-<strong>
-${money(total())}
-</strong>
-
-<br><br>
-
-👨‍🍳 Seu pedido já foi enviado para a equipe.
-
-`;
-
-
-closeModal("cartModal");
-
-openModal("successModal");
-
-
-/*
-==========================================
-4. LIMPA O CARRINHO
-==========================================
-*/
-
-cart=[];
-
-updateBadge();
-
-
-}catch(error){
-
-console.error(
-"Erro ao finalizar pedido:",
-error
-);
-
-
-alert(
-error.message ||
-"Erro ao finalizar pedido."
-);
-
-
-}finally{
-
-button.disabled=false;
-
-button.textContent =
-"✅ Finalizar pedido";
-
-}
-
-}
-
-
-/* =========================
-   FECHAR AO CLICAR FORA
 ========================= */
 
-window.addEventListener(
-"click",
-event=>{
+async function finishOrder() {
+    if (!cart.length) {
+        alert("Seu carrinho está vazio.");
+        return;
+    }
 
-document
-.querySelectorAll(".modal")
-.forEach(modal=>{
+    const mesa = Number(document.getElementById("mesa").value);
 
-if(event.target===modal){
+    if (!Number.isInteger(mesa) || mesa < 1) {
+        alert("Informe um número de mesa válido.");
+        return;
+    }
 
-modal.classList.remove("active");
+    const button = document.getElementById("finishBtn");
 
+    button.disabled = true;
+    button.textContent = "⏳ Registrando pedido...";
+
+    try {
+        const numero = Date.now();
+
+        const pedidoBody = {
+            numero_pedido: numero,
+            mesa: mesa,
+            pagamento: payment,
+            observacao:
+                document.getElementById("obs").value.trim() || null,
+            total: Number(total().toFixed(2))
+        };
+
+        /* 1. Criar o pedido no Neon */
+
+        const response = await fetch("/api/pedidos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(pedidoBody)
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || data.sucesso === false) {
+            throw new Error(
+                data.erro || "Não foi possível registrar o pedido."
+            );
+        }
+
+        const pedido = data.pedido || data;
+
+        if (!pedido.id) {
+            throw new Error(
+                "O pedido foi enviado, mas a API não retornou o ID."
+            );
+        }
+
+        /* 2. Salvar cada item do pedido */
+
+        for (const item of cart) {
+            const itemResponse = await fetch("/api/itens", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    pedido_id: pedido.id,
+                    produto: item.name,
+                    quantidade: item.qty,
+                    detalhes: item.details || null,
+                    preco: item.price
+                })
+            });
+
+            const itemData = await itemResponse.json().catch(() => ({}));
+
+            if (!itemResponse.ok || itemData.sucesso === false) {
+                throw new Error(
+                    itemData.erro ||
+                    "Pedido criado, mas houve erro ao salvar um dos itens."
+                );
+            }
+        }
+
+        /* 3. Mostrar confirmação */
+
+        document.getElementById("successText").innerHTML = `
+            Pedido <strong>#${esc(numero)}</strong>
+            <br>
+            Mesa <strong>${esc(mesa)}</strong>
+            <br>
+            Total <strong>${money(total())}</strong>
+            <br><br>
+            👨‍🍳 Seu pedido já foi enviado para a equipe.
+        `;
+
+        closeModal("cartModal");
+        openModal("successModal");
+
+        /* 4. Limpar carrinho */
+
+        cart = [];
+        updateBadge();
+
+    } catch (error) {
+        console.error("Erro ao finalizar pedido:", error);
+
+        alert(
+            error.message ||
+            "Não foi possível processar o pedido."
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "✅ Finalizar pedido";
+    }
 }
 
+/* =========================
+   FECHAR MODAIS
+========================= */
+
+window.addEventListener("click", event => {
+    document.querySelectorAll(".modal").forEach(modal => {
+        if (event.target === modal) {
+            modal.classList.remove("active");
+        }
+    });
 });
 
-}
-);
-
-
 /* =========================
-   INICIA
+   INICIAR A PÁGINA
 ========================= */
 
 init();
+</script>
 
-</script></body>
+</body>
 </html>
+```
