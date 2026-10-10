@@ -1151,7 +1151,7 @@ async function renderizarPedidos() {
         let itensHTML = "";
 
         if (itens.length) {
-            itensHTML = itens.map(item => `
+            itensHTML = itens.map(item => 
                 <div class="item">
                     <strong>
                         ${Number(item.quantidade || 1)}x
