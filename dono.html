@@ -1,1091 +1,847 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#5b21b6"><title>Cantinho do Açaí — Painel do Dono</title><style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5b21b6">
+<title>Cantinho do Açaí — Painel do Dono</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#f5f3ff;
-    color:#1f2937;
+body {
+    background: #f5f3ff;
+    color: #1f2937;
 }
 
-/* =========================
-   TELA DE LOGIN
-========================= */
-
-#loginScreen{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:linear-gradient(135deg,#4c1d95,#7c3aed);
+/* TELA DE LOGIN */
+#loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #4c1d95, #7c3aed);
 }
 
-.login-box{
-    width:100%;
-    max-width:390px;
-    background:white;
-    border-radius:22px;
-    padding:32px 25px;
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
-    text-align:center;
+.login-box {
+    width: 100%;
+    max-width: 390px;
+    background: white;
+    border-radius: 22px;
+    padding: 32px 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    text-align: center;
 }
 
-.login-icon{
-    font-size:55px;
-    margin-bottom:10px;
+.login-icon {
+    font-size: 55px;
+    margin-bottom: 10px;
 }
 
-.login-box h1{
-    color:#5b21b6;
-    font-size:25px;
-    margin-bottom:7px;
+.login-box h1 {
+    color: #5b21b6;
+    font-size: 25px;
+    margin-bottom: 7px;
 }
 
-.login-box p{
-    color:#6b7280;
-    font-size:14px;
-    margin-bottom:25px;
+.login-box p {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 25px;
 }
 
-.password-area{
-    position:relative;
-    margin-bottom:14px;
+.password-area {
+    position: relative;
+    margin-bottom: 14px;
 }
 
-.password-area input{
-    width:100%;
-    padding:14px 48px 14px 14px;
-    border:2px solid #ddd6fe;
-    border-radius:12px;
-    font-size:17px;
-    outline:none;
-    text-align:center;
-    letter-spacing:4px;
+.password-area input {
+    width: 100%;
+    padding: 14px 48px 14px 14px;
+    border: 2px solid #ddd6fe;
+    border-radius: 12px;
+    font-size: 17px;
+    outline: none;
+    text-align: center;
+    letter-spacing: 4px;
 }
 
-.password-area input:focus{
-    border-color:#7c3aed;
+.password-area input:focus {
+    border-color: #7c3aed;
 }
 
-.show-password{
-    position:absolute;
-    right:10px;
-    top:50%;
-    transform:translateY(-50%);
-    background:none;
-    font-size:20px;
-    color:#6b7280;
-    padding:5px;
+.show-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    font-size: 20px;
+    color: #6b7280;
+    padding: 5px;
 }
 
-.login-button{
-    width:100%;
-    background:linear-gradient(135deg,#5b21b6,#7c3aed);
-    color:white;
-    padding:14px;
-    border-radius:12px;
-    font-size:16px;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
+.login-button {
+    width: 100%;
+    background: linear-gradient(135deg, #5b21b6, #7c3aed);
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
 }
 
-.login-button:active{
-    transform:scale(.98);
+.login-button:active {
+    transform: scale(.98);
 }
 
-.login-error{
-    display:none;
-    margin-top:13px;
-    background:#fee2e2;
-    color:#b91c1c;
-    padding:10px;
-    border-radius:9px;
-    font-size:13px;
+.login-error {
+    display: none;
+    margin-top: 13px;
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    border-radius: 9px;
+    font-size: 13px;
 }
 
-.login-footer{
-    margin-top:20px;
-    color:#9ca3af;
-    font-size:12px;
+.login-footer {
+    margin-top: 20px;
+    color: #9ca3af;
+    font-size: 12px;
 }
 
-/* =========================
-   PAINEL
-========================= */
-
-#painel{
-    display:none;
+/* PAINEL */
+#painel {
+    display: none;
 }
 
-header{
-    background:linear-gradient(135deg,#5b21b6,#7c3aed);
-    color:white;
-    padding:22px 18px;
-    box-shadow:0 4px 15px rgba(0,0,0,.15);
+header {
+    background: linear-gradient(135deg, #5b21b6, #7c3aed);
+    color: white;
+    padding: 22px 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.15);
 }
 
-.header-content{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
+.header-content {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-header h1{
-    font-size:24px;
-    margin-bottom:5px;
+header h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
 }
 
-header p{
-    opacity:.9;
-    font-size:14px;
+header p {
+    opacity: .9;
+    font-size: 14px;
 }
 
-.logout{
-    background:rgba(255,255,255,.18);
-    color:white;
-    border:1px solid rgba(255,255,255,.3);
-    padding:9px 13px;
-    border-radius:9px;
-    font-weight:bold;
-    cursor:pointer;
+.logout {
+    background: rgba(255,255,255,.18);
+    color: white;
+    border: 1px solid rgba(255,255,255,.3);
+    padding: 9px 13px;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:20px;
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
 }
 
 /* STATUS */
-
-.status-bar{
-    background:white;
-    border-radius:14px;
-    padding:13px 16px;
-    margin-bottom:18px;
-    box-shadow:0 2px 10px rgba(0,0,0,.06);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    flex-wrap:wrap;
+.status-bar {
+    background: white;
+    border-radius: 14px;
+    padding: 13px 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-    color:#555;
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
 }
 
-.status-dot{
-    width:10px;
-    height:10px;
-    background:#22c55e;
-    border-radius:50%;
-    animation:pulse 1.5s infinite;
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
 }
 
-@keyframes pulse{
-    0%{
-        box-shadow:0 0 0 0 rgba(34,197,94,.5)
-    }
-
-    70%{
-        box-shadow:0 0 0 8px rgba(34,197,94,0)
-    }
-
-    100%{
-        box-shadow:0 0 0 0 rgba(34,197,94,0)
-    }
-}
-
-button{
-    border:none;
-    cursor:pointer;
+button {
+    border: none;
+    cursor: pointer;
 }
 
 /* DASHBOARD */
-
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-    margin-bottom:22px;
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
 }
 
-.card{
-    background:white;
-    border-radius:16px;
-    padding:18px;
-    box-shadow:0 3px 12px rgba(0,0,0,.07);
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
-.card-title{
-    color:#6b7280;
-    font-size:13px;
-    margin-bottom:8px;
+.card-title {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 8px;
 }
 
-.card-value{
-    color:#5b21b6;
-    font-size:27px;
-    font-weight:bold;
+.card-value {
+    color: #5b21b6;
+    font-size: 27px;
+    font-weight: bold;
 }
 
-.card-sub{
-    margin-top:5px;
-    font-size:12px;
-    color:#9ca3af;
+.card-sub {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #9ca3af;
 }
 
 /* ABAS */
-
-.tabs{
-    display:flex;
-    gap:8px;
-    margin-bottom:18px;
-    overflow-x:auto;
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    overflow-x: auto;
 }
 
-.tab{
-    background:white;
-    color:#5b21b6;
-    padding:11px 18px;
-    border-radius:10px;
-    font-weight:bold;
-    white-space:nowrap;
-    border:1px solid #ddd6fe;
+.tab {
+    background: white;
+    color: #5b21b6;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+    border: 1px solid #ddd6fe;
 }
 
-.tab.active{
-    background:#5b21b6;
-    color:white;
+.tab.active {
+    background: #5b21b6;
+    color: white;
 }
 
 /* FILTROS */
-
-.filters{
-    background:white;
-    padding:15px;
-    border-radius:14px;
-    margin-bottom:18px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
+.filters {
+    background: white;
+    padding: 15px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
 }
 
 .filters select,
-.filters input{
-    padding:10px;
-    border:1px solid #ddd;
-    border-radius:9px;
-    background:white;
+.filters input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    background: white;
 }
 
-.refresh{
-    background:#5b21b6;
-    color:white;
-    padding:10px 15px;
-    border-radius:9px;
-    font-weight:bold;
+.refresh {
+    background: #5b21b6;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 9px;
+    font-weight: bold;
 }
 
 /* PEDIDOS */
-
-.orders{
-    display:grid;
-    gap:15px;
+.orders {
+    display: grid;
+    gap: 15px;
 }
 
-.order{
-    background:white;
-    border-radius:16px;
-    padding:18px;
-    box-shadow:0 3px 12px rgba(0,0,0,.07);
-    border-left:5px solid #5b21b6;
+.order {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
+    border-left: 5px solid #5b21b6;
 }
 
-.order.new{
-    animation:newOrder .7s ease;
+.order.new {
+    animation: newOrder .7s ease;
 }
 
-@keyframes newOrder{
-    0%{
-        transform:scale(.97);
-        opacity:.4;
+@keyframes newOrder {
+    0% {
+        transform: scale(.97);
+        opacity: .4;
     }
-
-    100%{
-        transform:scale(1);
-        opacity:1;
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
-.order-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:12px;
+.order-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
 }
 
-.order-number{
-    font-size:18px;
-    font-weight:bold;
-    color:#5b21b6;
+.order-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5b21b6;
 }
 
-.order-info{
-    font-size:13px;
-    color:#666;
-    margin-top:4px;
+.order-info {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
 }
 
-.badge{
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
+.badge {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.badge.novo{
-    background:#fef3c7;
-    color:#92400e;
+.badge.novo {
+    background: #fef3c7;
+    color: #92400e;
 }
 
-.badge.em_preparo{
-    background:#dbeafe;
-    color:#1d4ed8;
+.badge.em_preparo {
+    background: #dbeafe;
+    color: #1d4ed8;
 }
 
-.badge.pronto{
-    background:#dcfce7;
-    color:#166534;
+.badge.pronto {
+    background: #dcfce7;
+    color: #166534;
 }
 
-.items{
-    border-top:1px solid #eee;
-    border-bottom:1px solid #eee;
-    padding:12px 0;
-    margin:10px 0;
+.items {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 12px 0;
+    margin: 10px 0;
 }
 
-.item{
-    margin-bottom:10px;
+.item {
+    margin-bottom: 10px;
 }
 
-.item:last-child{
-    margin-bottom:0;
+.item:last-child {
+    margin-bottom: 0;
 }
 
-.item strong{
-    color:#222;
+.item strong {
+    color: #222;
 }
 
-.details{
-    font-size:13px;
-    color:#666;
-    margin-top:3px;
-    line-height:1.4;
+.details {
+    font-size: 13px;
+    color: #666;
+    margin-top: 3px;
+    line-height: 1.4;
 }
 
-.order-bottom{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
+.order-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.total{
-    font-size:20px;
-    font-weight:bold;
-    color:#5b21b6;
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5b21b6;
 }
 
-.payment{
-    font-size:13px;
-    color:#555;
+.payment {
+    font-size: 13px;
+    color: #555;
 }
 
-.observation{
-    background:#faf5ff;
-    padding:10px;
-    border-radius:9px;
-    margin-top:10px;
-    font-size:13px;
-    color:#555;
+.observation {
+    background: #faf5ff;
+    padding: 10px;
+    border-radius: 9px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #555;
 }
 
-.actions{
-    display:flex;
-    gap:8px;
-    margin-top:14px;
-    flex-wrap:wrap;
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
 }
 
-.action{
-    padding:10px 14px;
-    border-radius:9px;
-    color:white;
-    font-weight:bold;
+.action {
+    padding: 10px 14px;
+    border-radius: 9px;
+    color: white;
+    font-weight: bold;
 }
 
-.preparo{
-    background:#2563eb;
+.preparo {
+    background: #2563eb;
 }
 
-.pronto{
-    background:#16a34a;
+.pronto {
+    background: #16a34a;
 }
 
-.voltar{
-    background:#6b7280;
+.voltar {
+    background: #6b7280;
 }
 
-.excluir{
-    background:#dc2626;
+.excluir {
+    background: #dc2626;
 }
 
 /* RESUMO */
-
-.summary-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:16px;
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
 }
 
-.summary-box{
-    background:white;
-    padding:20px;
-    border-radius:16px;
-    box-shadow:0 3px 12px rgba(0,0,0,.07);
+.summary-box {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
-.summary-box h3{
-    color:#5b21b6;
-    margin-bottom:15px;
+.summary-box h3 {
+    color: #5b21b6;
+    margin-bottom: 15px;
 }
 
-.summary-row{
-    display:flex;
-    justify-content:space-between;
-    padding:10px 0;
-    border-bottom:1px solid #eee;
-    font-size:14px;
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
 }
 
-.summary-row:last-child{
-    border-bottom:none;
+.summary-row:last-child {
+    border-bottom: none;
 }
 
-.empty{
-    background:white;
-    border-radius:16px;
-    padding:35px;
-    text-align:center;
-    color:#777;
+.empty {
+    background: white;
+    border-radius: 16px;
+    padding: 35px;
+    text-align: center;
+    color: #777;
 }
 
 /* RESPONSIVO */
-
-@media(max-width:850px){
-
-    .dashboard{
-        grid-template-columns:repeat(2,1fr);
+@media(max-width:850px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
     }
-
 }
 
-@media(max-width:550px){
-
-    .container{
-        padding:12px;
+@media(max-width:550px) {
+    .container {
+        padding: 12px;
     }
 
-    .dashboard{
-        grid-template-columns:repeat(2,1fr);
-        gap:9px;
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px;
     }
 
-    .card{
-        padding:14px;
+    .card {
+        padding: 14px;
     }
 
-    .card-value{
-        font-size:22px;
+    .card-value {
+        font-size: 22px;
     }
 
-    .summary-grid{
-        grid-template-columns:1fr;
+    .summary-grid {
+        grid-template-columns: 1fr;
     }
 
-    header h1{
-        font-size:21px;
+    header h1 {
+        font-size: 21px;
     }
 
-    .header-content{
-        align-items:flex-start;
+    .header-content {
+        align-items: flex-start;
     }
 
-    .logout{
-        font-size:12px;
-        padding:8px 10px;
+    .logout {
+        font-size: 12px;
+        padding: 8px 10px;
     }
-
 }
+</style>
+</head>
 
-</style></head><body><!-- =========================
-     TELA DE SENHA
-========================= --><div id="loginScreen"><div class="login-box">
+<body>
 
-    <div class="login-icon">
-        🔐
-    </div>
+<!-- TELA DE LOGIN -->
+<div id="loginScreen">
+    <div class="login-box">
+        <div class="login-icon">🔐</div>
 
-    <h1>Área do Dono</h1>
+        <h1>Área do Dono</h1>
+        <p>Digite a senha para acessar o painel.</p>
 
-    <p>
-        Digite a senha para acessar o painel.
-    </p>
+        <div class="password-area">
+            <input
+                type="password"
+                id="senha"
+                placeholder="Digite a senha"
+                inputmode="numeric"
+                maxlength="6"
+                autocomplete="off"
+                onkeydown="if(event.key==='Enter') entrar()">
 
-    <div class="password-area">
+            <button
+                type="button"
+                class="show-password"
+                onclick="mostrarSenha()"
+                id="botaoSenha">
+                👁️
+            </button>
+        </div>
 
-        <input
-            type="password"
-            id="senha"
-            placeholder="Digite a senha"
-            inputmode="numeric"
-            maxlength="6"
-            autocomplete="off"
-            onkeydown="if(event.key==='Enter') entrar()">
-
-        <button
-            type="button"
-            class="show-password"
-            onclick="mostrarSenha()"
-            id="botaoSenha">
-            👁️
+        <button class="login-button" onclick="entrar()">
+            Entrar no painel
         </button>
 
-    </div>
-
-    <button
-        class="login-button"
-        onclick="entrar()">
-        Entrar no painel
-    </button>
-
-    <div
-        class="login-error"
-        id="erroSenha">
-        ❌ Senha incorreta. Tente novamente.
-    </div>
-
-    <div class="login-footer">
-        Cantinho do Açaí — Portão
-    </div>
-
-</div>
-
-</div><!-- =========================
-     PAINEL DO DONO
-========================= --><div id="painel"><header><div class="header-content">
-
-    <div>
-
-        <h1>
-            🍧 Cantinho do Açaí
-        </h1>
-
-        <p>
-            Painel do dono
-        </p>
-
-    </div>
-
-    <button
-        class="logout"
-        onclick="sair()">
-        🔒 Sair
-    </button>
-
-</div>
-
-</header><div class="container"><div class="status-bar"><div class="status">
-
-    <span class="status-dot"></span>
-
-    Atualização automática ativada
-
-</div>
-
-<button
-    class="refresh"
-    onclick="carregarPedidos()">
-
-    ↻ Atualizar agora
-
-</button>
-
-</div><!-- DASHBOARD --><div class="dashboard"><div class="card">
-
-    <div class="card-title">
-        Pedidos hoje
-    </div>
-
-    <div
-        class="card-value"
-        id="pedidosHoje">
-        0
-    </div>
-
-    <div class="card-sub">
-        Pedidos realizados
-    </div>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-title">
-        Vendas hoje
-    </div>
-
-    <div
-        class="card-value"
-        id="vendasHoje">
-        R$ 0,00
-    </div>
-
-    <div class="card-sub">
-        Faturamento do dia
-    </div>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-title">
-        Pendentes
-    </div>
-
-    <div
-        class="card-value"
-        id="pendentes">
-        0
-    </div>
-
-    <div class="card-sub">
-        Ainda em atendimento
-    </div>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-title">
-        Ticket médio
-    </div>
-
-    <div
-        class="card-value"
-        id="ticketMedio">
-        R$ 0,00
-    </div>
-
-    <div class="card-sub">
-        Média por pedido
-    </div>
-
-</div>
-
-</div><!-- ABAS --><div class="tabs"><button
-    class="tab active"
-    id="tabPedidos"
-    onclick="mostrarAba('pedidos')">
-
-    📋 Pedidos
-
-</button>
-
-
-<button
-    class="tab"
-    id="tabResumo"
-    onclick="mostrarAba('resumo')">
-
-    📊 Resumo
-
-</button>
-
-</div><!-- ABA PEDIDOS --><section id="abaPedidos"><div class="filters">
-
-    <select
-        id="filtroStatus"
-        onchange="renderizarPedidos()">
-
-        <option value="todos">
-            Todos os status
-        </option>
-
-        <option value="novo">
-            Novos
-        </option>
-
-        <option value="em_preparo">
-            Em preparo
-        </option>
-
-        <option value="pronto">
-            Prontos
-        </option>
-
-    </select>
-
-
-    <input
-        type="date"
-        id="filtroData"
-        onchange="renderizarPedidos">
-
-
-    <button
-        class="refresh"
-        onclick="limparFiltros()">
-
-        Limpar filtros
-
-    </button>
-
-</div>
-
-
-<div
-    id="orders"
-    class="orders">
-</div>
-
-</section><!-- ABA RESUMO --><section
-    id="abaResumo"
-    style="display:none"><div class="summary-grid">
-
-
-    <div class="summary-box">
-
-        <h3>
-            📅 Hoje
-        </h3>
-
-
-        <div class="summary-row">
-
-            <span>
-                Pedidos
-            </span>
-
-            <strong
-                id="resPedidosHoje">
-                0
-            </strong>
-
+        <div class="login-error" id="erroSenha">
+            ❌ Senha incorreta. Tente novamente.
         </div>
 
+        <div class="login-footer">
+            Cantinho do Açaí — Portão
+        </div>
+    </div>
+</div>
 
-        <div class="summary-row">
+<!-- PAINEL DO DONO -->
+<div id="painel">
 
-            <span>
-                Faturamento
-            </span>
-
-            <strong
-                id="resVendasHoje">
-                R$ 0,00
-            </strong>
-
+<header>
+    <div class="header-content">
+        <div>
+            <h1>🍧 Cantinho do Açaí</h1>
+            <p>Painel do dono</p>
         </div>
 
+        <button class="logout" onclick="sair()">
+            🔒 Sair
+        </button>
+    </div>
+</header>
 
-        <div class="summary-row">
+<div class="container">
 
-            <span>
-                Ticket médio
-            </span>
-
-            <strong
-                id="resTicketHoje">
-                R$ 0,00
-            </strong>
-
+    <div class="status-bar">
+        <div class="status">
+            <span class="status-dot"></span>
+            Atualização manual
         </div>
 
+        <button class="refresh" onclick="carregarPedidos()">
+            ↻ Atualizar agora
+        </button>
+    </div>
 
-        <div class="summary-row">
+    <!-- DASHBOARD -->
+    <div class="dashboard">
 
-            <span>
-                Pedidos pendentes
-            </span>
+        <div class="card">
+            <div class="card-title">Pedidos hoje</div>
+            <div class="card-value" id="pedidosHoje">0</div>
+            <div class="card-sub">Pedidos realizados</div>
+        </div>
 
-            <strong
-                id="resPendentes">
-                0
-            </strong>
+        <div class="card">
+            <div class="card-title">Vendas hoje</div>
+            <div class="card-value" id="vendasHoje">R$ 0,00</div>
+            <div class="card-sub">Faturamento do dia</div>
+        </div>
 
+        <div class="card">
+            <div class="card-title">Pendentes</div>
+            <div class="card-value" id="pendentes">0</div>
+            <div class="card-sub">Ainda em atendimento</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Ticket médio</div>
+            <div class="card-value" id="ticketMedio">R$ 0,00</div>
+            <div class="card-sub">Média por pedido</div>
         </div>
 
     </div>
 
+    <!-- ABAS -->
+    <div class="tabs">
+        <button
+            class="tab active"
+            id="tabPedidos"
+            onclick="mostrarAba('pedidos')">
+            📋 Pedidos
+        </button>
 
-    <div class="summary-box">
-
-        <h3>
-            📈 Geral
-        </h3>
-
-
-        <div class="summary-row">
-
-            <span>
-                Total de pedidos
-            </span>
-
-            <strong
-                id="resTotalPedidos">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row">
-
-            <span>
-                Total vendido
-            </span>
-
-            <strong
-                id="resTotalVendas">
-                R$ 0,00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row">
-
-            <span>
-                Ticket médio geral
-            </span>
-
-            <strong
-                id="resTicketGeral">
-                R$ 0,00
-            </strong>
-
-        </div>
-
-
-        <div class="summary-row">
-
-            <span>
-                Pedidos concluídos
-            </span>
-
-            <strong
-                id="resConcluidos">
-                0
-            </strong>
-
-        </div>
-
+        <button
+            class="tab"
+            id="tabResumo"
+            onclick="mostrarAba('resumo')">
+            📊 Resumo
+        </button>
     </div>
 
+    <!-- ABA PEDIDOS -->
+    <section id="abaPedidos">
+
+        <div class="filters">
+
+            <select id="filtroStatus" onchange="renderizarPedidos()">
+                <option value="todos">Todos os status</option>
+                <option value="novo">Novos</option>
+                <option value="em_preparo">Em preparo</option>
+                <option value="pronto">Prontos</option>
+            </select>
+
+            <input
+                type="date"
+                id="filtroData"
+                onchange="renderizarPedidos()">
+
+            <button class="refresh" onclick="limparFiltros()">
+                Limpar filtros
+            </button>
+
+        </div>
+
+        <div id="orders" class="orders"></div>
+    </section>
+
+    <!-- ABA RESUMO -->
+    <section id="abaResumo" style="display:none">
+
+        <div class="summary-grid">
+
+            <div class="summary-box">
+                <h3>📅 Hoje</h3>
+
+                <div class="summary-row">
+                    <span>Pedidos</span>
+                    <strong id="resPedidosHoje">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Faturamento</span>
+                    <strong id="resVendasHoje">R$ 0,00</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Ticket médio</span>
+                    <strong id="resTicketHoje">R$ 0,00</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Pedidos pendentes</span>
+                    <strong id="resPendentes">0</strong>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h3>📈 Geral</h3>
+
+                <div class="summary-row">
+                    <span>Total de pedidos</span>
+                    <strong id="resTotalPedidos">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Total vendido</span>
+                    <strong id="resTotalVendas">R$ 0,00</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Ticket médio geral</span>
+                    <strong id="resTicketGeral">R$ 0,00</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Pedidos concluídos</span>
+                    <strong id="resConcluidos">0</strong>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
 </div>
 
-</section></div></div><script>
-
-/* =========================
-   SENHA
-========================= */
-
+<script>
+/* SENHA */
 const SENHA_DONO = "080509";
-
 let autenticado = false;
 
-function entrar(){
-
+/* LOGIN */
+function entrar() {
     const campo = document.getElementById("senha");
     const erro = document.getElementById("erroSenha");
 
-    const senhaDigitada = campo.value;
-
-    if(senhaDigitada === SENHA_DONO){
-
+    if (campo.value === SENHA_DONO) {
         autenticado = true;
 
         erro.style.display = "none";
-
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("painel").style.display = "block";
 
         carregarPedidos();
-
-    }else{
-
+    } else {
         erro.style.display = "block";
-
         campo.value = "";
-
         campo.focus();
-
     }
-
 }
 
-function mostrarSenha(){
-
+function mostrarSenha() {
     const campo = document.getElementById("senha");
     const botao = document.getElementById("botaoSenha");
 
-    if(campo.type === "password"){
-
+    if (campo.type === "password") {
         campo.type = "text";
         botao.textContent = "🙈";
-
-    }else{
-
+    } else {
         campo.type = "password";
         botao.textContent = "👁️";
-
     }
-
 }
 
-function sair(){
-
+function sair() {
     autenticado = false;
 
     document.getElementById("painel").style.display = "none";
     document.getElementById("loginScreen").style.display = "flex";
-
     document.getElementById("senha").value = "";
-
     document.getElementById("senha").type = "password";
-
     document.getElementById("botaoSenha").textContent = "👁️";
-
     document.getElementById("senha").focus();
-
 }
 
-
-/* =========================
-   SISTEMA
-========================= */
-
+/* SISTEMA */
 let pedidos = [];
 let idsConhecidos = new Set();
 let primeiraCarga = true;
+let carregandoPedidos = false;
 
-function dinheiro(valor){
-
-    return Number(valor || 0).toLocaleString("pt-BR",{
-        style:"currency",
-        currency:"BRL"
+function dinheiro(valor) {
+    return Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
     });
-
 }
 
-
-function escapar(texto){
-
+function escapar(texto) {
     return String(texto ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-
-function dataLocal(date){
-
+function dataLocal(date) {
     const d = new Date(date);
-
     const ano = d.getFullYear();
-    const mes = String(d.getMonth()+1).padStart(2,"0");
-    const dia = String(d.getDate()).padStart(2,"0");
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
 
     return `${ano}-${mes}-${dia}`;
-
 }
 
-
-function hoje(){
-
+function hoje() {
     return dataLocal(new Date());
-
 }
 
+function formatarData(date) {
+    if (!date) return "";
 
-function formatarData(date){
-
-    if(!date) return "";
-
-    return new Date(date).toLocaleString("pt-BR",{
-        day:"2-digit",
-        month:"2-digit",
-        year:"numeric",
-        hour:"2-digit",
-        minute:"2-digit"
+    return new Date(date).toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
     });
-
 }
 
-
-function nomeStatus(status){
-
-    if(status === "novo") return "Novo";
-
-    if(status === "em_preparo") return "Em preparo";
-
-    if(status === "pronto") return "Pronto";
+function nomeStatus(status) {
+    if (status === "novo") return "Novo";
+    if (status === "em_preparo") return "Em preparo";
+    if (status === "pronto") return "Pronto";
 
     return status || "Novo";
-
 }
 
-
-async function carregarItens(pedidoId){
-
-    try{
-
+/* CARREGAR ITENS DO PEDIDO */
+async function carregarItens(pedidoId) {
+    try {
         const resposta = await fetch(
             "/api/itens?pedido_id=" +
             encodeURIComponent(pedidoId) +
-            "&t=" + Date.now()
+            "&t=" + Date.now(),
+            { cache: "no-store" }
         );
 
-        if(!resposta.ok){
-            return [];
-        }
+        if (!resposta.ok) return [];
 
         const dados = await resposta.json();
 
@@ -1093,44 +849,36 @@ async function carregarItens(pedidoId){
             ? dados
             : (dados.itens || []);
 
-    }catch(e){
-
-        console.error(
-            "Erro ao carregar itens:",
-            e
-        );
-
+    } catch (e) {
+        console.error("Erro ao carregar itens:", e);
         return [];
-
     }
-
 }
 
+/* ATUALIZAR PEDIDOS SOMENTE QUANDO SOLICITADO */
+async function carregarPedidos() {
+    if (!autenticado || carregandoPedidos) return;
 
-async function carregarPedidos(){
+    carregandoPedidos = true;
 
-    /* Não carrega nada se não estiver logado */
+    const botaoAtualizar = document.querySelector(
+        ".status-bar .refresh"
+    );
 
-    if(!autenticado){
-        return;
-    }
+    const textoOriginal = botaoAtualizar.textContent;
 
-    try{
+    botaoAtualizar.disabled = true;
+    botaoAtualizar.textContent = "⏳ Carregando...";
+    botaoAtualizar.style.opacity = "0.7";
 
+    try {
         const resposta = await fetch(
             "/api/pedidos?t=" + Date.now(),
-            {
-                cache:"no-store"
-            }
+            { cache: "no-store" }
         );
 
-        if(!resposta.ok){
-
-            throw new Error(
-                "Erro HTTP " +
-                resposta.status
-            );
-
+        if (!resposta.ok) {
+            throw new Error("Erro HTTP " + resposta.status);
         }
 
         const dados = await resposta.json();
@@ -1139,711 +887,357 @@ async function carregarPedidos(){
             ? dados
             : (dados.pedidos || []);
 
-        pedidos.sort((a,b)=>{
-
-            return new Date(b.criado_em)
-                - new Date(a.criado_em);
-
+        pedidos.sort((a, b) => {
+            return new Date(b.criado_em) - new Date(a.criado_em);
         });
 
         atualizarDashboard();
-
-        renderizarPedidos();
-
+        await renderizarPedidos();
         atualizarResumo();
 
         primeiraCarga = false;
 
-    }catch(erro){
-
+    } catch (erro) {
         console.error(erro);
 
         document.getElementById("orders").innerHTML = `
-
             <div class="empty">
-
-                <h3>
-                    Não foi possível carregar os pedidos
-                </h3>
-
+                <h3>Não foi possível carregar os pedidos</h3>
                 <p style="margin-top:8px">
-
-                    Verifique a conexão com o banco de dados.
-
+                    Verifique a conexão com o banco de dados
+                    e tente atualizar novamente.
                 </p>
-
             </div>
-
         `;
-
+    } finally {
+        carregandoPedidos = false;
+        botaoAtualizar.disabled = false;
+        botaoAtualizar.textContent = textoOriginal;
+        botaoAtualizar.style.opacity = "1";
     }
-
 }
 
-
-function atualizarDashboard(){
-
+/* INDICADORES */
+function atualizarDashboard() {
     const dataHoje = hoje();
 
-    const pedidosHoje = pedidos.filter(p =>
-        dataLocal(p.criado_em) === dataHoje
+    const pedidosHoje = pedidos.filter(
+        p => dataLocal(p.criado_em) === dataHoje
     );
 
     const vendasHoje = pedidosHoje.reduce(
-        (total,p) =>
-        total + Number(p.total || 0),
+        (total, p) => total + Number(p.total || 0),
         0
     );
 
-    const pendentes = pedidos.filter(p =>
-        p.status !== "pronto"
+    const pendentes = pedidos.filter(
+        p => p.status !== "pronto"
     ).length;
 
     const totalGeral = pedidos.reduce(
-        (total,p) =>
-        total + Number(p.total || 0),
+        (total, p) => total + Number(p.total || 0),
         0
     );
 
-    const ticket =
-        pedidos.length
+    const ticket = pedidos.length
         ? totalGeral / pedidos.length
         : 0;
 
-    document.getElementById(
-        "pedidosHoje"
-    ).textContent =
+    document.getElementById("pedidosHoje").textContent =
         pedidosHoje.length;
 
-    document.getElementById(
-        "vendasHoje"
-    ).textContent =
+    document.getElementById("vendasHoje").textContent =
         dinheiro(vendasHoje);
 
-    document.getElementById(
-        "pendentes"
-    ).textContent =
+    document.getElementById("pendentes").textContent =
         pendentes;
 
-    document.getElementById(
-        "ticketMedio"
-    ).textContent =
+    document.getElementById("ticketMedio").textContent =
         dinheiro(ticket);
-
 }
 
+/* RENDERIZAR PEDIDOS E FILTROS */
+async function renderizarPedidos() {
+    if (!autenticado) return;
 
-async function renderizarPedidos(){
+    const container = document.getElementById("orders");
+    const filtroStatus = document.getElementById("filtroStatus").value;
+    const filtroData = document.getElementById("filtroData").value;
 
-    if(!autenticado){
-        return;
-    }
-
-    const container =
-        document.getElementById("orders");
-
-    const filtroStatus =
-        document.getElementById(
-            "filtroStatus"
-        ).value;
-
-    const filtroData =
-        document.getElementById(
-            "filtroData"
-        ).value;
-
-    let lista = pedidos.filter(p=>{
-
-        if(
-            filtroStatus !== "todos" &&
-            p.status !== filtroStatus
-        ){
+    const lista = pedidos.filter(p => {
+        if (filtroStatus !== "todos" && p.status !== filtroStatus) {
             return false;
         }
 
-        if(
-            filtroData &&
-            dataLocal(p.criado_em) !== filtroData
-        ){
+        if (filtroData && dataLocal(p.criado_em) !== filtroData) {
             return false;
         }
 
         return true;
-
     });
 
-
-    if(lista.length === 0){
-
+    if (lista.length === 0) {
         container.innerHTML = `
-
             <div class="empty">
-
-                <h3>
-                    Nenhum pedido encontrado
-                </h3>
-
+                <h3>Nenhum pedido encontrado</h3>
                 <p style="margin-top:8px">
-
                     Não há pedidos com os filtros selecionados.
-
                 </p>
-
             </div>
-
         `;
-
         return;
-
     }
-
 
     container.innerHTML = "";
 
-
-    for(const pedido of lista){
-
-        const card =
-            document.createElement("div");
-
+    for (const pedido of lista) {
+        const card = document.createElement("div");
         card.className = "order";
 
-
-        if(
+        if (
             !primeiraCarga &&
-            !idsConhecidos.has(
-                String(pedido.id)
-            )
-        ){
-
+            !idsConhecidos.has(String(pedido.id))
+        ) {
             card.classList.add("new");
-
         }
 
-
-        const itens =
-            await carregarItens(pedido.id);
-
+        const itens = await carregarItens(pedido.id);
 
         let itensHTML = "";
 
-
-        if(itens.length){
-
-            itensHTML = itens.map(item=>`
-
+        if (itens.length) {
+            itensHTML = itens.map(item => `
                 <div class="item">
-
                     <strong>
-
-                        ${Number(
-                            item.quantidade || 1
-                        )}x
-
-                        ${escapar(
-                            item.produto
-                        )}
-
+                        ${Number(item.quantidade || 1)}x
+                        ${escapar(item.produto)}
                     </strong>
 
                     ${
                         item.detalhes
-                        ? `
-
-                            <div class="details">
-
-                                ${escapar(
-                                    item.detalhes
-                                )}
-
-                            </div>
-
-                        `
+                        ? `<div class="details">
+                               ${escapar(item.detalhes)}
+                           </div>`
                         : ""
                     }
-
                 </div>
-
             `).join("");
-
-        }else{
-
+        } else {
             itensHTML = `
-
-                <div class="details">
-
-                    Itens não encontrados.
-
-                </div>
-
+                <div class="details">Itens não encontrados.</div>
             `;
-
         }
-
 
         let botao = "";
 
-
-        if(pedido.status === "novo"){
-
+        if (pedido.status === "novo") {
             botao = `
-
                 <button
                     class="action preparo"
-                    onclick="alterarStatus(
-                        ${pedido.id},
-                        'em_preparo'
-                    )">
-
+                    onclick="alterarStatus(${Number(pedido.id)}, 'em_preparo')">
                     👨‍🍳 Colocar em preparo
-
                 </button>
-
             `;
-
-        }else if(
-            pedido.status === "em_preparo"
-        ){
-
+        } else if (pedido.status === "em_preparo") {
             botao = `
-
                 <button
                     class="action pronto"
-                    onclick="alterarStatus(
-                        ${pedido.id},
-                        'pronto'
-                    )">
-
+                    onclick="alterarStatus(${Number(pedido.id)}, 'pronto')">
                     ✅ Marcar como pronto
-
                 </button>
-
             `;
-
-        }else if(
-            pedido.status === "pronto"
-        ){
-
+        } else if (pedido.status === "pronto") {
             botao = `
-
                 <button
                     class="action voltar"
-                    onclick="alterarStatus(
-                        ${pedido.id},
-                        'em_preparo'
-                    )">
-
+                    onclick="alterarStatus(${Number(pedido.id)}, 'em_preparo')">
                     ↩ Voltar para preparo
-
                 </button>
-
             `;
-
         }
 
-
         card.innerHTML = `
-
             <div class="order-top">
-
                 <div>
-
                     <div class="order-number">
-
-                        Pedido #
-                        ${escapar(
-                            pedido.numero_pedido
-                        )}
-
+                        Pedido #${escapar(pedido.numero_pedido)}
                     </div>
 
-
                     <div class="order-info">
-
                         Mesa:
-
-                        <strong>
-
-                            ${escapar(
-                                pedido.mesa || "-"
-                            )}
-
-                        </strong>
-
+                        <strong>${escapar(pedido.mesa || "-")}</strong>
                     </div>
-
 
                     <div class="order-info">
-
-                        ${formatarData(
-                            pedido.criado_em
-                        )}
-
+                        ${formatarData(pedido.criado_em)}
                     </div>
-
                 </div>
 
-
-                <span
-                    class="badge ${
-                        escapar(
-                            pedido.status || "novo"
-                        )
-                    }">
-
-                    ${nomeStatus(
-                        pedido.status
-                    )}
-
+                <span class="badge ${escapar(pedido.status || "novo")}">
+                    ${nomeStatus(pedido.status)}
                 </span>
-
             </div>
 
-
-            <div class="items">
-
-                ${itensHTML}
-
-            </div>
-
+            <div class="items">${itensHTML}</div>
 
             ${
                 pedido.observacao
-                ? `
-
-                    <div class="observation">
-
-                        <strong>
-                            Observação:
-                        </strong>
-
-                        <br>
-
-                        ${escapar(
-                            pedido.observacao
-                        )}
-
-                    </div>
-
-                `
+                ? `<div class="observation">
+                       <strong>Observação:</strong><br>
+                       ${escapar(pedido.observacao)}
+                   </div>`
                 : ""
             }
 
-
             <div class="order-bottom">
-
                 <div>
-
-                    <div class="total">
-
-                        ${dinheiro(
-                            pedido.total
-                        )}
-
-                    </div>
-
+                    <div class="total">${dinheiro(pedido.total)}</div>
 
                     <div class="payment">
-
                         Pagamento:
-
-                        <strong>
-
-                            ${escapar(
-                                pedido.pagamento || "-"
-                            )}
-
-                        </strong>
-
+                        <strong>${escapar(pedido.pagamento || "-")}</strong>
                     </div>
-
                 </div>
-
             </div>
 
-
-            <div class="actions">
-
-                ${botao}
-
-            </div>
-
+            <div class="actions">${botao}</div>
         `;
 
-
         container.appendChild(card);
-
     }
 
-
-    pedidos.forEach(p=>{
-
-        idsConhecidos.add(
-            String(p.id)
-        );
-
-    });
-
+    pedidos.forEach(p => idsConhecidos.add(String(p.id)));
 }
 
+/* ALTERAR STATUS */
+async function alterarStatus(id, status) {
+    if (!autenticado) return;
 
-async function alterarStatus(id,status){
+    try {
+        const resposta = await fetch("/api/pedidos", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: id,
+                status: status
+            })
+        });
 
-    if(!autenticado){
-        return;
-    }
-
-    try{
-
-        const resposta =
-            await fetch(
-                "/api/pedidos",
-                {
-                    method:"PATCH",
-
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:JSON.stringify({
-                        id:id,
-                        status:status
-                    })
-
-                }
-            );
-
-
-        if(!resposta.ok){
-
-            throw new Error(
-                "Erro ao alterar status"
-            );
-
+        if (!resposta.ok) {
+            throw new Error("Erro ao alterar status");
         }
-
 
         await carregarPedidos();
 
-    }catch(erro){
-
+    } catch (erro) {
         console.error(erro);
 
-        alert(
-            "Não foi possível alterar o status do pedido."
-        );
-
+        alert("Não foi possível alterar o status do pedido.");
     }
-
 }
 
-
-function limparFiltros(){
-
-    document.getElementById(
-        "filtroStatus"
-    ).value = "todos";
-
-    document.getElementById(
-        "filtroData"
-    ).value = "";
+/* LIMPAR FILTROS */
+function limparFiltros() {
+    document.getElementById("filtroStatus").value = "todos";
+    document.getElementById("filtroData").value = "";
 
     renderizarPedidos();
-
 }
 
-
-function atualizarResumo(){
-
+/* RESUMO */
+function atualizarResumo() {
     const dataHoje = hoje();
 
-    const pedidosHoje =
-        pedidos.filter(p =>
-            dataLocal(p.criado_em)
-            === dataHoje
-        );
+    const pedidosHoje = pedidos.filter(
+        p => dataLocal(p.criado_em) === dataHoje
+    );
 
+    const vendasHoje = pedidosHoje.reduce(
+        (total, p) => total + Number(p.total || 0),
+        0
+    );
 
-    const vendasHoje =
-        pedidosHoje.reduce(
-            (total,p)=>
-            total + Number(p.total || 0),
-            0
-        );
+    const totalVendas = pedidos.reduce(
+        (total, p) => total + Number(p.total || 0),
+        0
+    );
 
-
-    const totalVendas =
-        pedidos.reduce(
-            (total,p)=>
-            total + Number(p.total || 0),
-            0
-        );
-
-
-    const ticketHoje =
-        pedidosHoje.length
+    const ticketHoje = pedidosHoje.length
         ? vendasHoje / pedidosHoje.length
         : 0;
 
-
-    const ticketGeral =
-        pedidos.length
+    const ticketGeral = pedidos.length
         ? totalVendas / pedidos.length
         : 0;
 
+    const pendentes = pedidos.filter(
+        p => p.status !== "pronto"
+    ).length;
 
-    const pendentes =
-        pedidos.filter(
-            p=>p.status !== "pronto"
-        ).length;
+    const concluidos = pedidos.filter(
+        p => p.status === "pronto"
+    ).length;
 
-
-    const concluidos =
-        pedidos.filter(
-            p=>p.status === "pronto"
-        ).length;
-
-
-    document.getElementById(
-        "resPedidosHoje"
-    ).textContent =
+    document.getElementById("resPedidosHoje").textContent =
         pedidosHoje.length;
 
-
-    document.getElementById(
-        "resVendasHoje"
-    ).textContent =
+    document.getElementById("resVendasHoje").textContent =
         dinheiro(vendasHoje);
 
-
-    document.getElementById(
-        "resTicketHoje"
-    ).textContent =
+    document.getElementById("resTicketHoje").textContent =
         dinheiro(ticketHoje);
 
-
-    document.getElementById(
-        "resPendentes"
-    ).textContent =
+    document.getElementById("resPendentes").textContent =
         pendentes;
 
-
-    document.getElementById(
-        "resTotalPedidos"
-    ).textContent =
+    document.getElementById("resTotalPedidos").textContent =
         pedidos.length;
 
-
-    document.getElementById(
-        "resTotalVendas"
-    ).textContent =
+    document.getElementById("resTotalVendas").textContent =
         dinheiro(totalVendas);
 
-
-    document.getElementById(
-        "resTicketGeral"
-    ).textContent =
+    document.getElementById("resTicketGeral").textContent =
         dinheiro(ticketGeral);
 
-
-    document.getElementById(
-        "resConcluidos"
-    ).textContent =
+    document.getElementById("resConcluidos").textContent =
         concluidos;
-
 }
 
+/* ALTERNAR ABAS */
+function mostrarAba(aba) {
+    const pedidosAba = document.getElementById("abaPedidos");
+    const resumoAba = document.getElementById("abaResumo");
+    const tabPedidos = document.getElementById("tabPedidos");
+    const tabResumo = document.getElementById("tabResumo");
 
-function mostrarAba(aba){
-
-    const pedidosAba =
-        document.getElementById(
-            "abaPedidos"
-        );
-
-    const resumoAba =
-        document.getElementById(
-            "abaResumo"
-        );
-
-    const tabPedidos =
-        document.getElementById(
-            "tabPedidos"
-        );
-
-    const tabResumo =
-        document.getElementById(
-            "tabResumo"
-        );
-
-
-    if(aba === "pedidos"){
-
-        pedidosAba.style.display =
-            "block";
-
-        resumoAba.style.display =
-            "none";
-
-        tabPedidos.classList.add(
-            "active"
-        );
-
-        tabResumo.classList.remove(
-            "active"
-        );
-
-    }else{
-
-        pedidosAba.style.display =
-            "none";
-
-        resumoAba.style.display =
-            "block";
-
-        tabPedidos.classList.remove(
-            "active"
-        );
-
-        tabResumo.classList.add(
-            "active"
-        );
-
+    if (aba === "pedidos") {
+        pedidosAba.style.display = "block";
+        resumoAba.style.display = "none";
+        tabPedidos.classList.add("active");
+        tabResumo.classList.remove("active");
+    } else {
+        pedidosAba.style.display = "none";
+        resumoAba.style.display = "block";
+        tabPedidos.classList.remove("active");
+        tabResumo.classList.add("active");
     }
-
 }
 
+/*
+   ATUALIZAÇÃO AUTOMÁTICA REMOVIDA.
+   Os pedidos são carregados:
+   1. Ao entrar no painel.
+   2. Ao clicar em "Atualizar agora".
+   3. Depois de alterar o status de um pedido.
+*/
 
-/* =========================
-   ATUALIZAÇÃO AUTOMÁTICA
-========================= */
+/* FOCO AUTOMÁTICO NA SENHA */
+window.addEventListener("load", () => {
+    document.getElementById("senha").focus();
+});
+</script>
 
-setInterval(()=>{
-
-    if(autenticado){
-
-        carregarPedidos();
-
-    }
-
-},2000);
-
-
-/* =========================
-   FOCO AUTOMÁTICO NA SENHA
-========================= */
-
-window.addEventListener(
-    "load",
-    ()=>{
-
-        document.getElementById(
-            "senha"
-        ).focus();
-
-    }
-);
-
-</script></body>
+</body>
 </html>
