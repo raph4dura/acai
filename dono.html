@@ -1351,22 +1351,39 @@ function atualizarResumo() {
 }
 
 /* ALTERNAR ABAS */
+```javascript
+/* ALTERNAR ABAS */
 function mostrarAba(aba) {
-    const pedidosAba = document.getElementById("abaPedidos");
-    const resumoAba = document.getElementById("abaResumo");
-    const tabPedidos = document.getElementById("tabPedidos");
-    const tabResumo = document.getElementById("tabResumo");
+    const abas = {
+        pedidos: {
+            conteudo: document.getElementById("abaPedidos"),
+            botao: document.getElementById("tabPedidos")
+        },
+        resumo: {
+            conteudo: document.getElementById("abaResumo"),
+            botao: document.getElementById("tabResumo")
+        },
+        controle: {
+            conteudo: document.getElementById("abaControle"),
+            botao: document.getElementById("tabControle")
+        }
+    };
 
-    if (aba === "pedidos") {
-        pedidosAba.style.display = "block";
-        resumoAba.style.display = "none";
-        tabPedidos.classList.add("active");
-        tabResumo.classList.remove("active");
-    } else {
-        pedidosAba.style.display = "none";
-        resumoAba.style.display = "block";
-        tabPedidos.classList.remove("active");
-        tabResumo.classList.add("active");
+    // Esconde todas as abas e remove o destaque dos botões.
+    Object.values(abas).forEach(abaItem => {
+        abaItem.conteudo.style.display = "none";
+        abaItem.botao.classList.remove("active");
+    });
+
+    // Mostra a aba selecionada.
+    if (abas[aba]) {
+        abas[aba].conteudo.style.display = "block";
+        abas[aba].botao.classList.add("active");
+    }
+
+    // Atualiza os dados do Controle ao abri-lo.
+    if (aba === "controle" && typeof gerarControle === "function") {
+        gerarControle();
     }
 }
 
