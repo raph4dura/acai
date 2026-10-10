@@ -1565,43 +1565,30 @@ total().toFixed(2)
 
 const response =
 
-await fetch(
-"/api/pedidos",
-{
-method:"POST",
+const response = await fetch(
+  "/api/pedidos",
+  {
+    method: "POST",
 
-headers:{
-"Content-Type":
-"application/json"
-},
+    headers: {
+      "Content-Type": "application/json"
+    },
 
-body:
-JSON.stringify(pedidoBody)
-
-}
+    body: JSON.stringify(pedidoBody)
+  }
 );
 
+const data = await response.json()
+  .catch(() => ({}));
 
-const data =
-await response.json()
-.catch(()=>({}));
-
-
-if(!response.ok){
-
-throw new Error(
-data.erro ||
-"Não foi possível registrar o pedido."
-);
-
+if (!response.ok) {
+  throw new Error(
+    data.erro ||
+    "Não foi possível registrar o pedido."
+  );
 }
 
-
-const pedido =
-data.pedido ||
-data;
-
-
+const pedido = data.pedido || data;
 /*
 ==========================================
 2. SALVA CADA ITEM
