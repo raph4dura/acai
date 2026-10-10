@@ -1338,62 +1338,52 @@ function montarPedido(
 ===================================================== */
 
 
-async function alterarStatus(
-    pedidoId,
-    novoStatus
-){
 
-    try{
+async function alterarStatus(pedidoId, novoStatus) {
+    try {
+        let pin = null;
 
-        const resposta =
+        if (novoStatus === "em_preparo") {
+            pin = prompt("Digite seu PIN de 4 dígitos:");
 
-            await fetch(
+            if (pin === null) return;
 
-                "/api/pedidos",
-
-                {
-
-                    method:"PATCH",
-
-                    headers:{
-                        "Content-Type":
-                        "application/json"
-                    },
-
-                    body:
-                    JSON.stringify({
-
-                        id:pedidoId,
-
-                        status:novoStatus
-
-                    })
-
-                }
-
-            );
-
-
-        const dados =
-            await resposta
-                .json()
-                .catch(
-                    ()=>({})
-                );
-
-
-        if(!resposta.ok){
-
-            throw new Error(
-
-                dados.erro
-                ||
-                "Não foi possível alterar o status."
-
-            );
-
+            if (!/^\d{4}$/.test(pin)) {
+                alert("O PIN deve ter exatamente 4 dígitos.");
+                return;
+            }
         }
 
+        const resposta = await fetch("/api/status", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: pedidoId,
+                status: novoStatus,
+                pin: pin
+            })
+        });
+
+        const dados = await resposta.json().catch(() => ({}));
+
+        if (!resposta.ok) {
+            throw new Error(
+                dados.erro || "Não foi possível alterar o status."
+            );
+        }
+
+        await carregarPedidos(true);
+
+    } catch (erro) {
+        console.error(erro);
+
+        alert(
+            erro.message || "Erro ao alterar pedido."
+        );
+    }
+}
 
         /*
          * ATUALIZA IMEDIATAMENTE
