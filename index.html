@@ -1238,16 +1238,19 @@ async function finishOrder() {
     button.textContent = "⏳ Registrando pedido...";
 
     try {
-        const numero = Date.now();
 
-        const pedidoBody = {
-            numero_pedido: numero,
-            mesa: mesa,
-            pagamento: payment,
-            observacao:
-                document.getElementById("obs").value.trim() || null,
-            total: Number(total().toFixed(2))
-        };
+        
+const numero = Math.floor(Date.now() / 1000);
+
+const pedidoBody = {
+    numero_pedido: numero,
+    mesa: mesa,
+    pagamento: payment,
+    observacao:
+        document.getElementById("obs").value.trim() || null,
+    total: Number(total().toFixed(2))
+};
+
 
         /* 1. Criar o pedido no Neon */
 
