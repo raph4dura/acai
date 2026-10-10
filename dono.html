@@ -948,6 +948,7 @@ async function carregarItens(pedidoId) {
 }
 
 /* ATUALIZAR PEDIDOS SOMENTE QUANDO SOLICITADO */
+```javascript
 async function carregarPedidos() {
     if (!autenticado || carregandoPedidos) return;
 
@@ -957,11 +958,15 @@ async function carregarPedidos() {
         ".status-bar .refresh"
     );
 
-    const textoOriginal = botaoAtualizar.textContent;
+    const textoOriginal = botaoAtualizar
+        ? botaoAtualizar.textContent
+        : "";
 
-    botaoAtualizar.disabled = true;
-    botaoAtualizar.textContent = "⏳ Carregando...";
-    botaoAtualizar.style.opacity = "0.7";
+    if (botaoAtualizar) {
+        botaoAtualizar.disabled = true;
+        botaoAtualizar.textContent = "⏳ Carregando...";
+        botaoAtualizar.style.opacity = "0.7";
+    }
 
     try {
         const resposta = await fetch(
@@ -983,9 +988,53 @@ async function carregarPedidos() {
             return new Date(b.criado_em) - new Date(a.criado_em);
         });
 
+        // Carrega os itens de cada pedido para usar no Controle.
+        pedidos = await Promise.all(
+            pedidos.map(async (pedido) => {
+                try {
+                    const respostaItens = await fetch(
+                        "/api/itens?pedido_id=" +
+                        encodeURIComponent(pedido.id) +
+                        "&t=" + Date.now(),
+                        { cache: "no-store" }
+                    );
+
+                    if (!respostaItens.ok) {
+                        throw new Error("Erro ao carregar itens");
+                    }
+
+                    const dadosItens = await respostaItens.json();
+
+                    const itens = Array.isArray(dadosItens)
+                        ? dadosItens
+                        : (dadosItens.itens || []);
+
+                    return {
+                        ...pedido,
+                        itens
+                    };
+                } catch (erro) {
+                    console.error(
+                        "Erro ao carregar itens do pedido " + pedido.id,
+                        erro
+                    );
+
+                    return {
+                        ...pedido,
+                        itens: []
+                    };
+                }
+            })
+        );
+
         atualizarDashboard();
         await renderizarPedidos();
         atualizarResumo();
+
+        // Atualiza o Controle se a função já estiver implementada.
+        if (typeof gerarControle === "function") {
+            gerarControle();
+        }
 
         primeiraCarga = false;
 
@@ -1003,11 +1052,15 @@ async function carregarPedidos() {
         `;
     } finally {
         carregandoPedidos = false;
-        botaoAtualizar.disabled = false;
-        botaoAtualizar.textContent = textoOriginal;
-        botaoAtualizar.style.opacity = "1";
+
+        if (botaoAtualizar) {
+            botaoAtualizar.disabled = false;
+            botaoAtualizar.textContent = textoOriginal;
+            botaoAtualizar.style.opacity = "1";
+        }
     }
 }
+
 
 /* INDICADORES */
 function atualizarDashboard() {
