@@ -80,12 +80,12 @@ export default async function handler(req, res) {
       sucesso: false,
       erro: 'Método não permitido.'
     });
+
   } catch (erro) {
-    console.error('Erro em pedidos.js:', erro.message);
+    console.error('Erro em pedidos.js:', erro);
 
     return res.status(500).json({
       sucesso: false,
-      erro: 'Não foi possível processar os pedidos.'
+      erro: erro.message || 'Erro desconhecido ao processar os pedidos.'
     });
   }
-}
