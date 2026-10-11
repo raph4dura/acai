@@ -6,7 +6,7 @@
   "description": "Painel administrativo do Cantinho do Açaí.",
   "lang": "pt-BR",
   "start_url": "/admin",
-  "scope": "/",
+  "scope": "/admin",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#5b21b6",
