@@ -1115,6 +1115,7 @@ async function carregarComplementosDoBanco() {
    CARREGAR PRODUTOS DO NEON
 ========================= */
 
+
 function renderCategories() {
     const categorias = [
         "Todos",
@@ -1122,9 +1123,9 @@ function renderCategories() {
             products
                 .map(p => p.cat)
                 .filter(c => c && c !== "Complementos")
-        ),
-        "Complementos"
+        )
     ];
+
 
     const unicas = [...new Set(categorias)];
     const container = document.getElementById("cats");
