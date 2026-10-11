@@ -24,7 +24,13 @@ export default async function handler(req, res) {
         const sql = neon(process.env.DATABASE_URL);
 
         const produtos = await sql`
-            SELECT id, nome, categoria, preco, ativo
+            SELECT
+                id,
+                nome,
+                categoria,
+                preco,
+                imagem_url,
+                ativo
             FROM produtos
             WHERE ativo = TRUE
             ORDER BY categoria, nome
