@@ -219,6 +219,7 @@ header p{opacity:.9;font-size:14px}
 </style>
 </head>
 
+
 <body>
 
 <!-- LOGIN -->
@@ -471,13 +472,79 @@ header p{opacity:.9;font-size:14px}
             <div id="listaProdutos" class="product-list">
                 Entre no painel para carregar os produtos.
             </div>
+
+         
+        </div>
+
+        <!-- GERENCIAR COMPLEMENTOS -->
+        <div class="summary-box" style="margin-top:16px">
+            <h3>🥄 Gerenciar complementos</h3>
+
+            <p class="details">
+                Cadastre e altere os complementos disponíveis para montar o açaí.
+            </p>
+
+            <div id="avisoComplemento" class="notice"></div>
+
+            <form id="formComplemento" class="product-form"
+                  style="grid-template-columns:2fr 1fr auto;margin-top:16px">
+
+                <div>
+                    <label for="complementoNome">Nome do complemento</label>
+                    <input
+                        id="complementoNome"
+                        type="text"
+                        maxlength="150"
+                        required
+                        placeholder="Ex.: Leite em pó">
+                </div>
+
+                <div>
+                    <label for="complementoPreco">Preço (R$)</label>
+                    <input
+                        id="complementoPreco"
+                        type="number"
+                        min="0"
+                        max="999999"
+                        step="0.01"
+                        required
+                        placeholder="2.00">
+                </div>
+
+                <button
+                    class="refresh"
+                    type="submit"
+                    id="botaoSalvarComplemento">
+                    ➕ Cadastrar
+                </button>
+            </form>
+        </div>
+
+        <div class="summary-box" style="margin-top:16px">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+                <h3 style="margin-bottom:0">🍓 Complementos cadastrados</h3>
+
+                <button class="secondary" onclick="carregarComplementos()">
+                    ↻ Atualizar lista
+                </button>
+            </div>
+
+            <input
+                class="product-search"
+                id="buscaComplemento"
+                type="search"
+                placeholder="🔎 Buscar complemento..."
+                oninput="renderizarComplementos()">
+
+            <div id="listaComplementos" class="product-list">
+                Entre no painel para carregar os complementos.
+            </div>
         </div>
 
     </section>
 
- 
-</div>
-</div>
+
+    
  
 <script>
 "use strict";
@@ -493,6 +560,7 @@ let carregandoFuncionarios = false;
 const API_AUTH = "/api/dono-auth";
 const API_FUNCIONARIOS = "/api/gerenciar-funcionarios";
 const API_PRODUTOS = "/api/gerenciar-produtos";
+ const API_COMPLEMENTOS = "/api/gerenciar-complementos";
  
 async function requisicao(url, opcoes = {}) {
     const resposta = await fetch(url, {
@@ -852,9 +920,10 @@ function mostrarAba(aba) {
 
     if (aba === "controle") gerarControle();
     if (aba === "funcionarios") carregarFuncionarios();
- if (aba === "cardapio") carregarProdutos();
+if (aba === "cardapio") {
+    carregarProdutos();
+    carregarComplementos();
 }
-
 /* PERÍODO DO CONTROLE */
 function alterarPeriodoControle() {
     document.getElementById("controleDatas").style.display =
@@ -1328,6 +1397,258 @@ async function alternarProduto(id) {
         avisoProduto(e.message, "error");
     }
 }
+ 
+/* ==========================================
+   GERENCIAMENTO DOS COMPLEMENTOS
+========================================== */
+
+let complementos = [];
+let carregandoComplementos = false;
+
+function avisoComplemento(mensagem, tipo = "ok") {
+    const el = document.getElementById("avisoComplemento");
+    el.className = "notice " + tipo;
+    el.textContent = mensagem;
+}
+
+async function carregarComplementos() {
+    if (!autenticado || carregandoComplementos) return;
+
+    carregandoComplementos = true;
+
+    const lista = document.getElementById("listaComplementos");
+    lista.innerHTML = '<p class="details">Carregando complementos...</p>';
+
+    try {
+        const dados = await requisicao(
+            API_COMPLEMENTOS + "?t=" + Date.now()
+        );
+
+        complementos = Array.isArray(dados.complementos)
+            ? dados.complementos
+            : [];
+
+        renderizarComplementos();
+    } catch (e) {
+        lista.innerHTML =
+            `<p class="details">${escapar(e.message)}</p>`;
+    } finally {
+        carregandoComplementos = false;
+    }
+}
+
+function renderizarComplementos() {
+    const lista = document.getElementById("listaComplementos");
+    const busca = document
+        .getElementById("buscaComplemento")
+        .value.trim()
+        .toLocaleLowerCase("pt-BR");
+
+    const filtrados = complementos.filter(c =>
+        String(c.nome)
+            .toLocaleLowerCase("pt-BR")
+            .includes(busca)
+    );
+
+    if (!filtrados.length) {
+        lista.innerHTML =
+            '<div class="empty">Nenhum complemento encontrado.</div>';
+        return;
+    }
+
+    lista.innerHTML = filtrados.map(c => `
+        <div class="product-card ${c.ativo ? "" : "inactive"}">
+            <div class="product-name">${escapar(c.nome)}</div>
+
+            <div class="product-meta">
+                Código: ${Number(c.id)}
+            </div>
+
+            <div class="product-price">
+                ${dinheiro(c.preco)}
+            </div>
+
+            <div class="product-meta">
+                Situação:
+                <strong>${c.ativo ? "Ativo" : "Desativado"}</strong>
+            </div>
+
+            <div class="product-actions">
+                <button
+                    class="secondary"
+                    onclick="editarComplemento(${Number(c.id)})">
+                    ✏️ Editar
+                </button>
+
+                <button
+                    class="${c.ativo ? "danger" : "success"}"
+                    onclick="alternarComplemento(${Number(c.id)})">
+                    ${c.ativo ? "Desativar" : "Ativar"}
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+/* CADASTRAR COMPLEMENTO */
+document.getElementById("formComplemento").addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+
+        if (!autenticado) return;
+
+        const nome = document
+            .getElementById("complementoNome")
+            .value.trim();
+
+        const precoTexto = document
+            .getElementById("complementoPreco")
+            .value;
+
+        const preco = Number(precoTexto);
+        const botao = document.getElementById("botaoSalvarComplemento");
+
+        if (
+            !nome ||
+            precoTexto === "" ||
+            !Number.isFinite(preco) ||
+            preco < 0
+        ) {
+            avisoComplemento(
+                "Informe um nome e um preço válido.",
+                "error"
+            );
+            return;
+        }
+
+        botao.disabled = true;
+
+        try {
+            const dados = await requisicao(API_COMPLEMENTOS, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({nome, preco})
+            });
+
+            document.getElementById("formComplemento").reset();
+
+            avisoComplemento(
+                dados.mensagem || "Complemento cadastrado com sucesso!"
+            );
+
+            await carregarComplementos();
+        } catch (e) {
+            avisoComplemento(e.message, "error");
+        } finally {
+            botao.disabled = false;
+        }
+    }
+);
+
+/* EDITAR NOME E PREÇO */
+async function editarComplemento(id) {
+    if (!autenticado) return;
+
+    const complemento = complementos.find(
+        c => Number(c.id) === Number(id)
+    );
+
+    if (!complemento) return;
+
+    const nome = prompt(
+        "Nome do complemento:",
+        complemento.nome
+    );
+
+    if (nome === null) return;
+
+    const precoTexto = prompt(
+        "Preço do complemento:",
+        String(complemento.preco).replace(".", ",")
+    );
+
+    if (precoTexto === null) return;
+
+    const preco = Number(precoTexto.trim().replace(",", "."));
+
+    if (
+        !nome.trim() ||
+        nome.trim().length > 150 ||
+        precoTexto.trim() === "" ||
+        !Number.isFinite(preco) ||
+        preco < 0 ||
+        preco > 999999
+    ) {
+        avisoComplemento(
+            "Confira o nome e o preço informado.",
+            "error"
+        );
+        return;
+    }
+
+    try {
+        const dados = await requisicao(API_COMPLEMENTOS, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                id: Number(id),
+                nome: nome.trim(),
+                preco
+            })
+        });
+
+        avisoComplemento(
+            dados.mensagem || "Complemento atualizado com sucesso!"
+        );
+
+        await carregarComplementos();
+    } catch (e) {
+        avisoComplemento(e.message, "error");
+    }
+}
+
+/* ATIVAR OU DESATIVAR */
+async function alternarComplemento(id) {
+    if (!autenticado) return;
+
+    const complemento = complementos.find(
+        c => Number(c.id) === Number(id)
+    );
+
+    if (!complemento) return;
+
+    const novoEstado = !complemento.ativo;
+
+    const mensagem = novoEstado
+        ? `Deseja ativar "${complemento.nome}" novamente?`
+        : `Deseja desativar "${complemento.nome}"? Ele deixará de ser oferecido, mas continuará cadastrado.`;
+
+    if (!confirm(mensagem)) return;
+
+    try {
+        const dados = await requisicao(API_COMPLEMENTOS, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                id: Number(id),
+                ativo: novoEstado
+            })
+        });
+
+        avisoComplemento(
+            dados.mensagem ||
+            (novoEstado
+                ? "Complemento ativado."
+                : "Complemento desativado.")
+        );
+
+        await carregarComplementos();
+    } catch (e) {
+        avisoComplemento(e.message, "error");
+    }
+}
+
 
 
 /* VERIFICAR SE JÁ EXISTE SESSÃO VÁLIDA */
@@ -1343,6 +1664,7 @@ window.addEventListener("load", async () => {
             await carregarPedidos();
             await carregarFuncionarios();
             await carregarProdutos();
+         await carregarComplementos();
         }
     } catch (e) {
         console.info("Nenhuma sessão ativa.");
