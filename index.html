@@ -829,7 +829,7 @@ let products = [
    COMPLEMENTOS
 ========================= */
 
-const extras = [
+let extras = [];
     ["Banana", 1.50, "🍌"],
     ["Morango", 2.00, "🍓"],
     ["Leite em pó", 2.00, "🥛"],
@@ -874,6 +874,78 @@ const esc = value =>
         '"': "&quot;",
         "'": "&#039;"
     }[m]));
+
+    
+/* =========================
+   CARREGAR COMPLEMENTOS DO NEON
+========================= */
+
+async function carregarComplementosDoBanco() {
+    try {
+        const response = await fetch("/api/complementos", {
+            method: "GET",
+            cache: "no-store"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.sucesso !== true) {
+            throw new Error(
+                data.mensagem || "Erro ao buscar complementos."
+            );
+        }
+
+        if (!Array.isArray(data.complementos)) {
+            throw new Error("A lista de complementos é inválida.");
+        }
+
+        extras = data.complementos.map(c => {
+            const nome = String(c.nome || "").trim();
+
+            const nomeNormalizado = nome
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+
+            let icone = "🍫";
+
+            if (nomeNormalizado.includes("banana")) {
+                icone = "🍌";
+            } else if (nomeNormalizado.includes("morango")) {
+                icone = "🍓";
+            } else if (nomeNormalizado.includes("leite em po")) {
+                icone = "🥛";
+            } else if (nomeNormalizado.includes("granola")) {
+                icone = "🌾";
+            } else if (nomeNormalizado.includes("pacoca")) {
+                icone = "🥜";
+            } else if (nomeNormalizado.includes("leite condensado")) {
+                icone = "🍯";
+            } else if (nomeNormalizado.includes("confete")) {
+                icone = "🍬";
+            } else if (nomeNormalizado.includes("chocolate")) {
+                icone = "🍫";
+            }
+
+            return [
+                nome,
+                Number(c.preco),
+                icone
+            ];
+        });
+
+        // Limpa seleções antigas para evitar índices incorretos.
+        selectedExtras = [];
+
+        renderExtras();
+        updateAcaiTotal();
+
+    } catch (error) {
+        console.error("Erro ao carregar complementos:", error);
+
+        toast("Não foi possível carregar os complementos.");
+    }
+}
 
     
 /* =========================
@@ -1492,6 +1564,7 @@ window.addEventListener("click", event => {
 
 init();
 carregarProdutosDoBanco();
+carregarComplementosDoBanco();
 </script>
 
 </body>
