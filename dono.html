@@ -2007,5 +2007,17 @@ window.addEventListener("load", async () => {
     }
 });
 </script>
+
+ <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register(
+      "/service-worker-dono.js",
+      { scope: "/admin" }
+    );
+  });
+}
+</script>
+ 
 </body>
 </html>
