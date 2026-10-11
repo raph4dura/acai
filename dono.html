@@ -236,6 +236,157 @@ header p{opacity:.9;font-size:14px}
  .filters select,.filters input{width:100%}
  .tab{padding:10px 12px}
 }
+
+/* ==========================================
+   ANIMAÇÕES — PAINEL DO DONO
+========================================== */
+
+/* Rolagem suave nas abas */
+html {
+    scroll-behavior: smooth;
+}
+
+.tabs {
+    scrollbar-width: thin;
+    scrollbar-color: #c4b5fd transparent;
+    padding: 3px 2px 7px;
+}
+
+.tab {
+    position: relative;
+    overflow: hidden;
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+.tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px #5b21b61c;
+}
+
+.tab:active {
+    transform: scale(.96);
+}
+
+.tab.active {
+    box-shadow: 0 5px 14px #5b21b633;
+}
+
+/* Efeito suave nos cartões */
+.card,
+.summary-box,
+.order,
+.product-card,
+.employee,
+.status-bar,
+.filters {
+    transition:
+        box-shadow .25s ease,
+        transform .25s ease,
+        border-color .25s ease;
+}
+
+.card:hover,
+.summary-box:hover {
+    box-shadow: 0 7px 20px #00000014;
+}
+
+.product-card:hover,
+.employee:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px #5b21b618;
+}
+
+/* Entrada suave das áreas do painel */
+@keyframes painelEntrando {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#painel header,
+.dashboard,
+.status-bar,
+.tabs {
+    animation: painelEntrando .35s ease both;
+}
+
+/* Animação ao trocar de aba */
+@keyframes abaEntrando {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section.aba-animada {
+    animation: abaEntrando .28s ease both;
+}
+
+/* Botões com resposta visual */
+button {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        filter .2s ease,
+        box-shadow .2s ease,
+        transform .18s ease;
+}
+
+button:not(:disabled):hover {
+    filter: brightness(1.04);
+}
+
+button:not(:disabled):active {
+    transform: scale(.97);
+}
+
+/* Campos com destaque ao selecionar */
+input,
+select {
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px #8b5cf622;
+}
+
+/* Avisos aparecendo suavemente */
+.notice.ok,
+.notice.error {
+    animation: painelEntrando .25s ease both;
+}
+
+/* Acessibilidade: respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+ 
 </style>
 </head>
 
@@ -986,27 +1137,41 @@ function atualizarResumo() {
 }
 
 /* ABAS */
+/* ABAS */
 function mostrarAba(aba) {
     const abas = {
-        pedidos:["abaPedidos","tabPedidos"],
-        resumo:["abaResumo","tabResumo"],
-        controle:["abaControle","tabControle"],
-        funcionarios:["abaFuncionarios","tabFuncionarios"],
-     cardapio: ["abaCardapio", "tabCardapio"]
+        pedidos: ["abaPedidos", "tabPedidos"],
+        resumo: ["abaResumo", "tabResumo"],
+        controle: ["abaControle", "tabControle"],
+        funcionarios: ["abaFuncionarios", "tabFuncionarios"],
+        cardapio: ["abaCardapio", "tabCardapio"]
     };
 
-    Object.values(abas).forEach(([conteudo,botao]) => {
-        document.getElementById(conteudo).style.display = "none";
+    if (!abas[aba]) return;
+
+    Object.values(abas).forEach(([conteudo, botao]) => {
+        const secao = document.getElementById(conteudo);
+
+        secao.style.display = "none";
+        secao.classList.remove("aba-animada");
+
         document.getElementById(botao).classList.remove("active");
     });
 
-    if (!abas[aba]) return;
-    const [conteudo,botao] = abas[aba];
-    document.getElementById(conteudo).style.display = "block";
+    const [conteudo, botao] = abas[aba];
+    const secao = document.getElementById(conteudo);
+
+    secao.style.display = "block";
     document.getElementById(botao).classList.add("active");
 
+    /* Reinicia a animação ao abrir a aba */
+    void secao.offsetWidth;
+    secao.classList.add("aba-animada");
 
-    if (aba === "controle") gerarControle();
+    /* Atualiza os dados da aba quando necessário */
+    if (aba === "controle") {
+        gerarControle();
+    }
 
     if (aba === "funcionarios") {
         carregarFuncionarios();
@@ -1016,8 +1181,13 @@ function mostrarAba(aba) {
         carregarProdutos();
         carregarComplementos();
     }
-}
 
+    /* Leva o usuário até as abas em telas menores */
+    document.querySelector(".tabs").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
 /* PERÍODO DO CONTROLE */
 function alterarPeriodoControle() {
     document.getElementById("controleDatas").style.display =
