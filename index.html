@@ -1016,9 +1016,13 @@ async function carregarProdutosDoBanco() {
             const ehAcai = nomeNormalizado === "acai";
 
             const categoriaNormalizada = categoriaProduto
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase();
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+const ehAcai =
+    nomeNormalizado.includes("acai") ||
+    categoriaNormalizada.includes("acai");
 
             const icone =
                 categoriaNormalizada.includes("bebida") ? "🥤" :
@@ -1039,8 +1043,17 @@ async function carregarProdutosDoBanco() {
             };
         });
 
-        const acaiBanco = produtosBanco.find(p => p.acai);
-
+        const acaiBanco =
+    produtosBanco.find(p =>
+        p.acai && /300\s?ml/i.test(p.name)
+    ) ||
+    produtosBanco.find(p =>
+        p.acai &&
+        p.name.normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim()
+            .toLowerCase() === "acai"
+    );
         // Preserva o açaí especial, com tamanhos e complementos.
         const acai = acaiOriginal
             ? {
