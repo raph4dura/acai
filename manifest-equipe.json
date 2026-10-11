@@ -1,11 +1,11 @@
 
 {
-  "id": "/funcionarios.html",
+  "id": "/equipe",
   "name": "Cantinho do Açaí — Equipe",
   "short_name": "Cantinho Equipe",
-  "description": "Área de pedidos e preparo dos funcionários do Cantinho do Açaí.",
+  "description": "Pedidos e preparo dos funcionários.",
   "lang": "pt-BR",
-  "start_url": "/funcionarios.html",
+  "start_url": "/equipe",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
