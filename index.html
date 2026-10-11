@@ -525,6 +525,35 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+    
+.product .product-image {
+    width: 100%;
+    height: 155px;
+    margin: 0 0 14px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #f8eaff;
+    font-size: 3rem;
+}
+
+.product .product-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product .product-image .product-emoji {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 </style>
 </head>
 
@@ -990,6 +1019,7 @@ function renderCategories() {
 }
 
 
+
 async function carregarProdutosDoBanco() {
     try {
         const response = await fetch("/api/cardapio", {
@@ -1009,7 +1039,6 @@ async function carregarProdutosDoBanco() {
             throw new Error("A API retornou uma lista inválida.");
         }
 
-        // Mantém o produto especial que abre o montador de açaí.
         const acaiOriginal = {
             id: "acai",
             name: "Açaí",
@@ -1017,6 +1046,7 @@ async function carregarProdutosDoBanco() {
             price: sizes[0][1],
             cat: "Açaí",
             icon: "🍇",
+            image: "",
             acai: true
         };
 
@@ -1053,11 +1083,13 @@ async function carregarProdutosDoBanco() {
                 price: Number(p.preco),
                 cat: categoriaProduto,
                 icon: icone,
+                image: typeof p.imagem_url === "string"
+                    ? p.imagem_url.trim()
+                    : "",
                 acai: ehAcai
             };
         });
 
-        // Usa o preço do açaí de 300 ml, se existir no banco.
         const acaiBanco = produtosBanco.find(p =>
             p.acai && /300\s?ml/i.test(p.name)
         ) || produtosBanco.find(p =>
@@ -1074,7 +1106,6 @@ async function carregarProdutosDoBanco() {
 
         acaiOriginal.price = sizes[0][1];
 
-        // Deixa os açaís fora da lista normal do cardápio.
         products = [
             acaiOriginal,
             ...produtosBanco.filter(p => !p.acai)
@@ -1128,24 +1159,21 @@ function setCategory(c, button) {
 ========================= */
 
 
+
 function renderProducts() {
     const q = document.getElementById("search").value
         .toLowerCase()
         .trim();
 
     const list = products.filter(p => {
-        // O açaí especial não aparece em "Todos".
         if (p.acai && category === "Todos") {
             return false;
         }
 
-        // A categoria Açaí abre o montador,
-        // em vez de mostrar os tamanhos como produtos separados.
         if (p.acai && category === "Açaí") {
             return true;
         }
 
-        // Não mostra açaís do banco como cards individuais.
         if (p.acai) {
             return false;
         }
@@ -1165,26 +1193,44 @@ function renderProducts() {
         list.length + (list.length === 1 ? " item" : " itens");
 
     document.getElementById("products").innerHTML =
-        list.map(p => `
-            <div class="product ${p.acai ? "featured" : ""}">
-                <div class="icon">${p.icon}</div>
-                <h3>${esc(p.name)}</h3>
-                <p>${esc(p.desc)}</p>
+        list.map(p => {
+            const imagem = p.image
+                ? `<img
+                    src="${esc(p.image)}"
+                    alt="${esc(p.name)}"
+                    loading="lazy"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                  >`
+                : "";
 
-                <div class="price">
-                    ${p.acai ? "A partir de " : ""}
-                    ${money(p.price)}
+            return `
+                <div class="product ${p.acai ? "featured" : ""}">
+                    <div class="icon product-image">
+                        ${imagem}
+                        <span
+                            class="product-emoji"
+                            style="display:${p.image ? "none" : "flex"}"
+                        >${p.icon}</span>
+                    </div>
+
+                    <h3>${esc(p.name)}</h3>
+                    <p>${esc(p.desc)}</p>
+
+                    <div class="price">
+                        ${p.acai ? "A partir de " : ""}
+                        ${money(p.price)}
+                    </div>
+
+                    <button onclick="${
+                        p.acai
+                            ? "openAcai()"
+                            : "addProduct('" + p.id + "')"
+                    }">
+                        ${p.acai ? "🍇 Montar meu açaí" : "Adicionar"}
+                    </button>
                 </div>
-
-                <button onclick="${
-                    p.acai
-                        ? "openAcai()"
-                        : "addProduct('" + p.id + "')"
-                }">
-                    ${p.acai ? "🍇 Montar meu açaí" : "Adicionar"}
-                </button>
-            </div>
-        `).join("") || `
+            `;
+        }).join("") || `
             <div style="grid-column:1/-1;text-align:center;padding:40px;color:#83768d">
                 🔎<br><br>Nenhum item encontrado.
             </div>
