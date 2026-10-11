@@ -1,0 +1,22 @@
+
+{
+  "id": "/dono.html",
+  "name": "Cantinho do Açaí — Administração",
+  "short_name": "Cantinho Dono",
+  "description": "Painel administrativo do Cantinho do Açaí — Portão.",
+  "lang": "pt-BR",
+  "start_url": "/dono.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#5b21b6",
+  "theme_color": "#5b21b6",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
