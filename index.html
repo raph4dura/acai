@@ -1137,12 +1137,14 @@ function renderCategories() {
         button.className =
             "cat" + (categoriaItem === category ? " active" : "");
 
-        button.textContent =
-            categoriaItem === "Todos" ? "Todos" :
-            categoriaItem === "Açaí" ? "🍇 Açaí" :
-            categoriaItem === "Lanches" ? "🍔 Lanches" :
-            categoriaItem === "Bebidas" ? "🥤 Bebidas" :
-            categoriaItem;
+       
+button.textContent =
+    categoriaItem === "Todos" ? "Todos" :
+    categoriaItem === "Açaí" ? "🍇 Açaí" :
+    categoriaItem === "Lanches" ? "🍔 Lanches" :
+    categoriaItem === "Bebidas" ? "🥤 Bebidas" :
+    categoriaItem;
+
 
         button.addEventListener("click", () => {
             setCategory(categoriaItem, button);
