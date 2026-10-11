@@ -918,12 +918,19 @@ function mostrarAba(aba) {
     document.getElementById(conteudo).style.display = "block";
     document.getElementById(botao).classList.add("active");
 
+
     if (aba === "controle") gerarControle();
-    if (aba === "funcionarios") carregarFuncionarios();
-if (aba === "cardapio") {
-    carregarProdutos();
-    carregarComplementos();
+
+    if (aba === "funcionarios") {
+        carregarFuncionarios();
+    }
+
+    if (aba === "cardapio") {
+        carregarProdutos();
+        carregarComplementos();
+    }
 }
+
 /* PERÍODO DO CONTROLE */
 function alterarPeriodoControle() {
     document.getElementById("controleDatas").style.display =
