@@ -1,11 +1,11 @@
 
 {
-  "id": "/dono.html",
+  "id": "/admin",
   "name": "Cantinho do Açaí — Administração",
   "short_name": "Cantinho Dono",
-  "description": "Painel administrativo do Cantinho do Açaí — Portão.",
+  "description": "Painel administrativo do Cantinho do Açaí.",
   "lang": "pt-BR",
-  "start_url": "/dono.html",
+  "start_url": "/admin",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
