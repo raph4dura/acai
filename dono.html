@@ -111,6 +111,98 @@ header p{opacity:.9;font-size:14px}
 .notice.ok{display:block;background:#dcfce7;color:#166534}
 .notice.error{display:block;background:#fee2e2;color:#991b1b}
 
+ ```css
+/* CARDÁPIO */
+.product-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+}
+
+.product-form label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.product-form input,
+.product-form select {
+    width: 100%;
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    background: white;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #e9d5ff;
+    border-radius: 13px;
+    padding: 16px;
+    min-width: 0;
+}
+
+.product-card.inactive {
+    opacity: .65;
+    background: #f9fafb;
+}
+
+.product-name {
+    color: #4c1d95;
+    font-size: 17px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.product-meta {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.product-price {
+    color: #5b21b6;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.product-search {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    margin-top: 16px;
+}
+
+@media(max-width:700px) {
+    .product-form {
+        grid-template-columns: 1fr;
+    }
+
+    .product-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 @media(max-width:850px){.dashboard{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:550px){
  .container{padding:12px}
@@ -185,6 +277,10 @@ header p{opacity:.9;font-size:14px}
         <button class="tab" id="tabResumo" onclick="mostrarAba('resumo')">📊 Resumo</button>
         <button class="tab" id="tabControle" onclick="mostrarAba('controle')">📦 Controle</button>
         <button class="tab" id="tabFuncionarios" onclick="mostrarAba('funcionarios')">👥 Funcionários</button>
+        <button class="tab" id="tabCardapio" onclick="mostrarAba('cardapio')">
+    🍇 Cardápio
+</button>
+
     </div>
 
     <!-- PEDIDOS -->
@@ -296,6 +392,98 @@ header p{opacity:.9;font-size:14px}
 </div>
 </div>
 
+```html
+    <!-- CARDÁPIO -->
+    <section id="abaCardapio" style="display:none">
+
+        <div class="summary-box">
+            <h3>➕ Cadastrar produto</h3>
+            <p class="details">
+                Cadastre itens que serão vendidos no Cantinho do Açaí.
+            </p>
+
+            <div id="avisoProduto" class="notice"></div>
+
+            <form id="formProduto" class="product-form">
+                <div>
+                    <label for="produtoNome">Nome do produto</label>
+                    <input
+                        id="produtoNome"
+                        type="text"
+                        maxlength="150"
+                        required
+                        placeholder="Ex.: Açaí 500 ml">
+                </div>
+
+                <div>
+                    <label for="produtoCategoria">Categoria</label>
+                    <input
+                        id="produtoCategoria"
+                        type="text"
+                        maxlength="100"
+                        list="categoriasProdutos"
+                        required
+                        placeholder="Ex.: Açaí">
+
+                    <datalist id="categoriasProdutos">
+                        <option value="Açaí">
+                        <option value="Bebidas">
+                        <option value="Complementos">
+                        <option value="Lanches">
+                        <option value="Xis">
+                        <option value="Crepes">
+                    </datalist>
+                </div>
+
+                <div>
+                    <label for="produtoPreco">Preço (R$)</label>
+                    <input
+                        id="produtoPreco"
+                        type="number"
+                        min="0"
+                        max="999999"
+                        step="0.01"
+                        required
+                        placeholder="14,90">
+                </div>
+
+                <button
+                    class="refresh"
+                    type="submit"
+                    id="botaoSalvarProduto">
+                    ➕ Cadastrar
+                </button>
+            </form>
+        </div>
+
+        <div class="summary-box" style="margin-top:16px">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+                <h3 style="margin-bottom:0">🛍️ Produtos cadastrados</h3>
+                <button class="secondary" onclick="carregarProdutos()">
+                    ↻ Atualizar lista
+                </button>
+            </div>
+
+            <input
+                class="product-search"
+                id="buscaProduto"
+                type="search"
+                placeholder="🔎 Buscar por nome ou categoria..."
+                oninput="renderizarProdutos()">
+
+            <div id="listaProdutos" class="product-list">
+                Entre no painel para carregar os produtos.
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+
+
+ 
 <script>
 "use strict";
 
@@ -309,7 +497,8 @@ let carregandoFuncionarios = false;
 
 const API_AUTH = "/api/dono-auth";
 const API_FUNCIONARIOS = "/api/gerenciar-funcionarios";
-
+const API_PRODUTOS = "/api/gerenciar-produtos";
+ 
 async function requisicao(url, opcoes = {}) {
     const resposta = await fetch(url, {
         credentials: "same-origin",
@@ -332,9 +521,13 @@ async function requisicao(url, opcoes = {}) {
         throw new Error("Sua sessão expirou. Entre novamente.");
     }
 
-    if (!resposta.ok || dados.sucesso === false) {
-        throw new Error(dados.erro || "Não foi possível concluir a operação.");
-    }
+if (!resposta.ok || dados.sucesso === false) {
+    throw new Error(
+        dados.erro ||
+        dados.mensagem ||
+        "Não foi possível concluir a operação."
+    );
+}
 
     return dados;
 }
@@ -648,7 +841,8 @@ function mostrarAba(aba) {
         pedidos:["abaPedidos","tabPedidos"],
         resumo:["abaResumo","tabResumo"],
         controle:["abaControle","tabControle"],
-        funcionarios:["abaFuncionarios","tabFuncionarios"]
+        funcionarios:["abaFuncionarios","tabFuncionarios"],
+     cardapio: ["abaCardapio", "tabCardapio"]
     };
 
     Object.values(abas).forEach(([conteudo,botao]) => {
@@ -663,6 +857,7 @@ function mostrarAba(aba) {
 
     if (aba === "controle") gerarControle();
     if (aba === "funcionarios") carregarFuncionarios();
+ if (aba === "cardapio") carregarProdutos();
 }
 
 /* PERÍODO DO CONTROLE */
@@ -891,6 +1086,255 @@ async function alterarPinFuncionario(id) {
     }
 }
 
+ ```js
+/* ==========================================
+   GERENCIAMENTO DO CARDÁPIO
+========================================== */
+
+let produtos = [];
+let carregandoProdutos = false;
+
+function avisoProduto(mensagem, tipo = "ok") {
+    const el = document.getElementById("avisoProduto");
+    el.className = "notice " + tipo;
+    el.textContent = mensagem;
+}
+
+async function carregarProdutos() {
+    if (!autenticado || carregandoProdutos) return;
+
+    carregandoProdutos = true;
+
+    const lista = document.getElementById("listaProdutos");
+    lista.innerHTML = '<p class="details">Carregando produtos...</p>';
+
+    try {
+        const dados = await requisicao(
+            API_PRODUTOS + "?t=" + Date.now()
+        );
+
+        produtos = Array.isArray(dados.produtos)
+            ? dados.produtos
+            : [];
+
+        renderizarProdutos();
+    } catch (e) {
+        lista.innerHTML =
+            `<p class="details">${escapar(e.message)}</p>`;
+    } finally {
+        carregandoProdutos = false;
+    }
+}
+
+function renderizarProdutos() {
+    const lista = document.getElementById("listaProdutos");
+    const busca = document
+        .getElementById("buscaProduto")
+        .value.trim()
+        .toLocaleLowerCase("pt-BR");
+
+    const filtrados = produtos.filter(p => {
+        const texto = `${p.nome} ${p.categoria}`
+            .toLocaleLowerCase("pt-BR");
+
+        return texto.includes(busca);
+    });
+
+    if (!filtrados.length) {
+        lista.innerHTML =
+            '<div class="empty">Nenhum produto encontrado.</div>';
+        return;
+    }
+
+    lista.innerHTML = filtrados.map(p => `
+        <div class="product-card ${p.ativo ? "" : "inactive"}">
+            <div class="product-name">
+                ${escapar(p.nome)}
+            </div>
+
+            <div class="product-meta">
+                Categoria: ${escapar(p.categoria)}
+            </div>
+
+            <div class="product-meta">
+                Código: ${Number(p.id)}
+            </div>
+
+            <div class="product-price">
+                ${dinheiro(p.preco)}
+            </div>
+
+            <div class="product-meta">
+                Situação:
+                <strong>${p.ativo ? "Ativo" : "Desativado"}</strong>
+            </div>
+
+            <div class="product-actions">
+                <button
+                    class="secondary"
+                    onclick="editarProduto(${Number(p.id)})">
+                    ✏️ Editar
+                </button>
+
+                <button
+                    class="${p.ativo ? "danger" : "success"}"
+                    onclick="alternarProduto(${Number(p.id)})">
+                    ${p.ativo ? "Desativar" : "Ativar"}
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+document.getElementById("formProduto").addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+
+        if (!autenticado) return;
+
+        const nome = document
+            .getElementById("produtoNome").value.trim();
+
+        const categoria = document
+            .getElementById("produtoCategoria").value.trim();
+
+        const precoTexto = document
+            .getElementById("produtoPreco").value;
+
+        const preco = Number(precoTexto);
+        const botao = document.getElementById("botaoSalvarProduto");
+
+        if (!nome || !categoria || precoTexto === "" ||
+            !Number.isFinite(preco) || preco < 0) {
+            avisoProduto(
+                "Preencha nome, categoria e um preço válido.",
+                "error"
+            );
+            return;
+        }
+
+        botao.disabled = true;
+
+        try {
+            const dados = await requisicao(API_PRODUTOS, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({nome, categoria, preco})
+            });
+
+            document.getElementById("formProduto").reset();
+
+            avisoProduto(
+                dados.mensagem || "Produto cadastrado com sucesso!"
+            );
+
+            await carregarProdutos();
+        } catch (e) {
+            avisoProduto(e.message, "error");
+        } finally {
+            botao.disabled = false;
+        }
+    }
+);
+
+async function editarProduto(id) {
+    if (!autenticado) return;
+
+    const produto = produtos.find(p => Number(p.id) === Number(id));
+    if (!produto) return;
+
+    const nome = prompt("Nome do produto:", produto.nome);
+    if (nome === null) return;
+
+    const categoria = prompt(
+        "Categoria do produto:",
+        produto.categoria
+    );
+    if (categoria === null) return;
+
+    const precoTexto = prompt(
+        "Preço do produto (use ponto ou vírgula nos centavos):",
+        String(produto.preco).replace(".", ",")
+    );
+    if (precoTexto === null) return;
+
+    const preco = Number(precoTexto.trim().replace(",", "."));
+
+    if (
+        !nome.trim() ||
+        !categoria.trim() ||
+        precoTexto.trim() === "" ||
+        !Number.isFinite(preco) ||
+        preco < 0
+    ) {
+        avisoProduto(
+            "Confira o nome, a categoria e o preço.",
+            "error"
+        );
+        return;
+    }
+
+    try {
+        const dados = await requisicao(API_PRODUTOS, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                id: Number(id),
+                nome: nome.trim(),
+                categoria: categoria.trim(),
+                preco
+            })
+        });
+
+        avisoProduto(
+            dados.mensagem || "Produto atualizado com sucesso!"
+        );
+
+        await carregarProdutos();
+    } catch (e) {
+        avisoProduto(e.message, "error");
+    }
+}
+
+async function alternarProduto(id) {
+    if (!autenticado) return;
+
+    const produto = produtos.find(p => Number(p.id) === Number(id));
+    if (!produto) return;
+
+    const novoEstado = !produto.ativo;
+
+    const confirmacao = novoEstado
+        ? `Deseja ativar "${produto.nome}" novamente?`
+        : `Deseja desativar "${produto.nome}"? Ele deixará de ser oferecido, mas continuará cadastrado.`;
+
+    if (!confirm(confirmacao)) return;
+
+    try {
+        const dados = await requisicao(API_PRODUTOS, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                id: Number(id),
+                ativo: novoEstado
+            })
+        });
+
+        avisoProduto(
+            dados.mensagem ||
+            (novoEstado
+                ? "Produto ativado."
+                : "Produto desativado.")
+        );
+
+        await carregarProdutos();
+    } catch (e) {
+        avisoProduto(e.message, "error");
+    }
+}
+
+
 /* VERIFICAR SE JÁ EXISTE SESSÃO VÁLIDA */
 window.addEventListener("load", async () => {
     document.getElementById("senha").focus();
@@ -903,6 +1347,7 @@ window.addEventListener("load", async () => {
             document.getElementById("painel").style.display = "block";
             await carregarPedidos();
             await carregarFuncionarios();
+            await carregarProdutos();
         }
     } catch (e) {
         console.info("Nenhuma sessão ativa.");
