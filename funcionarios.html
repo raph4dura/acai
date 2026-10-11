@@ -532,10 +532,17 @@ function montarPedido(pedido, itens, temNovoPedido) {
 
             <div class="itens">${itensHTML}</div>
 
-            <div class="informacoes">
-                💳 <strong>${escapar(pedido.pagamento || "Não informado")}</strong>
-                ${horario ? `<br>🕐 ${escapar(horario)}` : ""}
-            </div>
+          
+<div class="informacoes">
+    ${status === "em_preparo" && pedido.funcionario_nome ? `
+        👨‍🍳 <strong>Preparando por:</strong>
+        ${escapar(pedido.funcionario_nome)}<br>
+    ` : ""}
+
+    💳 <strong>${escapar(pedido.pagamento || "Não informado")}</strong>
+    ${horario ? `<br>🕐 ${escapar(horario)}` : ""}
+</div>
+
 
             ${pedido.observacao ? `
                 <div class="observacao">
@@ -554,19 +561,26 @@ function montarPedido(pedido, itens, temNovoPedido) {
     `;
 }
 
+
 async function alterarStatus(pedidoId, novoStatus) {
     try {
-        let pin = null;
+        let mensagem;
 
         if (novoStatus === "em_preparo") {
-            pin = prompt("Digite seu PIN de 4 dígitos:");
+            mensagem = "Digite o PIN de 4 dígitos para iniciar o preparo:";
+        } else if (novoStatus === "pronto") {
+            mensagem = "Digite novamente seu PIN de 4 dígitos para finalizar o pedido:";
+        } else {
+            return;
+        }
 
-            if (pin === null) return;
+        const pin = prompt(mensagem);
 
-            if (!/^\d{4}$/.test(pin)) {
-                alert("O PIN deve ter exatamente 4 dígitos.");
-                return;
-            }
+        if (pin === null) return;
+
+        if (!/^\d{4}$/.test(pin)) {
+            alert("O PIN deve ter exatamente 4 dígitos.");
+            return;
         }
 
         const resposta = await fetch("/api/status", {
@@ -589,14 +603,18 @@ async function alterarStatus(pedidoId, novoStatus) {
             );
         }
 
+        alert(
+            novoStatus === "em_preparo"
+                ? "Preparo iniciado com sucesso!"
+                : "Pedido marcado como pronto!"
+        );
+
         await carregarPedidos(true);
 
     } catch (erro) {
         console.error("Erro ao alterar pedido:", erro);
 
-        alert(
-            erro.message || "Erro ao alterar pedido."
-        );
+        alert(erro.message || "Erro ao alterar pedido.");
     }
 }
 
