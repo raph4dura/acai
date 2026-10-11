@@ -5,7 +5,7 @@
   "description": "Cardápio e pedidos no local — Cantinho do Açaí, Portão.",
   "lang": "pt-BR",
   "start_url": "/",
-  "scope": "/",
+  "scope": "/equipe",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#5b21b6",
