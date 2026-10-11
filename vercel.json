@@ -1,0 +1,13 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/equipe",
+      "destination": "/funcionarios.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/dono.html"
+    }
+  ]
+}
