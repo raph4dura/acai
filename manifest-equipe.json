@@ -6,7 +6,7 @@
   "description": "Pedidos e preparo dos funcionários.",
   "lang": "pt-BR",
   "start_url": "/equipe",
-  "scope": "/",
+  "scope": "/equipe",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#5b21b6",
