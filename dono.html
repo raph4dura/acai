@@ -115,7 +115,7 @@ header p{opacity:.9;font-size:14px}
 /* CARDÁPIO */
 .product-form {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto;
+    grid-template-columns: 2fr 1fr 1fr 2fr auto;
     gap: 10px;
     align-items: end;
 }
@@ -469,6 +469,17 @@ header p{opacity:.9;font-size:14px}
                     class="refresh"
                     type="submit"
                     id="botaoSalvarProduto">
+                 
+<div>
+    <label for="produtoImagem">Foto do produto (URL)</label>
+    <input
+        id="produtoImagem"
+        type="url"
+        maxlength="2000"
+        placeholder="https://exemplo.com/foto.jpg">
+    <div id="previaImagemProduto" style="margin-top:8px"></div>
+</div>
+
                     ➕ Cadastrar
                 </button>
             </form>
@@ -724,6 +735,41 @@ function dinheiro(valor) {
 function escapar(texto) {
     return String(texto ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
+ 
+function urlImagemValida(valor) {
+    if (!valor || !valor.trim()) return "";
+
+    try {
+        const url = new URL(valor.trim());
+
+        if (url.protocol !== "https:" && url.protocol !== "http:") {
+            return "";
+        }
+
+        return url.href;
+    } catch {
+        return "";
+    }
+}
+
+document.getElementById("produtoImagem").addEventListener("input", function () {
+    const endereco = urlImagemValida(this.value);
+    const previa = document.getElementById("previaImagemProduto");
+
+    if (!endereco) {
+        previa.innerHTML = "";
+        return;
+    }
+
+    previa.innerHTML = `
+        <img
+            src="${escapar(endereco)}"
+            alt="Prévia da foto"
+            style="width:100%;max-width:180px;height:100px;object-fit:cover;border-radius:9px"
+            onerror="this.style.display='none'">
+    `;
+});
+
 function dataLocal(data) {
     const d = new Date(data);
     if (Number.isNaN(d.getTime())) return "";
@@ -1246,6 +1292,7 @@ function alternarListaProdutos() {
     renderizarProdutos();
 }
 
+
 function renderizarProdutos() {
     const lista = document.getElementById("listaProdutos");
     const botao = document.getElementById("botaoVerMaisProdutos");
@@ -1255,7 +1302,6 @@ function renderizarProdutos() {
         .value.trim()
         .toLocaleLowerCase("pt-BR");
 
-    // IDs maiores normalmente correspondem aos cadastros mais recentes.
     const filtrados = [...produtos]
         .sort((a, b) => Number(b.id) - Number(a.id))
         .filter(p => {
@@ -1277,50 +1323,59 @@ function renderizarProdutos() {
         ? filtrados
         : filtrados.slice(0, 3);
 
-    lista.innerHTML = exibidos.map(p => `
-        <div class="product-card ${p.ativo ? "" : "inactive"}">
-            <div class="product-name">
-                ${escapar(p.nome)}
-            </div>
+    lista.innerHTML = exibidos.map(p => {
+        const imagem = urlImagemValida(p.imagem_url);
 
-            <div class="product-meta">
-                Categoria: ${escapar(p.categoria)}
-            </div>
+        return `
+            <div class="product-card ${p.ativo ? "" : "inactive"}">
+                ${imagem ? `
+                    <img
+                        src="${escapar(imagem)}"
+                        alt="${escapar(p.nome)}"
+                        loading="lazy"
+                        style="width:100%;height:150px;object-fit:cover;border-radius:9px;margin-bottom:12px"
+                        onerror="this.style.display='none'">
+                ` : `
+                    <div style="font-size:36px;margin-bottom:10px">🍽️</div>
+                `}
 
-            <div class="product-meta">
-                Código: ${Number(p.id)}
-            </div>
+                <div class="product-name">${escapar(p.nome)}</div>
 
-            <div class="product-price">
-                ${dinheiro(p.preco)}
-            </div>
+                <div class="product-meta">
+                    Categoria: ${escapar(p.categoria)}
+                </div>
 
-            <div class="product-meta">
-                Situação:
-                <strong>${p.ativo ? "Ativo" : "Desativado"}</strong>
-            </div>
+                <div class="product-meta">Código: ${Number(p.id)}</div>
 
-            <div class="product-actions">
-                <button
-                    class="secondary"
-                    onclick="editarProduto(${Number(p.id)})">
-                    ✏️ Editar
-                </button>
+                <div class="product-price">${dinheiro(p.preco)}</div>
 
-                <button
-                    class="${p.ativo ? "danger" : "success"}"
-                    onclick="alternarProduto(${Number(p.id)})">
-                    ${p.ativo ? "Desativar" : "Ativar"}
-                </button>
+                <div class="product-meta">
+                    Situação:
+                    <strong>${p.ativo ? "Ativo" : "Desativado"}</strong>
+                </div>
+
+                <div class="product-actions">
+                    <button class="secondary"
+                        onclick="editarProduto(${Number(p.id)})">
+                        ✏️ Editar
+                    </button>
+
+                    <button
+                        class="${p.ativo ? "danger" : "success"}"
+                        onclick="alternarProduto(${Number(p.id)})">
+                        ${p.ativo ? "Desativar" : "Ativar"}
+                    </button>
+                </div>
             </div>
-        </div>
-    `).join("");
+        `;
+    }).join("");
 
     botao.style.display = filtrados.length > 3 ? "block" : "none";
     botao.textContent = mostrarTodosProdutos
         ? "Ver menos produtos ▲"
         : `Ver mais produtos (${filtrados.length - 3}) ▼`;
 }
+
 
 document.getElementById("formProduto").addEventListener(
     "submit",
@@ -1329,24 +1384,23 @@ document.getElementById("formProduto").addEventListener(
 
         if (!autenticado) return;
 
-        const nome = document
-            .getElementById("produtoNome").value.trim();
-
-        const categoria = document
-            .getElementById("produtoCategoria").value.trim();
-
-        const precoTexto = document
-            .getElementById("produtoPreco").value;
-
+        const nome = document.getElementById("produtoNome").value.trim();
+        const categoria = document.getElementById("produtoCategoria").value.trim();
+        const precoTexto = document.getElementById("produtoPreco").value;
+        const imagemTexto = document.getElementById("produtoImagem").value.trim();
         const preco = Number(precoTexto);
         const botao = document.getElementById("botaoSalvarProduto");
 
         if (!nome || !categoria || precoTexto === "" ||
             !Number.isFinite(preco) || preco < 0) {
-            avisoProduto(
-                "Preencha nome, categoria e um preço válido.",
-                "error"
-            );
+            avisoProduto("Preencha nome, categoria e um preço válido.", "error");
+            return;
+        }
+
+        const imagem = urlImagemValida(imagemTexto);
+
+        if (imagemTexto && !imagem) {
+            avisoProduto("Informe um endereço de imagem HTTP ou HTTPS válido.", "error");
             return;
         }
 
@@ -1356,15 +1410,18 @@ document.getElementById("formProduto").addEventListener(
             const dados = await requisicao(API_PRODUTOS, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({nome, categoria, preco})
+                body: JSON.stringify({
+                    nome,
+                    categoria,
+                    preco,
+                    imagem_url: imagem || null
+                })
             });
 
             document.getElementById("formProduto").reset();
+            document.getElementById("previaImagemProduto").innerHTML = "";
 
-            avisoProduto(
-                dados.mensagem || "Produto cadastrado com sucesso!"
-            );
-
+            avisoProduto(dados.mensagem || "Produto cadastrado com sucesso!");
             await carregarProdutos();
         } catch (e) {
             avisoProduto(e.message, "error");
@@ -1373,6 +1430,7 @@ document.getElementById("formProduto").addEventListener(
         }
     }
 );
+
 
 async function editarProduto(id) {
     if (!autenticado) return;
@@ -1383,10 +1441,7 @@ async function editarProduto(id) {
     const nome = prompt("Nome do produto:", produto.nome);
     if (nome === null) return;
 
-    const categoria = prompt(
-        "Categoria do produto:",
-        produto.categoria
-    );
+    const categoria = prompt("Categoria do produto:", produto.categoria);
     if (categoria === null) return;
 
     const precoTexto = prompt(
@@ -1395,7 +1450,14 @@ async function editarProduto(id) {
     );
     if (precoTexto === null) return;
 
+    const imagemTexto = prompt(
+        "Endereço da foto (URL). Deixe vazio para remover a foto:",
+        produto.imagem_url || ""
+    );
+    if (imagemTexto === null) return;
+
     const preco = Number(precoTexto.trim().replace(",", "."));
+    const imagem = urlImagemValida(imagemTexto.trim());
 
     if (
         !nome.trim() ||
@@ -1404,10 +1466,12 @@ async function editarProduto(id) {
         !Number.isFinite(preco) ||
         preco < 0
     ) {
-        avisoProduto(
-            "Confira o nome, a categoria e o preço.",
-            "error"
-        );
+        avisoProduto("Confira o nome, a categoria e o preço.", "error");
+        return;
+    }
+
+    if (imagemTexto.trim() && !imagem) {
+        avisoProduto("Informe um endereço de imagem HTTP ou HTTPS válido.", "error");
         return;
     }
 
@@ -1419,14 +1483,12 @@ async function editarProduto(id) {
                 id: Number(id),
                 nome: nome.trim(),
                 categoria: categoria.trim(),
-                preco
+                preco,
+                imagem_url: imagem || null
             })
         });
 
-        avisoProduto(
-            dados.mensagem || "Produto atualizado com sucesso!"
-        );
-
+        avisoProduto(dados.mensagem || "Produto atualizado com sucesso!");
         await carregarProdutos();
     } catch (e) {
         avisoProduto(e.message, "error");
