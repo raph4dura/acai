@@ -564,6 +564,14 @@ footer {
         >
     </div>
 
+    <button
+    class="primary"
+    style="margin-bottom:18px"
+    onclick="openAcai()"
+>
+    🍇 Montar meu açaí
+</button>
+
     <div class="cats" id="cats"></div>
 
     <div class="title">
@@ -981,6 +989,7 @@ function renderCategories() {
     });
 }
 
+
 async function carregarProdutosDoBanco() {
     try {
         const response = await fetch("/api/cardapio", {
@@ -1000,7 +1009,16 @@ async function carregarProdutosDoBanco() {
             throw new Error("A API retornou uma lista inválida.");
         }
 
-        const acaiOriginal = products.find(p => p.acai);
+        // Mantém o produto especial que abre o montador de açaí.
+        const acaiOriginal = {
+            id: "acai",
+            name: "Açaí",
+            desc: "Monte do seu jeito com tamanho e complementos.",
+            price: sizes[0][1],
+            cat: "Açaí",
+            icon: "🍇",
+            acai: true
+        };
 
         const produtosBanco = data.produtos.map(p => {
             const nome = String(p.nome || "").trim();
@@ -1013,65 +1031,52 @@ async function carregarProdutosDoBanco() {
                 .replace(/[\u0300-\u036f]/g, "")
                 .toLowerCase();
 
-            const ehAcai = nomeNormalizado === "acai";
-
             const categoriaNormalizada = categoriaProduto
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
 
-const ehAcai =
-    nomeNormalizado.includes("acai") ||
-    categoriaNormalizada.includes("acai");
+            const ehAcai =
+                nomeNormalizado.includes("acai") ||
+                categoriaNormalizada.includes("acai");
 
             const icone =
                 categoriaNormalizada.includes("bebida") ? "🥤" :
                 categoriaNormalizada.includes("lanch") ? "🍔" :
-                categoriaNormalizada.includes("acai") ? "🍇" :
+                ehAcai ? "🍇" :
                 "🍽️";
 
             return {
                 id: "db-" + p.id,
                 name: nome,
-                desc: ehAcai
-                    ? "Monte do seu jeito com tamanho e complementos."
-                    : "Preparado com carinho para você.",
+                desc: "Preparado com carinho para você.",
                 price: Number(p.preco),
                 cat: categoriaProduto,
-                icon: ehAcai ? "🍇" : icone,
+                icon: icone,
                 acai: ehAcai
             };
         });
 
-        const acaiBanco =
-    produtosBanco.find(p =>
-        p.acai && /300\s?ml/i.test(p.name)
-    ) ||
-    produtosBanco.find(p =>
-        p.acai &&
-        p.name.normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .trim()
-            .toLowerCase() === "acai"
-    );
-        // Preserva o açaí especial, com tamanhos e complementos.
-        const acai = acaiOriginal
-            ? {
-                ...acaiOriginal,
-                price: acaiBanco
-                    ? acaiBanco.price
-                    : acaiOriginal.price
-            }
-            : acaiBanco;
+        // Usa o preço do açaí de 300 ml, se existir no banco.
+        const acaiBanco = produtosBanco.find(p =>
+            p.acai && /300\s?ml/i.test(p.name)
+        ) || produtosBanco.find(p =>
+            p.acai &&
+            p.name.normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim()
+                .toLowerCase() === "acai"
+        );
 
-        // Se o preço do açaí foi alterado no painel,
-        // atualiza também o preço do tamanho de 300 ml.
-        if (acaiBanco && sizes.length > 0) {
+        if (acaiBanco) {
             sizes[0][1] = acaiBanco.price;
         }
 
+        acaiOriginal.price = sizes[0][1];
+
+        // Deixa os açaís fora da lista normal do cardápio.
         products = [
-            ...(acai ? [acai] : []),
+            acaiOriginal,
             ...produtosBanco.filter(p => !p.acai)
         ];
 
@@ -1082,7 +1087,6 @@ const ehAcai =
 
     } catch (error) {
         console.error("Erro ao atualizar cardápio:", error);
-
         toast("Não foi possível atualizar o cardápio.");
     }
 }
@@ -1123,20 +1127,39 @@ function setCategory(c, button) {
    PRODUTOS
 ========================= */
 
-function renderProducts() {
-    const q = document.getElementById("search").value.toLowerCase().trim();
 
-    const list = products.filter(p =>
-        (
+function renderProducts() {
+    const q = document.getElementById("search").value
+        .toLowerCase()
+        .trim();
+
+    const list = products.filter(p => {
+        // O açaí especial não aparece em "Todos".
+        if (p.acai && category === "Todos") {
+            return false;
+        }
+
+        // A categoria Açaí abre o montador,
+        // em vez de mostrar os tamanhos como produtos separados.
+        if (p.acai && category === "Açaí") {
+            return true;
+        }
+
+        // Não mostra açaís do banco como cards individuais.
+        if (p.acai) {
+            return false;
+        }
+
+        const categoriaCorreta =
             category === "Todos" ||
-            p.cat === category ||
-            (category === "Complementos" && p.acai)
-        ) &&
-        (
+            p.cat === category;
+
+        const buscaCorreta =
             p.name.toLowerCase().includes(q) ||
-            p.desc.toLowerCase().includes(q)
-        )
-    );
+            p.desc.toLowerCase().includes(q);
+
+        return categoriaCorreta && buscaCorreta;
+    });
 
     document.getElementById("count").textContent =
         list.length + (list.length === 1 ? " item" : " itens");
