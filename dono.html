@@ -191,6 +191,26 @@ header p{opacity:.9;font-size:14px}
     border-radius: 9px;
     margin-top: 16px;
 }
+ 
+/* BOTÕES VER MAIS / VER MENOS */
+.see-more {
+    display: none;
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    border: 1px solid #ddd6fe;
+    border-radius: 10px;
+    background: #ede9fe;
+    color: #5b21b6;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.see-more:hover {
+    background: #ddd6fe;
+}
+
 
 @media(max-width:700px) {
     .product-form {
@@ -474,6 +494,16 @@ header p{opacity:.9;font-size:14px}
             </div>
 
          
+<button
+    type="button"
+    id="botaoVerMaisProdutos"
+    class="see-more"
+    onclick="alternarListaProdutos()">
+    Ver mais produtos
+</button>
+
+
+         
         </div>
 
         <!-- GERENCIAR COMPLEMENTOS -->
@@ -539,6 +569,17 @@ header p{opacity:.9;font-size:14px}
             <div id="listaComplementos" class="product-list">
                 Entre no painel para carregar os complementos.
             </div>
+
+         
+<button
+    type="button"
+    id="botaoVerMaisComplementos"
+    class="see-more"
+    onclick="alternarListaComplementos()">
+    Ver mais complementos
+</button>
+
+         
         </div>
 
     </section>
@@ -1197,27 +1238,46 @@ async function carregarProdutos() {
     }
 }
 
+
+let mostrarTodosProdutos = false;
+
+function alternarListaProdutos() {
+    mostrarTodosProdutos = !mostrarTodosProdutos;
+    renderizarProdutos();
+}
+
 function renderizarProdutos() {
     const lista = document.getElementById("listaProdutos");
+    const botao = document.getElementById("botaoVerMaisProdutos");
+
     const busca = document
         .getElementById("buscaProduto")
         .value.trim()
         .toLocaleLowerCase("pt-BR");
 
-    const filtrados = produtos.filter(p => {
-        const texto = `${p.nome} ${p.categoria}`
-            .toLocaleLowerCase("pt-BR");
+    // IDs maiores normalmente correspondem aos cadastros mais recentes.
+    const filtrados = [...produtos]
+        .sort((a, b) => Number(b.id) - Number(a.id))
+        .filter(p => {
+            const texto = `${p.nome || ""} ${p.categoria || ""}`
+                .toLocaleLowerCase("pt-BR");
 
-        return texto.includes(busca);
-    });
+            return texto.includes(busca);
+        });
 
     if (!filtrados.length) {
         lista.innerHTML =
             '<div class="empty">Nenhum produto encontrado.</div>';
+
+        botao.style.display = "none";
         return;
     }
 
-    lista.innerHTML = filtrados.map(p => `
+    const exibidos = mostrarTodosProdutos
+        ? filtrados
+        : filtrados.slice(0, 3);
+
+    lista.innerHTML = exibidos.map(p => `
         <div class="product-card ${p.ativo ? "" : "inactive"}">
             <div class="product-name">
                 ${escapar(p.nome)}
@@ -1255,6 +1315,11 @@ function renderizarProdutos() {
             </div>
         </div>
     `).join("");
+
+    botao.style.display = filtrados.length > 3 ? "block" : "none";
+    botao.textContent = mostrarTodosProdutos
+        ? "Ver menos produtos ▲"
+        : `Ver mais produtos (${filtrados.length - 3}) ▼`;
 }
 
 document.getElementById("formProduto").addEventListener(
@@ -1444,28 +1509,49 @@ async function carregarComplementos() {
     }
 }
 
+
+let mostrarTodosComplementos = false;
+
+function alternarListaComplementos() {
+    mostrarTodosComplementos = !mostrarTodosComplementos;
+    renderizarComplementos();
+}
+
 function renderizarComplementos() {
     const lista = document.getElementById("listaComplementos");
+    const botao = document.getElementById("botaoVerMaisComplementos");
+
     const busca = document
         .getElementById("buscaComplemento")
         .value.trim()
         .toLocaleLowerCase("pt-BR");
 
-    const filtrados = complementos.filter(c =>
-        String(c.nome)
-            .toLocaleLowerCase("pt-BR")
-            .includes(busca)
-    );
+    // IDs maiores normalmente correspondem aos cadastros mais recentes.
+    const filtrados = [...complementos]
+        .sort((a, b) => Number(b.id) - Number(a.id))
+        .filter(c =>
+            String(c.nome)
+                .toLocaleLowerCase("pt-BR")
+                .includes(busca)
+        );
 
     if (!filtrados.length) {
         lista.innerHTML =
             '<div class="empty">Nenhum complemento encontrado.</div>';
+
+        botao.style.display = "none";
         return;
     }
 
-    lista.innerHTML = filtrados.map(c => `
+    const exibidos = mostrarTodosComplementos
+        ? filtrados
+        : filtrados.slice(0, 3);
+
+    lista.innerHTML = exibidos.map(c => `
         <div class="product-card ${c.ativo ? "" : "inactive"}">
-            <div class="product-name">${escapar(c.nome)}</div>
+            <div class="product-name">
+                ${escapar(c.nome)}
+            </div>
 
             <div class="product-meta">
                 Código: ${Number(c.id)}
@@ -1495,6 +1581,11 @@ function renderizarComplementos() {
             </div>
         </div>
     `).join("");
+
+    botao.style.display = filtrados.length > 3 ? "block" : "none";
+    botao.textContent = mostrarTodosComplementos
+        ? "Ver menos complementos ▲"
+        : `Ver mais complementos (${filtrados.length - 3}) ▼`;
 }
 
 /* CADASTRAR COMPLEMENTO */
