@@ -553,6 +553,137 @@ footer {
     align-items: center;
     justify-content: center;
 }
+    
+/* =====================================
+   ANIMAÇÕES SUAVES — CANTINHO DO AÇAÍ
+===================================== */
+
+/* Troca de categoria */
+.cats {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #c4b5fd transparent;
+}
+
+.cat {
+    transition:
+        background-color 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.cat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 13px #5b21b622;
+}
+
+.cat:active {
+    transform: scale(0.96);
+}
+
+.cat.active {
+    box-shadow: 0 4px 12px #6d28d933;
+}
+
+/* Entrada dos produtos */
+@keyframes produtoEntrando {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.product {
+    animation: produtoEntrando 0.28s ease both;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.product:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 24px #27113c18;
+}
+
+/* Botões com resposta visual */
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.product button,
+.primary,
+.cart,
+.close,
+.qty button {
+    transition:
+        transform 0.18s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.product button:active,
+.primary:active,
+.cart:active,
+.close:active,
+.qty button:active {
+    transform: scale(0.97);
+}
+
+/* Destaque do campo de pesquisa */
+.search input {
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search input:focus {
+    box-shadow: 0 0 0 4px #8b5cf622;
+}
+
+/* Abertura e fechamento dos modais */
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal .box {
+    transform: translateY(22px);
+    transition: transform 0.25s ease;
+}
+
+.modal.active .box {
+    transform: translateY(0);
+}
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 
 </style>
 </head>
@@ -1192,8 +1323,8 @@ function renderProducts() {
     document.getElementById("count").textContent =
         list.length + (list.length === 1 ? " item" : " itens");
 
-    document.getElementById("products").innerHTML =
-        list.map(p => {
+document.getElementById("products").innerHTML =
+    list.map((p, index) => {
             const imagem = p.image
                 ? `<img
                     src="${esc(p.image)}"
@@ -1204,7 +1335,10 @@ function renderProducts() {
                 : "";
 
             return `
-                <div class="product ${p.acai ? "featured" : ""}">
+               <div
+    class="product ${p.acai ? "featured" : ""}"
+    style="animation-delay:${Math.min(index * 45, 270)}ms"
+>
                     <div class="icon product-image">
                         ${imagem}
                         <span
