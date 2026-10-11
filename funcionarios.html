@@ -630,5 +630,16 @@ setInterval(() => {
 }, 2000);
 </script>
 
+    <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register(
+      "/service-worker-equipe.js",
+      { scope: "/equipe" }
+    );
+  });
+}
+</script>
+
 </body>
 </html>
