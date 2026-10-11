@@ -1,20 +1,38 @@
-```js
+
 import { neon } from "@neondatabase/serverless";
 import { exigirDono } from "./dono-auth.js";
-
-const sql = neon(process.env.DATABASE_URL);
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
-  try {
-    // ==========================================
-    // PROTEÇÃO: SOMENTE O DONO AUTENTICADO
-    // ==========================================
+  // Aceita somente os métodos utilizados pela API.
+  const metodosPermitidos = ["GET", "POST", "PUT", "DELETE"];
 
+  res.setHeader("Allow", metodosPermitidos.join(", "));
+
+  if (!metodosPermitidos.includes(req.method)) {
+    return res.status(405).json({
+      sucesso: false,
+      mensagem: "Método não permitido."
+    });
+  }
+
+  try {
+    // Somente o dono autenticado pode gerenciar o cardápio.
     if (!exigirDono(req, res)) {
       return;
     }
+
+    if (!process.env.DATABASE_URL) {
+      console.error("A variável DATABASE_URL não está configurada.");
+
+      return res.status(500).json({
+        sucesso: false,
+        mensagem: "A conexão com o banco não está configurada."
+      });
+    }
+
+    const sql = neon(process.env.DATABASE_URL);
 
     // ==========================================
     // LISTAR PRODUTOS
@@ -46,20 +64,29 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
       const { nome, categoria, preco } = req.body || {};
 
-      if (
-        typeof nome !== "string" ||
-        !nome.trim() ||
-        typeof categoria !== "string" ||
-        !categoria.trim() ||
-        preco === undefined ||
-        preco === null ||
-        preco === "" ||
-        !Number.isFinite(Number(preco)) ||
-        Number(preco) < 0
-      ) {
+      const nomeValido =
+        typeof nome === "string" &&
+        nome.trim().length > 0 &&
+        nome.trim().length <= 150;
+
+      const categoriaValida =
+        typeof categoria === "string" &&
+        categoria.trim().length > 0 &&
+        categoria.trim().length <= 100;
+
+      const precoValido =
+        preco !== undefined &&
+        preco !== null &&
+        preco !== "" &&
+        Number.isFinite(Number(preco)) &&
+        Number(preco) >= 0 &&
+        Number(preco) <= 999999;
+
+      if (!nomeValido || !categoriaValida || !precoValido) {
         return res.status(400).json({
           sucesso: false,
-          mensagem: "Informe nome, categoria e um preço válido."
+          mensagem:
+            "Informe um nome de até 150 caracteres, uma categoria de até 100 caracteres e um preço entre R$ 0,00 e R$ 999.999,00."
         });
       }
 
@@ -93,63 +120,83 @@ export default async function handler(req, res) {
     }
 
     // ==========================================
-    // EDITAR PRODUTO
-    // Também permite ativar/desativar
+    // EDITAR OU ATIVAR/DESATIVAR PRODUTO
     // ==========================================
 
     if (req.method === "PUT") {
       const { id, nome, categoria, preco, ativo } = req.body || {};
 
-      if (
-        id === undefined ||
-        id === null ||
-        !Number.isInteger(Number(id)) ||
-        Number(id) <= 0
-      ) {
+      const idValido =
+        id !== undefined &&
+        id !== null &&
+        String(id).trim() !== "" &&
+        Number.isSafeInteger(Number(id)) &&
+        Number(id) > 0;
+
+      if (!idValido) {
         return res.status(400).json({
           sucesso: false,
           mensagem: "ID do produto inválido."
         });
       }
 
-      if (
-        nome !== undefined &&
-        (typeof nome !== "string" || !nome.trim())
-      ) {
+      const temNome = nome !== undefined;
+      const temCategoria = categoria !== undefined;
+      const temPreco = preco !== undefined;
+      const temAtivo = ativo !== undefined;
+
+      if (!temNome && !temCategoria && !temPreco && !temAtivo) {
         return res.status(400).json({
           sucesso: false,
-          mensagem: "O nome não pode ficar vazio."
+          mensagem: "Informe os dados que deseja alterar."
         });
       }
 
       if (
-        categoria !== undefined &&
-        (typeof categoria !== "string" || !categoria.trim())
-      ) {
-        return res.status(400).json({
-          sucesso: false,
-          mensagem: "A categoria não pode ficar vazia."
-        });
-      }
-
-      if (
-        preco !== undefined &&
+        temNome &&
         (
-          preco === "" ||
-          !Number.isFinite(Number(preco)) ||
-          Number(preco) < 0
+          typeof nome !== "string" ||
+          !nome.trim() ||
+          nome.trim().length > 150
         )
       ) {
         return res.status(400).json({
           sucesso: false,
-          mensagem: "Preço inválido."
+          mensagem: "Informe um nome válido de até 150 caracteres."
         });
       }
 
       if (
-        ativo !== undefined &&
-        typeof ativo !== "boolean"
+        temCategoria &&
+        (
+          typeof categoria !== "string" ||
+          !categoria.trim() ||
+          categoria.trim().length > 100
+        )
       ) {
+        return res.status(400).json({
+          sucesso: false,
+          mensagem: "Informe uma categoria válida de até 100 caracteres."
+        });
+      }
+
+      if (
+        temPreco &&
+        (
+          preco === null ||
+          preco === "" ||
+          !Number.isFinite(Number(preco)) ||
+          Number(preco) < 0 ||
+          Number(preco) > 999999
+        )
+      ) {
+        return res.status(400).json({
+          sucesso: false,
+          mensagem: "Informe um preço entre R$ 0,00 e R$ 999.999,00."
+        });
+      }
+
+      if (temAtivo && typeof ativo !== "boolean") {
         return res.status(400).json({
           sucesso: false,
           mensagem: "O campo ativo deve ser verdadeiro ou falso."
@@ -160,19 +207,19 @@ export default async function handler(req, res) {
         UPDATE produtos
         SET
           nome = COALESCE(
-            ${nome === undefined ? null : nome.trim()},
+            ${temNome ? nome.trim() : null},
             nome
           ),
           categoria = COALESCE(
-            ${categoria === undefined ? null : categoria.trim()},
+            ${temCategoria ? categoria.trim() : null},
             categoria
           ),
           preco = COALESCE(
-            ${preco === undefined ? null : Number(preco)},
+            ${temPreco ? Number(preco) : null},
             preco
           ),
           ativo = COALESCE(
-            ${ativo === undefined ? null : ativo},
+            ${temAtivo ? ativo : null},
             ativo
           )
         WHERE id = ${Number(id)}
@@ -194,20 +241,30 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         sucesso: true,
-        mensagem: "Produto atualizado com sucesso!",
+        mensagem: temAtivo && !temNome && !temCategoria && !temPreco
+          ? (ativo ? "Produto ativado com sucesso!" : "Produto desativado com sucesso!")
+          : "Produto atualizado com sucesso!",
         produto: resultado[0]
       });
     }
 
     // ==========================================
-    // EXCLUIR PRODUTO
-    // Atenção: prefira desativar pelo painel.
+    // EXCLUSÃO SEGURA
+    // Não apaga o registro: desativa o produto.
+    // Isso ajuda a preservar o histórico de vendas.
     // ==========================================
 
     if (req.method === "DELETE") {
-      const id = Number(req.query?.id);
+      const valorId = req.query?.id;
+      const id = Number(valorId);
 
-      if (!Number.isInteger(id) || id <= 0) {
+      if (
+        valorId === undefined ||
+        valorId === null ||
+        String(valorId).trim() === "" ||
+        !Number.isSafeInteger(id) ||
+        id <= 0
+      ) {
         return res.status(400).json({
           sucesso: false,
           mensagem: "ID do produto inválido."
@@ -215,9 +272,10 @@ export default async function handler(req, res) {
       }
 
       const resultado = await sql`
-        DELETE FROM produtos
+        UPDATE produtos
+        SET ativo = FALSE
         WHERE id = ${id}
-        RETURNING id
+        RETURNING id, nome, categoria, preco, ativo
       `;
 
       if (resultado.length === 0) {
@@ -229,21 +287,10 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         sucesso: true,
-        mensagem: "Produto excluído com sucesso!"
+        mensagem: "Produto desativado. O histórico foi preservado.",
+        produto: resultado[0]
       });
     }
-
-    // ==========================================
-    // MÉTODO NÃO PERMITIDO
-    // ==========================================
-
-    res.setHeader("Allow", "GET, POST, PUT, DELETE");
-
-    return res.status(405).json({
-      sucesso: false,
-      mensagem: "Método não permitido."
-    });
-
   } catch (erro) {
     console.error("Erro ao gerenciar produtos:", erro);
 
@@ -253,4 +300,3 @@ export default async function handler(req, res) {
     });
   }
 }
-```
