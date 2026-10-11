@@ -709,7 +709,7 @@ footer {
    PRODUTOS
 ========================= */
 
-const products = [
+let products = [
     {
         id: "acai",
         name: "Açaí",
@@ -875,31 +875,149 @@ const esc = value =>
         "'": "&#039;"
     }[m]));
 
+    
+/* =========================
+   CARREGAR PRODUTOS DO NEON
+========================= */
+
+function renderCategories() {
+    const categorias = [
+        "Todos",
+        ...new Set(
+            products
+                .map(p => p.cat)
+                .filter(c => c && c !== "Complementos")
+        ),
+        "Complementos"
+    ];
+
+    const unicas = [...new Set(categorias)];
+    const container = document.getElementById("cats");
+
+    container.innerHTML = "";
+
+    unicas.forEach(categoriaItem => {
+        const button = document.createElement("button");
+
+        button.className =
+            "cat" + (categoriaItem === category ? " active" : "");
+
+        button.textContent =
+            categoriaItem === "Todos" ? "Todos" :
+            categoriaItem === "Açaí" ? "🍇 Açaí" :
+            categoriaItem === "Lanches" ? "🍔 Lanches" :
+            categoriaItem === "Bebidas" ? "🥤 Bebidas" :
+            categoriaItem === "Complementos" ? "🍫 Complementos" :
+            categoriaItem;
+
+        button.addEventListener("click", () => {
+            setCategory(categoriaItem, button);
+        });
+
+        container.appendChild(button);
+    });
+}
+
+async function carregarProdutosDoBanco() {
+    try {
+        const response = await fetch("/api/cardapio", {
+            method: "GET",
+            cache: "no-store"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.sucesso !== true) {
+            throw new Error(
+                data.mensagem || "Erro ao buscar os produtos."
+            );
+        }
+
+        if (!Array.isArray(data.produtos)) {
+            throw new Error("A API retornou uma lista inválida.");
+        }
+
+        const acaiOriginal = products.find(p => p.acai);
+
+        const produtosBanco = data.produtos.map(p => {
+            const nome = String(p.nome || "").trim();
+            const categoriaProduto = String(
+                p.categoria || "Outros"
+            ).trim();
+
+            const nomeNormalizado = nome
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+
+            const ehAcai = nomeNormalizado === "acai";
+
+            const categoriaNormalizada = categoriaProduto
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+
+            const icone =
+                categoriaNormalizada.includes("bebida") ? "🥤" :
+                categoriaNormalizada.includes("lanch") ? "🍔" :
+                categoriaNormalizada.includes("acai") ? "🍇" :
+                "🍽️";
+
+            return {
+                id: "db-" + p.id,
+                name: nome,
+                desc: ehAcai
+                    ? "Monte do seu jeito com tamanho e complementos."
+                    : "Preparado com carinho para você.",
+                price: Number(p.preco),
+                cat: categoriaProduto,
+                icon: ehAcai ? "🍇" : icone,
+                acai: ehAcai
+            };
+        });
+
+        const acaiBanco = produtosBanco.find(p => p.acai);
+
+        // Preserva o açaí especial, com tamanhos e complementos.
+        const acai = acaiOriginal
+            ? {
+                ...acaiOriginal,
+                price: acaiBanco
+                    ? acaiBanco.price
+                    : acaiOriginal.price
+            }
+            : acaiBanco;
+
+        // Se o preço do açaí foi alterado no painel,
+        // atualiza também o preço do tamanho de 300 ml.
+        if (acaiBanco && sizes.length > 0) {
+            sizes[0][1] = acaiBanco.price;
+        }
+
+        products = [
+            ...(acai ? [acai] : []),
+            ...produtosBanco.filter(p => !p.acai)
+        ];
+
+        renderCategories();
+        renderProducts();
+        renderSizes();
+        updateAcaiTotal();
+
+    } catch (error) {
+        console.error("Erro ao atualizar cardápio:", error);
+
+        toast("Não foi possível atualizar o cardápio.");
+    }
+}
+
+
 /* =========================
    INICIALIZAÇÃO
 ========================= */
 
 function init() {
-    document.getElementById("cats").innerHTML = [
-        "Todos",
-        "Açaí",
-        "Lanches",
-        "Bebidas",
-        "Complementos"
-    ].map((c, i) => `
-        <button
-            class="cat ${i === 0 ? "active" : ""}"
-            onclick="setCategory('${c}',this)">
-            ${
-                c === "Todos" ? "Todos" :
-                c === "Açaí" ? "🍇 Açaí" :
-                c === "Lanches" ? "🍔 Lanches" :
-                c === "Bebidas" ? "🥤 Bebidas" :
-                "🍫 Complementos"
-            }
-        </button>
-    `).join("");
-
+    renderCategories();
     renderProducts();
     renderSizes();
     renderExtras();
