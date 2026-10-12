@@ -2038,7 +2038,7 @@ async function cancelarPedidoCliente(id) {
     }
 
     try {
-        const resposta = await fetch("/api/cancelar-pedido", {
+        const resposta = await fetch("/api/meus-pedidos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
