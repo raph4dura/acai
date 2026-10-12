@@ -12,9 +12,8 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Cache-Control', 'no-store');
 
-    if (req.method !== 'GET') {
-        res.setHeader('Allow', 'GET');
-
+    if (!['GET', 'POST'].includes(req.method)) {
+        res.setHeader('Allow', 'GET, POST');
         return res.status(405).json({
             sucesso: false,
             erro: 'Método não permitido.'
@@ -41,27 +40,62 @@ export default async function handler(req, res) {
         const sql = neon(process.env.DATABASE_URL);
         const tokenHash = hashToken(token);
 
-        const pedidos = await sql`
-            SELECT
-                id,
-                numero_pedido,
-                mesa,
-                status,
-                pagamento,
-                observacao,
-                total,
-                criado_em,
-                iniciado_em,
-                pronto_em,
-                entregue_em
-            FROM pedidos
-            WHERE cliente_token_hash = ${tokenHash}
-            ORDER BY criado_em DESC NULLS LAST, id DESC
+        // CONSULTAR OS PEDIDOS DO CLIENTE
+        if (req.method === 'GET') {
+            const pedidos = await sql`
+                SELECT
+                    id,
+                    numero_pedido,
+                    mesa,
+                    status,
+                    pagamento,
+                    observacao,
+                    total,
+                    criado_em,
+                    iniciado_em,
+                    pronto_em,
+                    entregue_em
+                FROM pedidos
+                WHERE cliente_token_hash = ${tokenHash}
+                ORDER BY criado_em DESC NULLS LAST, id DESC
+            `;
+
+            return res.status(200).json({
+                sucesso: true,
+                pedidos
+            });
+        }
+
+        // CANCELAR PEDIDO AINDA NÃO INICIADO
+        const id = Number(req.body?.id);
+
+        if (!Number.isSafeInteger(id) || id <= 0) {
+            return res.status(400).json({
+                sucesso: false,
+                erro: 'Pedido inválido.'
+            });
+        }
+
+        const resultado = await sql`
+            UPDATE pedidos
+            SET status = 'cancelado'
+            WHERE id = ${id}
+              AND cliente_token_hash = ${tokenHash}
+              AND status = 'novo'
+            RETURNING id, numero_pedido, status
         `;
+
+        if (resultado.length === 0) {
+            return res.status(409).json({
+                sucesso: false,
+                erro: 'Não foi possível cancelar. O pedido pode já estar em preparo ou não pertencer a você.'
+            });
+        }
 
         return res.status(200).json({
             sucesso: true,
-            pedidos
+            mensagem: 'Pedido cancelado com sucesso.',
+            pedido: resultado[0]
         });
 
     } catch (erro) {
@@ -69,7 +103,7 @@ export default async function handler(req, res) {
 
         return res.status(500).json({
             sucesso: false,
-            erro: 'Não foi possível consultar seus pedidos.'
+            erro: 'Não foi possível processar a solicitação.'
         });
     }
 }
