@@ -896,7 +896,7 @@ let products = [
         name: "Xis Salada",
         desc: "Pão, hambúrguer, queijo, presunto, alface, tomate e maionese.",
         price: 18.90,
-        cat: "Lanches",
+        cat: "Xis",
         icon: "🍔"
     },
     {
@@ -939,6 +939,8 @@ let products = [
         cat: "Lanches",
         icon: "🍔"
     },
+
+    cat: "Crepes",
     {
         id: "crepe-chocolate",
         name: "Crepe de Chocolate",
@@ -1142,10 +1144,10 @@ function renderCategories() {
 button.textContent =
     categoriaItem === "Todos" ? "Todos" :
     categoriaItem === "Açaí" ? "🍇 Açaí" :
-    categoriaItem === "Lanches" ? "🍔 Lanches" :
     categoriaItem === "Bebidas" ? "🥤 Bebidas" :
+    categoriaItem === "Xis" ? "🍔 Xis" :
+    categoriaItem === "Crepes" ? "🥞 Crepes" :
     categoriaItem;
-
 
         button.addEventListener("click", () => {
             setCategory(categoriaItem, button);
