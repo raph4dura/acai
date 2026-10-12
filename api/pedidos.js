@@ -1,5 +1,12 @@
 
 import { neon } from '@neondatabase/serverless';
+import { createHash, randomBytes } from 'node:crypto';
+
+function hashToken(token) {
+    return createHash('sha256')
+        .update(token)
+        .digest('hex');
+}
 
 export default async function handler(req, res) {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -26,9 +33,7 @@ export default async function handler(req, res) {
 
         const sql = neon(databaseUrl);
 
-        // ==========================================
-        // CONSULTAR PEDIDOS COM NOME DO FUNCIONÁRIO
-        // ==========================================
+        // CONSULTAR TODOS OS PEDIDOS (PAINÉIS)
         if (req.method === 'GET') {
             const pedidos = await sql`
                 SELECT
@@ -48,9 +53,7 @@ export default async function handler(req, res) {
             });
         }
 
-        // ==========================================
         // CADASTRAR PEDIDO
-        // ==========================================
         const {
             numero_pedido,
             mesa,
@@ -70,14 +73,13 @@ export default async function handler(req, res) {
         ) {
             return res.status(400).json({
                 sucesso: false,
-                erro: 'Número do pedido, mesa ou total inválido.',
-                recebido: {
-                    numero_pedido,
-                    mesa,
-                    total
-                }
+                erro: 'Número do pedido, mesa ou total inválido.'
             });
         }
+
+        // Identificação aleatória exclusiva deste cliente/navegador.
+        const tokenCliente = randomBytes(32).toString('hex');
+        const tokenHash = hashToken(tokenCliente);
 
         const resultado = await sql`
             INSERT INTO pedidos (
@@ -87,7 +89,8 @@ export default async function handler(req, res) {
                 pagamento,
                 observacao,
                 total,
-                criado_em
+                criado_em,
+                cliente_token_hash
             )
             VALUES (
                 ${numero},
@@ -96,14 +99,16 @@ export default async function handler(req, res) {
                 ${pagamento || null},
                 ${observacao || null},
                 ${valorTotal},
-                CURRENT_TIMESTAMP
+                CURRENT_TIMESTAMP,
+                ${tokenHash}
             )
             RETURNING *
         `;
 
         return res.status(201).json({
             sucesso: true,
-            pedido: resultado[0]
+            pedido: resultado[0],
+            cliente_token: tokenCliente
         });
 
     } catch (erro) {
@@ -111,8 +116,7 @@ export default async function handler(req, res) {
 
         return res.status(500).json({
             sucesso: false,
-            erro: 'Falha ao processar o pedido.',
-            detalhe: erro?.message || String(erro)
+            erro: 'Falha ao processar o pedido.'
         });
     }
 }
