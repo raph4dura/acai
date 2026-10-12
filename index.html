@@ -939,14 +939,12 @@ let products = [
         cat: "Lanches",
         icon: "🍔"
     },
-
-    cat: "Crepes",
     {
         id: "crepe-chocolate",
         name: "Crepe de Chocolate",
         desc: "Crepe recheado com chocolate.",
         price: 12.90,
-        cat: "Lanches",
+        cat: "Crepes",
         icon: "🥞"
     },
     {
@@ -954,7 +952,7 @@ let products = [
         name: "Crepe de Morango",
         desc: "Crepe recheado com morango.",
         price: 13.90,
-        cat: "Lanches",
+        cat: "Crepes",
         icon: "🍓"
     },
     {
@@ -962,7 +960,7 @@ let products = [
         name: "Crepe de Banana",
         desc: "Crepe recheado com banana.",
         price: 12.90,
-        cat: "Lanches",
+        cat: "Crepes",
         icon: "🍌"
     },
     {
@@ -970,7 +968,7 @@ let products = [
         name: "Crepe Chocolate com Morango",
         desc: "Chocolate e morango em um crepe delicioso.",
         price: 15.90,
-        cat: "Lanches",
+        cat: "Crepes",
         icon: "🍫"
     },
     {
@@ -1118,95 +1116,64 @@ async function carregarComplementosDoBanco() {
 ========================= */
 
 
-function renderCategories(){
 
-  const container = document.getElementById("categories");
+function renderCategories() {
+    const container = document.getElementById("cats");
 
-  const categoriasExistentes = [
-    ...new Set(
-      products
-        .map(p => p.cat)
-        .filter(c => c && c !== "Complementos")
-    )
-  ];
-
-  // Ordem desejada das categorias
-  const ordemCategorias = [
-    "Açaí",
-    "Bebidas",
-    "Xis",
-    "Crepes"
-  ];
-
-  const categorias = ordemCategorias.filter(cat =>
-    categoriasExistentes.includes(cat)
-  );
-
-  container.innerHTML = "";
-
-  // Aba Todos
-  const todos = document.createElement("button");
-  todos.className = "category active";
-  todos.dataset.category = "Todos";
-  todos.innerHTML = "🍽️ Todos";
-
-  todos.onclick = () => {
-    currentCategory = "Todos";
-
-    document
-      .querySelectorAll(".category")
-      .forEach(btn => btn.classList.remove("active"));
-
-    todos.classList.add("active");
-
-    renderProducts();
-  };
-
-  container.appendChild(todos);
-
-  // Demais categorias
-  categorias.forEach(cat => {
-
-    const button = document.createElement("button");
-
-    button.className = "category";
-    button.dataset.category = cat;
-
-    let icone = "🍽️";
-
-    if(cat === "Açaí"){
-      icone = "🍇";
+    if (!container) {
+        console.error("Elemento #cats não encontrado.");
+        return;
     }
 
-    if(cat === "Bebidas"){
-      icone = "🥤";
-    }
+    const categoriasExistentes = [
+        ...new Set(
+            products
+                .map(p => p.cat)
+                .filter(c => c && c !== "Complementos")
+        )
+    ];
 
-    if(cat === "Xis"){
-      icone = "🍔";
-    }
+    const ordemCategorias = [
+        "Açaí",
+        "Bebidas",
+        "Xis",
+        "Crepes",
+        "Lanches",
+        "Outros"
+    ];
 
-    if(cat === "Crepes"){
-      icone = "🥞";
-    }
+    const categorias = ordemCategorias.filter(cat =>
+        categoriasExistentes.includes(cat)
+    );
 
-    button.innerHTML = `${icone} ${cat}`;
+    container.innerHTML = "";
 
-    button.onclick = () => {
+    const todas = ["Todos", ...categorias];
 
-      currentCategory = cat;
+    todas.forEach(cat => {
+        const button = document.createElement("button");
 
-      document
-        .querySelectorAll(".category")
-        .forEach(btn => btn.classList.remove("active"));
+        button.className = "cat" +
+            (cat === category ? " active" : "");
 
-      button.classList.add("active");
+        const icones = {
+            "Todos": "🍽️",
+            "Açaí": "🍇",
+            "Bebidas": "🥤",
+            "Xis": "🍔",
+            "Crepes": "🥞",
+            "Lanches": "🍔",
+            "Outros": "🍽️"
+        };
 
-      renderProducts();
-    };
+        button.textContent = `${icones[cat] || "🍽️"} ${cat}`;
 
-    container.appendChild(button);
-  });
+        button.onclick = () => {
+            setCategory(cat, button);
+        };
+
+        container.appendChild(button);
+    });
 }
 
 
