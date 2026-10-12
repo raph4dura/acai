@@ -1023,6 +1023,31 @@ let selectedExtras = [];
    FUNÇÕES AUXILIARES
 ========================= */
 
+/* =========================
+   IDENTIFICAÇÃO DO CLIENTE
+========================= */
+
+function obterTokenCliente() {
+    let token = localStorage.getItem("cantinho_cliente_token");
+
+    if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
+        const bytes = new Uint8Array(32);
+        crypto.getRandomValues(bytes);
+
+        token = Array.from(bytes)
+            .map(byte => byte.toString(16).padStart(2, "0"))
+            .join("");
+
+        localStorage.setItem("cantinho_cliente_token", token);
+    }
+
+    return token;
+}
+
+const clienteToken = obterTokenCliente();
+
+
+    
 const money = value =>
     Number(value || 0).toLocaleString("pt-BR", {
         style: "currency",
@@ -1689,7 +1714,8 @@ const pedidoBody = {
     pagamento: payment,
     observacao:
         document.getElementById("obs").value.trim() || null,
-    total: Number(total().toFixed(2))
+    total: Number(total().toFixed(2)),
+    cliente_token: clienteToken
 };
 
 
