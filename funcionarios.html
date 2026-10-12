@@ -674,53 +674,7 @@ async function alterarStatus(pedidoId, novoStatus) {
                 : "Pedido marcado como pronto!"
         );
 
-async function alterarStatus(pedidoId, novoStatus) {
-    try {
-        let mensagem;
-
-        if (novoStatus === "em_preparo") {
-            mensagem = "Digite o PIN de 4 dígitos para iniciar o preparo:";
-        } else if (novoStatus === "pronto") {
-            mensagem = "Digite novamente seu PIN de 4 dígitos para finalizar o pedido:";
-        } else {
-            return;
-        }
-
-        const pin = prompt(mensagem);
-
-        if (pin === null) return;
-
-        if (!/^\d{4}$/.test(pin)) {
-            alert("O PIN deve ter exatamente 4 dígitos.");
-            return;
-        }
-
-        const resposta = await fetch("/api/status", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id: pedidoId,
-                status: novoStatus,
-                pin: pin
-            })
-        });
-
-        const dados = await resposta.json().catch(() => ({}));
-
-        if (!resposta.ok) {
-            throw new Error(
-                dados.erro || "Não foi possível alterar o status."
-            );
-        }
-
-        alert(
-            novoStatus === "em_preparo"
-                ? "Preparo iniciado com sucesso!"
-                : "Pedido marcado como pronto!"
-        );
-
+    ```javascript
         await carregarPedidos(true);
 
     } catch (erro) {
@@ -762,7 +716,6 @@ async function marcarComoPago(pedidoId) {
         }
 
         alert("Pagamento registrado com sucesso! 💜");
-
         await carregarPedidos(true);
 
     } catch (erro) {
@@ -772,12 +725,9 @@ async function marcarComoPago(pedidoId) {
 }
 
 
-carregarPedidos(true);
-
-setInterval(() => {
-    carregarPedidos(false);
-}, 2000);
-
+// ==========================================
+// INICIAR CARREGAMENTO DOS PEDIDOS
+// ==========================================
 
 carregarPedidos(true);
 
@@ -788,14 +738,16 @@ setInterval(() => {
 
     <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register(
-      "/service-worker-equipe.js",
-      { scope: "/equipe" }
-    );
-  });
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register(
+            "/service-worker-equipe.js",
+            { scope: "/equipe" }
+        );
+    });
 }
 </script>
 
 </body>
 </html>
+
+        
