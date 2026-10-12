@@ -626,7 +626,6 @@ function montarPedido(pedido, itens, temNovoPedido) {
     `;
 }
 
-
 async function alterarStatus(pedidoId, novoStatus) {
     try {
         let mensagem;
@@ -674,7 +673,6 @@ async function alterarStatus(pedidoId, novoStatus) {
                 : "Pedido marcado como pronto!"
         );
 
-    ```javascript
         await carregarPedidos(true);
 
     } catch (erro) {
@@ -682,11 +680,6 @@ async function alterarStatus(pedidoId, novoStatus) {
         alert(erro.message || "Erro ao alterar pedido.");
     }
 }
-
-
-// ==========================================
-// MARCAR PEDIDO COMO PAGO
-// ==========================================
 
 async function marcarComoPago(pedidoId) {
     const confirmar = confirm(
@@ -723,11 +716,6 @@ async function marcarComoPago(pedidoId) {
         alert(erro.message || "Erro ao registrar pagamento.");
     }
 }
-
-
-// ==========================================
-// INICIAR CARREGAMENTO DOS PEDIDOS
-// ==========================================
 
 carregarPedidos(true);
 
