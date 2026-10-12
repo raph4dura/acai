@@ -272,6 +272,48 @@ main {
         width: 100%;
     }
 }
+
+    
+.cabecalho-direita {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.pagamento-canto {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-pago {
+    background: #15803d;
+    font-size: 12px;
+    padding: 9px 11px;
+}
+
+.btn-pago:hover {
+    background: #166534;
+}
+
+.pagamento-confirmado {
+    background: #dcfce7;
+    color: #166534;
+    padding: 8px 11px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pagamento-pendente {
+    color: #92400e;
+    background: #fef3c7;
+    padding: 8px 11px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+    
 </style>
 </head>
 
@@ -378,10 +420,6 @@ async function carregarPedidos(manual = false) {
             ? dados
             : (dados.pedidos || []);
 
-        pedidos = pedidos.filter(
-            pedido => pedido.status !== "pronto"
-        );
-
         pedidos.sort((a, b) =>
             new Date(b.criado_em || 0) -
             new Date(a.criado_em || 0)
@@ -460,6 +498,24 @@ async function renderizarPedidos(pedidos, temNovoPedido = false) {
 function montarPedido(pedido, itens, temNovoPedido) {
     const status = pedido.status || "novo";
 
+    
+    const pagamentoHTML = `
+        <div class="pagamento-canto">
+            ${
+                pedido.pago
+                    ? '<span class="pagamento-confirmado">✅ Pago</span>'
+                    : status === "pronto"
+                        ? `<button
+                            class="btn btn-pago"
+                            onclick="marcarComoPago(${Number(pedido.id)})">
+                            💰 Marcar como pago
+                           </button>`
+                        : '<span class="pagamento-pendente">⏳ Pendente</span>'
+            }
+        </div>
+    `;
+
+
     const data = pedido.criado_em
         ? new Date(pedido.criado_em)
         : null;
@@ -520,20 +576,24 @@ function montarPedido(pedido, itens, temNovoPedido) {
 
     return `
         <article class="pedido ${classeNovo}">
-            <div class="pedido-header">
-                <div>
-                    <div class="numero">
-                        Pedido #${escapar(pedido.numero_pedido)}
-                    </div>
-                    <div class="mesa">
-                        🪑 Mesa <strong>${escapar(pedido.mesa)}</strong>
-                    </div>
-                </div>
+            
+<div class="pedido-header">
+    <div>
+        <div class="numero">
+            Pedido #${escapar(pedido.numero_pedido)}
+        </div>
+        <div class="mesa">
+            🪑 Mesa <strong>${escapar(pedido.mesa)}</strong>
+        </div>
+    </div>
 
-                <div class="status status-${escapar(status)}">
-                    ${escapar(nomeStatus(status))}
-                </div>
-            </div>
+    <div class="cabecalho-direita">
+        ${pagamentoHTML}
+        <div class="status status-${escapar(status)}">
+            ${escapar(nomeStatus(status))}
+        </div>
+    </div>
+</div>
 
             <div class="itens">${itensHTML}</div>
 
@@ -613,6 +673,44 @@ async function alterarStatus(pedidoId, novoStatus) {
                 ? "Preparo iniciado com sucesso!"
                 : "Pedido marcado como pronto!"
         );
+
+        
+async function marcarComoPago(pedidoId) {
+    const confirmar = confirm(
+        "Confirma que o pagamento deste pedido foi recebido?"
+    );
+
+    if (!confirmar) return;
+
+    try {
+        const resposta = await fetch("/api/status", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: pedidoId,
+                status: "pago"
+            })
+        });
+
+        const dados = await resposta.json().catch(() => ({}));
+
+        if (!resposta.ok) {
+            throw new Error(
+                dados.erro || "Não foi possível registrar o pagamento."
+            );
+        }
+
+        alert("Pagamento registrado com sucesso! 💜");
+        await carregarPedidos(true);
+
+    } catch (erro) {
+        console.error("Erro ao registrar pagamento:", erro);
+        alert(erro.message || "Erro ao registrar pagamento.");
+    }
+}
+
 
         await carregarPedidos(true);
 
