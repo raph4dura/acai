@@ -67,6 +67,63 @@ header {
     opacity: .85;
 }
 
+    
+.header-botoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.botao-meus-pedidos {
+    border: 0;
+    background: white;
+    color: #5b21b6;
+    min-height: 48px;
+    padding: 0 13px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.botao-meus-pedidos:hover {
+    background: #f3e8ff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+    .header-botoes {
+        gap: 6px;
+    }
+
+    .botao-meus-pedidos {
+        min-height: 44px;
+        padding: 0 9px;
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    .cart {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+    }
+
+    .logo h1 {
+        font-size: 16px;
+    }
+
+    .logo small {
+        font-size: 11px;
+    }
+}
+
+
 .cart {
     border: 0;
     background: white;
@@ -796,10 +853,28 @@ button {
             </div>
         </div>
 
-        <button class="cart" onclick="openCart()" aria-label="Abrir carrinho">
-            🛒
-            <span class="badge" id="badge">0</span>
-        </button>
+       
+        <div class="header-botoes">
+            <button
+                type="button"
+                class="botao-meus-pedidos"
+                onclick="document.getElementById('meus-pedidos').scrollIntoView({ behavior: 'smooth' })"
+                aria-label="Ver meus pedidos"
+                title="Meus pedidos"
+            >
+                📋 <span>Meus pedidos</span>
+            </button>
+
+            <button
+                class="cart"
+                onclick="openCart()"
+                aria-label="Abrir carrinho"
+                title="Carrinho"
+            >
+                🛒
+                <span class="badge" id="badge">0</span>
+            </button>
+        </div>
     </div>
 </header>
 
