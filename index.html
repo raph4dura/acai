@@ -855,15 +855,17 @@ button {
 
        
         <div class="header-botoes">
-            <button
-                type="button"
-                class="botao-meus-pedidos"
-                onclick="document.getElementById('meus-pedidos').scrollIntoView({ behavior: 'smooth' })"
-                aria-label="Ver meus pedidos"
-                title="Meus pedidos"
-            >
-                📋 <span>Meus pedidos</span>
-            </button>
+            ```html
+<button
+    type="button"
+    class="botao-meus-pedidos"
+    onclick="abrirMeusPedidos()"
+    aria-label="Ver meus pedidos"
+    title="Meus pedidos"
+>
+    📋 <span>Meus pedidos</span>
+</button>
+
 
             <button
                 class="cart"
