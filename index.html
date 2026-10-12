@@ -812,9 +812,6 @@ button {
         </p>
     </section>
 
-    
-    </section>
-
     <!-- MEUS PEDIDOS -->
     <section id="meus-pedidos" class="meus-pedidos">
         <div class="meus-pedidos-topo">
@@ -835,9 +832,6 @@ button {
 
         <div id="lista-meus-pedidos" class="lista-meus-pedidos"></div>
     </section>
-
-    <div class="search">
-
 
     <div class="search">
         <input
@@ -1936,6 +1930,143 @@ window.addEventListener("click", event => {
         }
     });
 });
+    
+/* =========================
+   HISTÓRICO DO CLIENTE
+========================= */
+
+async function carregarMeusPedidos() {
+    const lista = document.getElementById("lista-meus-pedidos");
+    const mensagem = document.getElementById("mensagem-meus-pedidos");
+
+    mensagem.textContent = "Carregando seus pedidos...";
+    lista.replaceChildren();
+
+    try {
+        const resposta = await fetch("/api/meus-pedidos", {
+            method: "GET",
+            headers: {
+                "x-cliente-token": clienteToken
+            },
+            cache: "no-store"
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok || !dados.sucesso) {
+            throw new Error(
+                dados.erro || "Não foi possível consultar os pedidos."
+            );
+        }
+
+        if (!Array.isArray(dados.pedidos) || dados.pedidos.length === 0) {
+            mensagem.textContent =
+                "Você ainda não tem pedidos registrados neste navegador.";
+            return;
+        }
+
+        mensagem.textContent = "Acompanhe o andamento dos seus pedidos:";
+
+        const nomesStatus = {
+            novo: "Novo",
+            em_preparo: "Em preparo",
+            pronto: "Pronto",
+            entregue: "Entregue",
+            cancelado: "Cancelado"
+        };
+
+        for (const pedido of dados.pedidos) {
+            const card = document.createElement("article");
+            card.className = "pedido-cliente-card";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = `Pedido #${pedido.numero_pedido}`;
+
+            const mesa = document.createElement("p");
+            mesa.textContent = `Mesa: ${pedido.mesa ?? "Não informada"}`;
+
+            const data = document.createElement("p");
+            data.textContent = "Data: " + (
+                pedido.criado_em
+                    ? new Date(pedido.criado_em).toLocaleString("pt-BR")
+                    : "Indisponível"
+            );
+
+            const totalPedido = document.createElement("p");
+            totalPedido.textContent =
+                "Total: " + money(pedido.total);
+
+            const status = document.createElement("span");
+            status.className = "status-pedido-cliente";
+            status.textContent =
+                nomesStatus[pedido.status] || pedido.status || "Desconhecido";
+
+            card.append(titulo, mesa, data, totalPedido, status);
+
+            if (pedido.status === "novo") {
+                const cancelar = document.createElement("button");
+                cancelar.type = "button";
+                cancelar.className = "botao-cancelar-pedido";
+                cancelar.textContent = "Cancelar pedido";
+
+                cancelar.addEventListener("click", () => {
+                    cancelarPedidoCliente(pedido.id);
+                });
+
+                card.appendChild(cancelar);
+            }
+
+            lista.appendChild(card);
+        }
+
+    } catch (erro) {
+        console.error("Erro ao carregar pedidos:", erro);
+        mensagem.textContent =
+            "Não foi possível carregar seus pedidos. Tente novamente.";
+    }
+}
+
+/* =========================
+   CANCELAR PEDIDO
+========================= */
+
+async function cancelarPedidoCliente(id) {
+    if (!confirm(
+        "Deseja realmente cancelar este pedido? O cancelamento só é permitido antes do início do preparo."
+    )) {
+        return;
+    }
+
+    try {
+        const resposta = await fetch("/api/cancelar-pedido", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-cliente-token": clienteToken
+            },
+            body: JSON.stringify({ id })
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok || !dados.sucesso) {
+            alert(
+                dados.erro || "Não foi possível cancelar o pedido."
+            );
+
+            await carregarMeusPedidos();
+            return;
+        }
+
+        alert("Pedido cancelado com sucesso!");
+        await carregarMeusPedidos();
+
+    } catch (erro) {
+        console.error("Erro ao cancelar pedido:", erro);
+        alert("Erro de conexão ao tentar cancelar o pedido.");
+    }
+}
+
 
 /* =========================
    INICIAR A PÁGINA
