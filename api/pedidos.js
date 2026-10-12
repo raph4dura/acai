@@ -1,11 +1,9 @@
 
 import { neon } from '@neondatabase/serverless';
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash } from 'node:crypto';
 
 function hashToken(token) {
-    return createHash('sha256')
-        .update(token)
-        .digest('hex');
+    return createHash('sha256').update(token).digest('hex');
 }
 
 export default async function handler(req, res) {
@@ -14,7 +12,6 @@ export default async function handler(req, res) {
 
     if (req.method !== 'GET' && req.method !== 'POST') {
         res.setHeader('Allow', 'GET, POST');
-
         return res.status(405).json({
             sucesso: false,
             erro: 'Método não permitido.'
@@ -22,18 +19,16 @@ export default async function handler(req, res) {
     }
 
     try {
-        const databaseUrl = process.env.DATABASE_URL;
-
-        if (!databaseUrl) {
+        if (!process.env.DATABASE_URL) {
             return res.status(500).json({
                 sucesso: false,
-                erro: 'A variável DATABASE_URL não está configurada.'
+                erro: 'DATABASE_URL não está configurada.'
             });
         }
 
-        const sql = neon(databaseUrl);
+        const sql = neon(process.env.DATABASE_URL);
 
-        // CONSULTAR TODOS OS PEDIDOS (PAINÉIS)
+        // Consulta utilizada pelos painéis administrativos.
         if (req.method === 'GET') {
             const pedidos = await sql`
                 SELECT
@@ -42,9 +37,7 @@ export default async function handler(req, res) {
                 FROM pedidos p
                 LEFT JOIN funcionarios f
                     ON f.id = p.funcionario_id
-                ORDER BY
-                    p.criado_em DESC NULLS LAST,
-                    p.id DESC
+                ORDER BY p.criado_em DESC NULLS LAST, p.id DESC
             `;
 
             return res.status(200).json({
@@ -53,13 +46,13 @@ export default async function handler(req, res) {
             });
         }
 
-        // CADASTRAR PEDIDO
         const {
             numero_pedido,
             mesa,
             pagamento,
             observacao,
-            total
+            total,
+            cliente_token
         } = req.body || {};
 
         const numero = Number(numero_pedido);
@@ -77,9 +70,17 @@ export default async function handler(req, res) {
             });
         }
 
-        // Identificação aleatória exclusiva deste cliente/navegador.
-        const tokenCliente = randomBytes(32).toString('hex');
-        const tokenHash = hashToken(tokenCliente);
+        if (
+            typeof cliente_token !== 'string' ||
+            !/^[a-f0-9]{64}$/i.test(cliente_token)
+        ) {
+            return res.status(400).json({
+                sucesso: false,
+                erro: 'Identificação do cliente inválida.'
+            });
+        }
+
+        const tokenHash = hashToken(cliente_token);
 
         const resultado = await sql`
             INSERT INTO pedidos (
@@ -107,12 +108,11 @@ export default async function handler(req, res) {
 
         return res.status(201).json({
             sucesso: true,
-            pedido: resultado[0],
-            cliente_token: tokenCliente
+            pedido: resultado[0]
         });
 
     } catch (erro) {
-        console.error('Erro em api/pedidos.js:', erro);
+        console.error('Erro em api/pedidos.js:', erro.message);
 
         return res.status(500).json({
             sucesso: false,
