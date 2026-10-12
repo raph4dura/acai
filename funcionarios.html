@@ -674,7 +674,66 @@ async function alterarStatus(pedidoId, novoStatus) {
                 : "Pedido marcado como pronto!"
         );
 
-        
+async function alterarStatus(pedidoId, novoStatus) {
+    try {
+        let mensagem;
+
+        if (novoStatus === "em_preparo") {
+            mensagem = "Digite o PIN de 4 dígitos para iniciar o preparo:";
+        } else if (novoStatus === "pronto") {
+            mensagem = "Digite novamente seu PIN de 4 dígitos para finalizar o pedido:";
+        } else {
+            return;
+        }
+
+        const pin = prompt(mensagem);
+
+        if (pin === null) return;
+
+        if (!/^\d{4}$/.test(pin)) {
+            alert("O PIN deve ter exatamente 4 dígitos.");
+            return;
+        }
+
+        const resposta = await fetch("/api/status", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: pedidoId,
+                status: novoStatus,
+                pin: pin
+            })
+        });
+
+        const dados = await resposta.json().catch(() => ({}));
+
+        if (!resposta.ok) {
+            throw new Error(
+                dados.erro || "Não foi possível alterar o status."
+            );
+        }
+
+        alert(
+            novoStatus === "em_preparo"
+                ? "Preparo iniciado com sucesso!"
+                : "Pedido marcado como pronto!"
+        );
+
+        await carregarPedidos(true);
+
+    } catch (erro) {
+        console.error("Erro ao alterar pedido:", erro);
+        alert(erro.message || "Erro ao alterar pedido.");
+    }
+}
+
+
+// ==========================================
+// MARCAR PEDIDO COMO PAGO
+// ==========================================
+
 async function marcarComoPago(pedidoId) {
     const confirmar = confirm(
         "Confirma que o pagamento deste pedido foi recebido?"
@@ -703,6 +762,7 @@ async function marcarComoPago(pedidoId) {
         }
 
         alert("Pagamento registrado com sucesso! 💜");
+
         await carregarPedidos(true);
 
     } catch (erro) {
@@ -712,14 +772,12 @@ async function marcarComoPago(pedidoId) {
 }
 
 
-        await carregarPedidos(true);
+carregarPedidos(true);
 
-    } catch (erro) {
-        console.error("Erro ao alterar pedido:", erro);
+setInterval(() => {
+    carregarPedidos(false);
+}, 2000);
 
-        alert(erro.message || "Erro ao alterar pedido.");
-    }
-}
 
 carregarPedidos(true);
 
