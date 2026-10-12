@@ -1118,45 +1118,96 @@ async function carregarComplementosDoBanco() {
 ========================= */
 
 
-function renderCategories() {
-    const categorias = [
-        "Todos",
-        ...new Set(
-            products
-                .map(p => p.cat)
-                .filter(c => c && c !== "Complementos")
-        )
-    ];
+function renderCategories(){
 
+  const container = document.getElementById("categories");
 
-    const unicas = [...new Set(categorias)];
-    const container = document.getElementById("cats");
+  const categoriasExistentes = [
+    ...new Set(
+      products
+        .map(p => p.cat)
+        .filter(c => c && c !== "Complementos")
+    )
+  ];
 
-    container.innerHTML = "";
+  // Ordem desejada das categorias
+  const ordemCategorias = [
+    "Açaí",
+    "Bebidas",
+    "Xis",
+    "Crepes"
+  ];
 
-    unicas.forEach(categoriaItem => {
-        const button = document.createElement("button");
+  const categorias = ordemCategorias.filter(cat =>
+    categoriasExistentes.includes(cat)
+  );
 
-        button.className =
-            "cat" + (categoriaItem === category ? " active" : "");
+  container.innerHTML = "";
 
-       
-button.textContent =
-    categoriaItem === "Todos" ? "Todos" :
-    categoriaItem === "Açaí" ? "🍇 Açaí" :
-    categoriaItem === "Bebidas" ? "🥤 Bebidas" :
-    categoriaItem === "Xis" ? "🍔 Xis" :
-    categoriaItem === "Crepes" ? "🥞 Crepes" :
-    categoriaItem;
+  // Aba Todos
+  const todos = document.createElement("button");
+  todos.className = "category active";
+  todos.dataset.category = "Todos";
+  todos.innerHTML = "🍽️ Todos";
 
-        button.addEventListener("click", () => {
-            setCategory(categoriaItem, button);
-        });
+  todos.onclick = () => {
+    currentCategory = "Todos";
 
-        container.appendChild(button);
-    });
+    document
+      .querySelectorAll(".category")
+      .forEach(btn => btn.classList.remove("active"));
+
+    todos.classList.add("active");
+
+    renderProducts();
+  };
+
+  container.appendChild(todos);
+
+  // Demais categorias
+  categorias.forEach(cat => {
+
+    const button = document.createElement("button");
+
+    button.className = "category";
+    button.dataset.category = cat;
+
+    let icone = "🍽️";
+
+    if(cat === "Açaí"){
+      icone = "🍇";
+    }
+
+    if(cat === "Bebidas"){
+      icone = "🥤";
+    }
+
+    if(cat === "Xis"){
+      icone = "🍔";
+    }
+
+    if(cat === "Crepes"){
+      icone = "🥞";
+    }
+
+    button.innerHTML = `${icone} ${cat}`;
+
+    button.onclick = () => {
+
+      currentCategory = cat;
+
+      document
+        .querySelectorAll(".category")
+        .forEach(btn => btn.classList.remove("active"));
+
+      button.classList.add("active");
+
+      renderProducts();
+    };
+
+    container.appendChild(button);
+  });
 }
-
 
 
 async function carregarProdutosDoBanco() {
@@ -1210,11 +1261,12 @@ async function carregarProdutosDoBanco() {
                 categoriaNormalizada.includes("acai");
 
             const icone =
-                categoriaNormalizada.includes("bebida") ? "🥤" :
-                categoriaNormalizada.includes("lanch") ? "🍔" :
-                ehAcai ? "🍇" :
-                "🍽️";
-
+  categoriaNormalizada.includes("bebida") ? "🥤" :
+  categoriaNormalizada.includes("xis") ? "🍔" :
+  categoriaNormalizada.includes("lanch") ? "🍔" :
+  categoriaNormalizada.includes("crepe") ? "🥞" :
+  ehAcai ? "🍇" :
+  "🍽️";
             return {
                 id: "db-" + p.id,
                 name: nome,
