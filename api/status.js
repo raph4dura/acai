@@ -41,12 +41,61 @@ export default async function handler(req, res) {
             });
         }
 
+        
+        // Registrar pagamento sem PIN.
+        // Essa operação não altera o status do preparo.
+        if (status === 'pago') {
+            const resultadoPagamento = await sql`
+                UPDATE pedidos
+                SET pago = TRUE,
+                    pago_em = CURRENT_TIMESTAMP
+                WHERE id = ${idPedido}
+                  AND status = 'pronto'
+                  AND pago = FALSE
+                RETURNING id, numero_pedido, pago, pago_em
+            `;
+
+            if (resultadoPagamento.length > 0) {
+                return res.status(200).json({
+                    sucesso: true,
+                    mensagem: 'Pagamento registrado com sucesso.',
+                    pedido: resultadoPagamento[0]
+                });
+            }
+
+            const pedidosPagamento = await sql`
+                SELECT id, status, pago
+                FROM pedidos
+                WHERE id = ${idPedido}
+            `;
+
+            if (pedidosPagamento.length === 0) {
+                return res.status(404).json({
+                    sucesso: false,
+                    erro: 'Pedido não encontrado.'
+                });
+            }
+
+            if (pedidosPagamento[0].pago) {
+                return res.status(409).json({
+                    sucesso: false,
+                    erro: 'Este pedido já foi marcado como pago.'
+                });
+            }
+
+            return res.status(409).json({
+                sucesso: false,
+                erro: 'O pedido precisa estar pronto para registrar o pagamento.'
+            });
+        }
+
         if (!['em_preparo', 'pronto'].includes(status)) {
             return res.status(400).json({
                 sucesso: false,
                 erro: 'Status inválido.'
             });
         }
+
 
         // PIN obrigatório para iniciar e finalizar.
         if (typeof pin !== 'string' || !/^\d{4}$/.test(pin)) {
